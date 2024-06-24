@@ -1,11 +1,15 @@
 import React from 'react'
 import Header from '../components/Header'
+import Slider from '../components/Slider'
 
 function Home() {
+
   return (
     <>
     <Header/>
-    dsnajdsnaj
+    <div className="page-content">
+      <Slider/>
+    </div>
     </>
   )
 }
