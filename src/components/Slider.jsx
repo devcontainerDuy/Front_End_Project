@@ -9,6 +9,7 @@ function Slider() {
         fetch(process.env.REACT_APP_API_URL+'slides/'+page)
         .then(res=>res.json())
         .then((res)=>{
+            console.log(res);
             setSliders(res);
         })
     },[page])
@@ -19,7 +20,7 @@ function Slider() {
                 slidesPerView={1}
                 modules={[Autoplay]}
                 autoplay={{
-                    delay: 2500,
+                    delay: 4500,
                     disableOnInteraction: false,
                 }}
                 loop={true}
@@ -34,7 +35,7 @@ function Slider() {
                 {window.innerWidth >900 &&
                     sliders.map((item, index) => (
                         <SwiperSlide>
-                            <img  className='slider-image' key={index}  src={process.env.REACT_APP_IMG_URL +'slides/'+ item.desktop} alt="" />
+                            <img  className='w-100' key={index}  src={item.desktop?process.env.REACT_APP_IMG_URL +'slides/'+ item.desktop:process.env.REACT_APP_IMG_URL +'slides/'+ item.mobile} alt="" />
                         </SwiperSlide>
                     ))
                 }

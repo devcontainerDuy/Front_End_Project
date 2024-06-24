@@ -2,8 +2,8 @@ import React from "react";
 
 function Product({ name, price, discount, slug, image }) {
   return (
-    <div className="card">
-      <div className="position-relative overflow-hidden">
+    <div className="card border-0">
+      <div className="position-relative overflow-hidden" style={{ margin:'0px auto' }}>
         <div className="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
           <a href="javascript:;">
             <i className="bi bi-heart" />
@@ -17,6 +17,7 @@ function Product({ name, price, discount, slug, image }) {
         </div>
         <a href={`/${slug}`}>
           <img
+            style={{ height:'200px',width:'auto',}}
             src={process.env.REACT_APP_IMG_URL+'products/'+image}
             className="card-img-top"
             alt={name}
