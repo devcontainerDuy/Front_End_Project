@@ -40,8 +40,9 @@ function Home() {
           </div>
           <div className="row text-center">
             <div className="col-md">
+              {limit>=total &&(
             <button className="btn btn-outline-primary" onClick={(e)=>changeLimit()}>Xem thêm</button>
-
+              )}
             </div>
           </div>
         </div>
