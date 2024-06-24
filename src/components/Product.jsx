@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React from "react";
 
 function Product({ name, price, discount, slug, image }) {

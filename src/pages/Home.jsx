@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Slider from "../components/Slider";
