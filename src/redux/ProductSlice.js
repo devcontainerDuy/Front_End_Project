@@ -8,7 +8,8 @@ export const getProducts = createAsyncThunk(
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    return data;
+
+    return data.data;
   }
 );
 
@@ -29,6 +30,7 @@ export const productSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, action) => {
         state.loading_product = false;
         state.products = action.payload;
+        console.log(state.products);
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.loading_product = false;
