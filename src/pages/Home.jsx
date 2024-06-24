@@ -9,11 +9,18 @@ function Home() {
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(4);
   useEffect(() => {
+    if(limit==4){
+      fetch(process.env.REACT_APP_API_URL + "products" )
+      .then((res) => res.json())
+      .then((res) => {
+        setProducts(res.data);
+        setTotal(res.total);
+      });
+    }
     fetch(process.env.REACT_APP_API_URL + "products?limit=" + limit)
       .then((res) => res.json())
       .then((res) => {
         setProducts(res);
-        setTotal(res.total);
       });
   }, [limit]);
   const changeLimit = () => {
@@ -37,6 +44,7 @@ function Home() {
                     name={product.name}
                     image={product.image}
                     price={product.price}
+                    slug={product.slug}
                     discount={product.discount}
                   />
                 </div>
@@ -44,7 +52,7 @@ function Home() {
           </div>
           <div className="row text-center">
             <div className="col-md">
-              {limit <= total && (
+              {limit < total && (
                 <button
                   className="btn btn-outline-primary"
                   onClick={(e) => changeLimit()}

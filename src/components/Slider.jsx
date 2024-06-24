@@ -1,27 +1,24 @@
-/* eslint-disable*/
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 function Slider() {
     const [sliders,setSliders]= useState([]);
-    const [page]= useState('home-slide');
     useEffect(()=>{
-        fetch(process.env.REACT_APP_API_URL+'slides/'+page)
+        fetch(process.env.REACT_APP_API_URL+'slides/home-slide')
         .then(res=>res.json())
         .then((res)=>{
             console.log(res);
             setSliders(res);
         })
-    },[page])
+    },[])
   return (
     <>
     <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
-                modules={[Autoplay]}
                 autoplay={{
-                    delay: 4500,
+                    delay: 2500,
                     disableOnInteraction: false,
                 }}
                 loop={true}
@@ -40,7 +37,6 @@ function Slider() {
                         </SwiperSlide>
                     ))
                 }
-
             </Swiper>
     </>
   )
