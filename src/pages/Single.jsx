@@ -273,7 +273,7 @@ function Single() {
         </div>
       </section>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal}   size="lg" onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Chi tiết sản phẩm</Modal.Title>
         </Modal.Header>
