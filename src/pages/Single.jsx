@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
@@ -33,13 +32,13 @@ function Single() {
               {product && (
                 <>
                   <li className="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="/">Home</a>
                   </li>
                   <li className="breadcrumb-item" aria-current="page">
-                    {product.brands.name} - {product.categories.name}
+                    {product?.brands?.name} - {product?.categories?.name}
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    {product.name}
+                    {product?.name}
                   </li>
                 </>
               )}
@@ -58,11 +57,16 @@ function Single() {
                     </div>
                   ))}
               </Carousel>
+              <div className="mt-2 row">
+                <div className="col-md">
+                  <button className="btn btn-primary">Thêm vào giỏ hàng</button>
+                </div>
+              </div>
             </div>
             <div className="col-md-5 p-3">
               <h4>{product.name}</h4>
-              <h5>Thương hiệu : {product.brands.name}</h5>
-              <h5>Loại sản phẩm : {product.categories.name}</h5>
+              <h5>Thương hiệu : {product?.brands?.name}</h5>
+              <h5>Loại sản phẩm : {product?.categories?.name}</h5>
               <ul className="nav nav-tabs mt-3" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
                   <button
@@ -135,11 +139,7 @@ function Single() {
                   ...
                 </div>
               </div>
-              <div className="mt-2 row">
-                <div className="col-md">
-                  <button className="btn btn-primary">Thêm vào giỏ hàng</button>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
