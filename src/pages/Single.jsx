@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import "swiper/css";
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -20,7 +22,45 @@ function Single() {
   const [gallery, setGallery] = useState([]);
   const [links, setLinks] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
+  const notyf = new Notyf({
+    duration: 1000,
+    position: {
+      x: "right",
+      y: "top",
+    },
+    types: [
+      {
+        type: "warning",
+        background: "orange",
+        icon: {
+          className: "material-icons",
+          tagName: "i",
+          text: "warning",
+        },
+      },
+      {
+        type: "error",
+        background: "indianred",
+        duration: 2000,
+        dismissible: true,
+      },
+      {
+        type: "success",
+        background: "green",
+        color: "white",
+        duration: 2000,
+        dismissible: true,
+      },
+      {
+        type: "info",
+        background: "#24b3f0",
+        color: "white",
+        duration: 1500,
+        dismissible: false,
+        icon: '<i class="bi bi-bag-check"></i>',
+      },
+    ],
+  });
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "products/" + id)
       .then((res) => res.json())
@@ -43,6 +83,26 @@ function Single() {
     return fullDescription.substring(0, maxLength) + "...";
   };
 
+  const addToCart = (id)=>{
+    var cart =[];
+    if(localStorage.getItem('cart')){
+      cart= JSON.parse(localStorage.getItem('cart'));
+      cart.forEach(el => {
+        if(el.id==id){
+          el.quantity=el.quantity+1;
+        }else{
+          cart.push({'id':id,'quantity':1});
+        }
+      });
+    }else{
+      cart = [{'id':id,'quantity':1}];
+    }
+    notyf.open({
+      type: "success",
+      message: "Đã thêm vào giỏ hàng",
+    });
+    localStorage.setItem('cart',JSON.stringify(cart));
+  }
   return (
     <>
       <Header />
@@ -53,7 +113,7 @@ function Single() {
               {product && (
                 <>
                   <li className="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="/">Home</a>
                   </li>
                   <li className="breadcrumb-item" aria-current="page">
                     {product?.brands?.name} - {product?.categories?.name}
@@ -145,7 +205,7 @@ function Single() {
                   )}
                   <div className="mb-4 mt-3 row">
                     <div className="col-md">
-                      <button className="btn btn-primary">
+                      <button className="btn btn-primary" onClick={(e)=>addToCart(product.id)}>
                         Thêm vào giỏ hàng
                       </button>
                     </div>
