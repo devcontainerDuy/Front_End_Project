@@ -51,7 +51,7 @@ function Home() {
                 </div>
               ))}
           </div>
-          <div className="row text-center">
+          <div className="row mb-4 text-center">
             <div className="col-md">
               {limit < total && (
                 <button

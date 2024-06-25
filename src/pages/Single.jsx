@@ -12,6 +12,7 @@ import Footer from "../components/Footer";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Product from "../components/Product";
 
 function Single() {
   const { id } = useParams();
@@ -77,11 +78,6 @@ function Single() {
                     </div>
                   ))}
               </Carousel>
-              <div className="mb-4 row">
-                <div className="col-md">
-                  <button className="btn btn-primary">Thêm vào giỏ hàng</button>
-                </div>
-              </div>
             </div>
             <div className="col-md-5 p-3">
               <h4>{product?.name}</h4>
@@ -147,7 +143,15 @@ function Single() {
                       Show more
                     </button>
                   )}
+                  <div className="mb-4 mt-3 row">
+                    <div className="col-md">
+                      <button className="btn btn-primary">
+                        Thêm vào giỏ hàng
+                      </button>
+                    </div>
+                  </div>
                 </div>
+
                 <div
                   className="tab-pane fade"
                   id="profile"
@@ -165,7 +169,45 @@ function Single() {
                   ...
                 </div>
               </div>
-
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col-md-9 text-center">
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={10}
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 50,
+                },
+              }}
+              loop={true}
+              className="mySwiper"
+            >
+              {links.length>0 && links.map((product,index)=>(
+                <SwiperSlide key={index}>
+                    <Product
+                    name={product.name}
+                    image={product.image}
+                    price={product.price}
+                    slug={product.slug}
+                    discount={product.discount}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
             </div>
           </div>
         </div>
@@ -176,10 +218,16 @@ function Single() {
           <Modal.Title>Chi tiết sản phẩm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ fontFamily:'Times New Roman' }} dangerouslySetInnerHTML={{ __html: product?.content }} />
+          <div
+            style={{ fontFamily: "Times New Roman" }}
+            dangerouslySetInnerHTML={{ __html: product?.content }}
+          />
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn btn-sm btn-secondary" onClick={handleCloseModal}>
+          <Button
+            className="btn btn-sm btn-secondary"
+            onClick={handleCloseModal}
+          >
             Đóng
           </Button>
         </Modal.Footer>
