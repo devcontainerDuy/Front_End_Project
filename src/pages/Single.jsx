@@ -146,8 +146,8 @@ function Single() {
             </div>
             <div className="col-md-5 p-3">
               <h4>{product?.name}</h4>
-              <h5>Thương hiệu : {product?.brands?.name}</h5>
-              <h5>Loại sản phẩm : {product?.categories?.name}</h5>
+
+              <h5>Giá sản phẩm : <span className="text-decoration-line-through pe-2">{Intl.NumberFormat("en-US").format(Number(product.price))}</span><span className="text-danger">{Intl.NumberFormat("en-US").format(Number(product.discount))}</span></h5>
               <ul className="nav nav-tabs mt-3" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
                   <button

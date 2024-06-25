@@ -35,9 +35,9 @@ function Product({ name, price, discount, slug, image }) {
             <i className="bi bi-star-fill text-warning" />
             <i className="bi bi-star-fill text-warning" />
           </div>
-          <span className="mb-0 h6 fw-bold product-price text-danger" >{discount}</span>
+          <span className="mb-0 h6 fw-bold product-price text-danger" > {Intl.NumberFormat("en-US").format(Number(discount))}</span>
          
-        <span className="text-decoration-line-through ms-3 mb-0 h6 fw-bold original-price">{price}</span>
+        <span className="text-decoration-line-through ms-3 mb-0 h6 fw-bold original-price">{Intl.NumberFormat("en-US").format(Number(price))}</span>
         </div>
       </div>
     </div>
