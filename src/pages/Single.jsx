@@ -9,13 +9,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Footer from "../components/Footer";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Single() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [gallery, setGallery] = useState([]);
   const [links, setLinks] = useState([]);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "products/" + id)
@@ -27,14 +30,13 @@ function Single() {
       });
   }, [id]);
 
-  const handleToggleDescription = () => {
-    setShowFullDescription((prevState) => !prevState);
-  };
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const getDescription = () => {
     const fullDescription = product?.content || "";
     const maxLength = 200;
-    if (showFullDescription || fullDescription.length <= maxLength) {
+    if (fullDescription.length <= maxLength) {
       return fullDescription;
     }
     return fullDescription.substring(0, maxLength) + "...";
@@ -62,7 +64,7 @@ function Single() {
               )}
             </ol>
           </nav>
-          <div className="row mb-5">
+          <div className="row">
             <div className="col-md-4">
               <Carousel showStatus={false} showArrows={true}>
                 {gallery &&
@@ -75,11 +77,11 @@ function Single() {
                     </div>
                   ))}
               </Carousel>
-              <div className="mt-2 row">
+              <div className="mb-4 row">
                 <div className="col-md">
                   <button className="btn btn-primary">Thêm vào giỏ hàng</button>
                 </div>
-              </div>  
+              </div>
             </div>
             <div className="col-md-5 p-3">
               <h4>{product?.name}</h4>
@@ -136,15 +138,13 @@ function Single() {
                   role="tabpanel"
                   aria-labelledby="home-tab"
                 >
-                  <div
-                    dangerouslySetInnerHTML={{ __html: getDescription() }}
-                  />
+                  <div dangerouslySetInnerHTML={{ __html: getDescription() }} />
                   {product?.content && product?.content.length > 200 && (
                     <button
                       className="btn btn-link p-0"
-                      onClick={handleToggleDescription}
+                      onClick={handleShowModal}
                     >
-                      {showFullDescription ? "Show less" : "Show more"}
+                      Show more
                     </button>
                   )}
                 </div>
@@ -170,6 +170,21 @@ function Single() {
           </div>
         </div>
       </section>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Chi tiết sản phẩm</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ fontFamily:'Times New Roman' }} dangerouslySetInnerHTML={{ __html: product?.content }} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn btn-sm btn-secondary" onClick={handleCloseModal}>
+            Đóng
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Footer />
     </>
   );
