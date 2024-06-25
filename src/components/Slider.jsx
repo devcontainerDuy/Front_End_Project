@@ -9,7 +9,6 @@ function Slider() {
         fetch(process.env.REACT_APP_API_URL+'slides/home-slide')
         .then(res=>res.json())
         .then((res)=>{
-            console.log(res);
             setSliders(res);
         })
     },[])

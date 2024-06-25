@@ -88,14 +88,14 @@ function Single() {
     if(localStorage.getItem('cart')){
       cart= JSON.parse(localStorage.getItem('cart'));
       cart.forEach(el => {
-        if(el.id==id){
-          el.quantity=el.quantity+1;
+        if(el[0]==id){
+          el[1]=el[1]+1;
         }else{
-          cart.push({'id':id,'quantity':1});
+          cart.push([id,1]);
         }
       });
     }else{
-      cart = [{'id':id,'quantity':1}];
+      cart = [[id,1]];
     }
     notyf.open({
       type: "success",
