@@ -65,6 +65,9 @@ function Single() {
     fetch(process.env.REACT_APP_API_URL + "products/" + id)
       .then((res) => res.json())
       .then((res) => {
+        if(!res.product){
+          window.location.replace('/not-found');
+        }
         setProduct(res.product);
         setGallery(res.medias);
         setLinks(res.links);
@@ -105,7 +108,9 @@ function Single() {
   }
   return (
     <>
-      <Header />
+    {product && (
+      <>
+            <Header />
       <section className="page-content">
         <div className="container mt-5">
           <nav aria-label="breadcrumb">
@@ -295,6 +300,9 @@ function Single() {
       </Modal>
 
       <Footer />
+      </>
+    )}
+
     </>
   );
 }
