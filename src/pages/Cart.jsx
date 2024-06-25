@@ -143,6 +143,7 @@ function Cart() {
                       alt=""
                     />
                   </a>
+                  
                 </td>
                 <td>
                   <h5 className="fw-bold mb-0">
