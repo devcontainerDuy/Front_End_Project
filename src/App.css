@@ -988,3 +988,11 @@ h6 {
   display: block;
   margin: 0 auto; 
 }
+
+.detail{ 
+  font-family: 'Times New Roman', Times, serif;
+
+}
+.detail img{
+  width: 100%;
+}

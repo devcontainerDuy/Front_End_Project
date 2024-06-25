@@ -219,6 +219,7 @@ function Single() {
         </Modal.Header>
         <Modal.Body>
           <div
+          className="detail"
             style={{ fontFamily: "Times New Roman" }}
             dangerouslySetInnerHTML={{ __html: product?.content }}
           />
