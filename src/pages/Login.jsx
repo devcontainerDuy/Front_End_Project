@@ -1,8 +1,89 @@
-import React from "react";
+/* eslint-disable*/
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
+import axios from "axios";
 
 function Login() {
+  const [email,setEmail]= useState('');
+  const [password,setPassword]= useState('');
+  const notyf = new Notyf({
+    duration: 1000,
+    position: {
+      x: "right",
+      y: "top",
+    },
+    types: [
+      {
+        type: "warning",
+        background: "orange",
+        icon: {
+          className: "material-icons",
+          tagName: "i",
+          text: "warning",
+        },
+      },
+      {
+        type: "error",
+        background: "indianred",
+        duration: 2000,
+        dismissible: true,
+      },
+      {
+        type: "success",
+        background: "green",
+        color: "white",
+        duration: 2000,
+        dismissible: true,
+      },
+      {
+        type: "info",
+        background: "#24b3f0",
+        color: "white",
+        duration: 1500,
+        dismissible: false,
+        icon: '<i class="bi bi-bag-check"></i>',
+      },
+    ],
+  });
+  const submitLogin=()=>{
+    if(email==''){
+      notyf.open({
+        type: "error",
+        message: "Thiếu email tài khoản",
+      });
+    }else if(password==''){
+      notyf.open({
+        type: "error",
+        message: "Thiếu mật khẩu tài khoản",
+      });
+    }else{
+      axios.post(process.env.REACT_APP_API_URL+'customers/auth/login',{
+        email:email,
+        password:password
+      }).then((res)=>{
+        if(res.data.check==true){
+          localStorage.setItem('token',res.data.token);
+          notyf.open({
+            type: "success",
+            message: "Đăng nhập thành công",
+          });
+          setTimeout(() => {
+            window.location.replace('/');
+          }, 1200);
+        }else if(res.data.check==false){
+          if(res.data.msg){
+            notyf.open({
+              type: "error",
+              message: res.data.msg,
+            });
+          }
+        }
+      })
+    }
+  }
   return (
     <>
       <Header />
@@ -33,23 +114,12 @@ function Login() {
                 <div className="col-md">
                   <div className="mb-3 align-middle">
                     <label for="" className="text-dark form-label">
-                      Tên tài khoản
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name=""
-                      id=""
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
                       Email
                     </label>
                     <input
                       type="email"
                       className="form-control"
+                      onChange={(e)=>setEmail(e.target.value)}
                       name=""
                       id=""
                       placeholder="Email"
@@ -61,28 +131,17 @@ function Login() {
                     </label>
                     <input
                       type="password"
+                      onChange={(e)=>setPassword(e.target.value)}
                       className="form-control"
                       name=""
                       id=""
                       placeholder="Mật khẩu"
                     />
                   </div>
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name=""
-                      id=""
-                      placeholder="Nhập lại mật khẩu"
-                    />
-                  </div>
                   <div className="row">
                     <div className="col-md-4">
-                      <button className="btn btn-sm btn-primary">
-                        Tạo tài khoản
+                      <button className="btn btn-sm btn-primary" onClick={(e)=>submitLogin()}>
+                      Đăng nhập
                       </button>
                     </div>
                   </div>
