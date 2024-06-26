@@ -66,6 +66,7 @@ function Login() {
       }).then((res)=>{
         if(res.data.check==true){
           localStorage.setItem('token',res.data.token);
+          localStorage.setItem('id',res.data.id);
           notyf.open({
             type: "success",
             message: "Đăng nhập thành công",
