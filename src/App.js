@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import Cart from './pages/Cart';
 import NotFound from './pages/NotFound';
+import Register from './pages/Register';
+import Login from './pages/Login';
 function App() {
   return (
     < >
@@ -14,6 +16,8 @@ function App() {
         <Route path='/'  element={<Home/>}/>
         <Route path='/:id'  element={<Single/>}/>
         <Route path='/gio-hang'  element={<Cart/>}/>
+        <Route path='/dang-ky' element={<Register/>}/>
+        <Route path='/dang-nhap' element={<Login/>}/>
         <Route path='/not-found'  element={<NotFound/>}/>
         <Route path='*'  element={<NotFound/>}/>
     
