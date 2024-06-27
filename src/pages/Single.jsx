@@ -15,6 +15,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Product from "../components/Product";
+import axios from "axios";
 
 function Single() {
   const { id } = useParams();
@@ -65,7 +66,7 @@ function Single() {
     fetch(process.env.REACT_APP_API_URL + "products/" + id)
       .then((res) => res.json())
       .then((res) => {
-        if(!res.product){
+        if (!res.product) {
           window.location.replace('/not-found');
         }
         setProduct(res.product);
@@ -85,223 +86,243 @@ function Single() {
     }
     return fullDescription.substring(0, maxLength) + "...";
   };
+  const addToCart1 = (id)=>{
+    axios.post(process.env.REACT_APP_API_URL+'carts',{
+      id_customer:localStorage.getItem('id'),
+      id_product:id
+    }).then((res)=>{
+      if(res.data.check==true){
+        notyf.open({
+          type: "success",
+          message: "Đã thêm vào giỏ hàng",
+        });
+      }
+    })
+  }
 
-  const addToCart = (id)=>{
-    var cart =[];
-    if(localStorage.getItem('cart')){
-      cart= JSON.parse(localStorage.getItem('cart'));
+  const addToCart = (id) => {
+    var cart = [];
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart'));
       cart.forEach(el => {
-        if(el[0]==id){
-          el[1]=el[1]+1;
-        }else{
-          cart.push([id,1]);
+        if (el[0] == id) {
+          el[1] = el[1] + 1;
+        } else {
+          cart.push([id, 1]);
         }
       });
-    }else{
-      cart = [[id,1]];
+    } else {
+      cart = [[id, 1]];
     }
     notyf.open({
       type: "success",
       message: "Đã thêm vào giỏ hàng",
     });
-    localStorage.setItem('cart',JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
   return (
     <>
-    {product && (
-      <>
-            <Header />
-      <section className="page-content">
-        <div className="container mt-5">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              {product && (
-                <>
-                  <li className="breadcrumb-item">
-                    <a href="/">Home</a>
-                  </li>
-                  <li className="breadcrumb-item" aria-current="page">
-                    {product?.brands?.name} - {product?.categories?.name}
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    {product?.name}
-                  </li>
-                </>
-              )}
-            </ol>
-          </nav>
-          <div className="row">
-            <div className="col-md-4">
-              <Carousel showStatus={false} showArrows={true}>
-                {gallery &&
-                  gallery.map((item, index) => (
-                    <div key={index}>
-                      <img
-                        src={process.env.REACT_APP_IMG_URL + "products/" + item}
-                        alt={`gallery-${item}`}
-                      />
-                    </div>
-                  ))}
-              </Carousel>
-            </div>
-            <div className="col-md-5 p-3">
-              <h4>{product?.name}</h4>
-
-              <h5>Giá sản phẩm : <span className="text-decoration-line-through pe-2">{Intl.NumberFormat("en-US").format(Number(product.price))}</span><span className="text-danger">{Intl.NumberFormat("en-US").format(Number(product.discount))}</span></h5>
-              <ul className="nav nav-tabs mt-3" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link active"
-                    id="home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#home"
-                    type="button"
-                    role="tab"
-                    aria-controls="home"
-                    aria-selected="true"
-                  >
-                    Chi tiết sản phẩm
-                  </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link"
-                    id="profile-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#profile"
-                    type="button"
-                    role="tab"
-                    aria-controls="profile"
-                    aria-selected="false"
-                  >
-                    Comment
-                  </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link"
-                    id="contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#contact"
-                    type="button"
-                    role="tab"
-                    aria-controls="contact"
-                    aria-selected="false"
-                  >
-                    Review sản phẩm
-                  </button>
-                </li>
-              </ul>
-              <div className="tab-content" id="myTabContent">
-                <div
-                  className="tab-pane fade show active ps-2 pt-2"
-                  id="home"
-                  role="tabpanel"
-                  aria-labelledby="home-tab"
-                >
-                  <div dangerouslySetInnerHTML={{ __html: getDescription() }} />
-                  {product?.content && product?.content.length > 200 && (
-                    <button
-                      className="btn btn-link p-0"
-                      onClick={handleShowModal}
-                    >
-                      Show more
-                    </button>
+      {product && (
+        <>
+          <Header />
+          <section className="page-content">
+            <div className="container mt-5">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  {product && (
+                    <>
+                      <li className="breadcrumb-item">
+                        <a href="/">Home</a>
+                      </li>
+                      <li className="breadcrumb-item" aria-current="page">
+                        {product?.brands?.name} - {product?.categories?.name}
+                      </li>
+                      <li className="breadcrumb-item active" aria-current="page">
+                        {product?.name}
+                      </li>
+                    </>
                   )}
-                  <div className="mb-4 mt-3 row">
-                    <div className="col-md">
-                      <button className="btn btn-primary" onClick={(e)=>addToCart(product.id)}>
-                        Thêm vào giỏ hàng
+                </ol>
+              </nav>
+              <div className="row">
+                <div className="col-md-4">
+                  <Carousel showStatus={false} showArrows={true}>
+                    {gallery &&
+                      gallery.map((item, index) => (
+                        <div key={index}>
+                          <img
+                            src={process.env.REACT_APP_IMG_URL + "products/" + item}
+                            alt={`gallery-${item}`}
+                          />
+                        </div>
+                      ))}
+                  </Carousel>
+                </div>
+                <div className="col-md-5 p-3">
+                  <h4>{product?.name}</h4>
+
+                  <h5>Giá sản phẩm : <span className="text-decoration-line-through pe-2">{Intl.NumberFormat("en-US").format(Number(product.price))}</span><span className="text-danger">{Intl.NumberFormat("en-US").format(Number(product.discount))}</span></h5>
+                  <ul className="nav nav-tabs mt-3" id="myTab" role="tablist">
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link active"
+                        id="home-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#home"
+                        type="button"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                      >
+                        Chi tiết sản phẩm
                       </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        id="profile-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#profile"
+                        type="button"
+                        role="tab"
+                        aria-controls="profile"
+                        aria-selected="false"
+                      >
+                        Comment
+                      </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        id="contact-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#contact"
+                        type="button"
+                        role="tab"
+                        aria-controls="contact"
+                        aria-selected="false"
+                      >
+                        Review sản phẩm
+                      </button>
+                    </li>
+                  </ul>
+                  <div className="tab-content" id="myTabContent">
+                    <div
+                      className="tab-pane fade show active ps-2 pt-2"
+                      id="home"
+                      role="tabpanel"
+                      aria-labelledby="home-tab"
+                    >
+                      <div dangerouslySetInnerHTML={{ __html: getDescription() }} />
+                      {product?.content && product?.content.length > 200 && (
+                        <button
+                          className="btn btn-link p-0"
+                          onClick={handleShowModal}
+                        >
+                          Show more
+                        </button>
+                      )}
+                      <div className="mb-4 mt-3 row">
+                        <div className="col-md">
+                          {!localStorage.getItem('token') && (
+                            <button className="btn btn-primary" onClick={(e) => addToCart(product.id)}>
+                              Thêm vào giỏ hàng
+                            </button>
+                          )}
+                          {localStorage.getItem('token') && (
+                            <button className="btn btn-primary" onClick={(e) => addToCart1(product.id)}>
+                            Thêm vào giỏ hàng
+                          </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="tab-pane fade"
+                      id="profile"
+                      role="tabpanel"
+                      aria-labelledby="profile-tab"
+                    >
+                      ...
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="contact"
+                      role="tabpanel"
+                      aria-labelledby="contact-tab"
+                    >
+                      ...
                     </div>
                   </div>
                 </div>
-
-                <div
-                  className="tab-pane fade"
-                  id="profile"
-                  role="tabpanel"
-                  aria-labelledby="profile-tab"
-                >
-                  ...
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="contact"
-                  role="tabpanel"
-                  aria-labelledby="contact-tab"
-                >
-                  ...
+              </div>
+              <div className="row mt-3">
+                <div className="col-md-9 text-center">
+                  <Swiper
+                    slidesPerView={1}
+                    spaceBetween={10}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                      },
+                      1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 50,
+                      },
+                    }}
+                    loop={true}
+                    className="mySwiper"
+                  >
+                    {links.length > 0 && links.map((product, index) => (
+                      <SwiperSlide key={index}>
+                        <Product
+                          name={product.name}
+                          image={product.image}
+                          price={product.price}
+                          slug={product.slug}
+                          discount={product.discount}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col-md-9 text-center">
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={10}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 1,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 50,
-                },
-              }}
-              loop={true}
-              className="mySwiper"
-            >
-              {links.length>0 && links.map((product,index)=>(
-                <SwiperSlide key={index}>
-                    <Product
-                    name={product.name}
-                    image={product.image}
-                    price={product.price}
-                    slug={product.slug}
-                    discount={product.discount}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <Modal show={showModal}   size="lg" onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Chi tiết sản phẩm</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div
-          className="detail"
-            style={{ fontFamily: "Times New Roman" }}
-            dangerouslySetInnerHTML={{ __html: product?.content }}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="btn btn-sm btn-secondary"
-            onClick={handleCloseModal}
-          >
-            Đóng
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal show={showModal} size="lg" onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Chi tiết sản phẩm</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div
+                className="detail"
+                style={{ fontFamily: "Times New Roman" }}
+                dangerouslySetInnerHTML={{ __html: product?.content }}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                className="btn btn-sm btn-secondary"
+                onClick={handleCloseModal}
+              >
+                Đóng
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
-      <Footer />
-      </>
-    )}
+          <Footer />
+        </>
+      )}
 
     </>
   );
