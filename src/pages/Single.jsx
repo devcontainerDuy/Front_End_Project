@@ -306,7 +306,7 @@ function Single() {
                           className="btn btn-link p-0"
                           onClick={handleShowModal}
                         >
-                          Show more
+                          Xem thêm
                         </button>
                       )}
                       <div className="mb-4 mt-3 row">
