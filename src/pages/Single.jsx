@@ -111,14 +111,17 @@ function Single() {
           cart.push([id, 1]);
         }
       });
+    localStorage.setItem('cart', JSON.stringify(cart));
+
     } else {
       cart = [[id, 1]];
+    localStorage.setItem('cart', JSON.stringify(cart));
+      
     }
     notyf.open({
       type: "success",
       message: "Đã thêm vào giỏ hàng",
     });
-    localStorage.setItem('cart', JSON.stringify(cart));
   }
   return (
     <>
