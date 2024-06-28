@@ -80,15 +80,48 @@ function Cart() {
       });
   };
 
-  const submitBook = () => {};
+  const submitBook = () => {
+    if (!fullname || !email || !phone || !address) {
+      notyf.error("Please fill in all the fields.");
+      return;
+    }
+
+    const orderDetails = {
+      name: fullname,
+      email: email,
+      phone: phone,
+      address: address,
+      cart: JSON.parse(localStorage.getItem('cart')),
+    };
+
+    axios
+      .post(process.env.REACT_APP_API_URL + "bills", orderDetails)
+      .then((response) => {
+        if (response.data.check==true) {
+          notyf.success("Đặt hàng thành công!");
+          localStorage.removeItem("cart");
+          setCart([]);
+          setFullname("");
+          setEmail("");
+          setPhone("");
+          setAddress("");
+          setTotal(0);
+        } else {
+          notyf.error("Fail đặt hàng.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting order:", error);
+      });
+  };
 
   const deleteItem = (id) => {
     var cart = JSON.parse(localStorage.getItem("cart"));
-    var arr=[];
+    var arr = [];
     cart.forEach((el) => {
-        if(el[0]!=id){
-            arr.push(el);
-        }
+      if (el[0] != id) {
+        arr.push(el);
+      }
     });
     localStorage.setItem("cart", JSON.stringify(arr));
     loadCart();
@@ -120,79 +153,90 @@ function Cart() {
                   className="card-body"
                   style={{ fontFamily: "Times New Roman" }}
                 >
-                 {window.innerWidth > 800 && (
-  <>
-    {carts && carts.length > 0 ? (
-      <div className="table-responsive">
-        <table className="table table-light">
-          <thead>
-            <tr>
-              <th style={{ width: "20%" }}>#</th>
-              <th style={{ width: "65%" }}>Sản phẩm</th>
-              <th scope="col">Thành tiền</th>
-            </tr>
-          </thead>
-          <tbody>
-            {carts.map((item, index) => (
-              <tr key={index}>
-                <td scope="row">
-                  <a href={`/${item.slug}`}>
-                    <img
-                      src={`${process.env.REACT_APP_IMG_URL}products/${item.image}`}
-                      width={150}
-                      alt=""
-                    />
-                  </a>
-                </td>
-                <td>
-                  <h5 className="fw-bold mb-0">
-                    <a style={{ textDecoration: 'none' }} href={`/${item.slug}`}>
-                      {item.name ? item.name : "Item"}
-                    </a>
-                  </h5>
-                  <div className="product-price d-flex align-items-center gap-2 mt-3">
-                    <div className="h6 fw-bold">
-                      <span className="text-decoration-line-through pe-2">
-                        {Intl.NumberFormat("en-US").format(Number(item.price))}
-                      </span>
-                      <span className="text-danger">
-                        {Intl.NumberFormat("en-US").format(Number(item.discount))}
-                      </span>
-                      <br />
-                      <label htmlFor="" className="mt-2">
-                        Số lượng
-                      </label>
-                      <div className="input-group mb-3">
-                        <input
-                          type="number"
-                          className="form-control mt-2"
-                          value={item.quantity}
-                          onChange={(e) => updateQuantity(item.id, e)}
-                        />
-                        <button
-                          className="btn btn-outline-danger mt-2"
-                          type="button"
-                          onClick={() => deleteItem(item.id)}
-                        >
-                          Xoá
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  {Intl.NumberFormat("en-US").format(Number(item.total))}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ) : (
-      <h4>Giỏ hàng rỗng</h4>
-    )}
-  </>
-)}
+                  {window.innerWidth > 800 && (
+                    <>
+                      {carts && carts.length > 0 ? (
+                        <div className="table-responsive">
+                          <table className="table table-light">
+                            <thead>
+                              <tr>
+                                <th style={{ width: "20%" }}>#</th>
+                                <th style={{ width: "65%" }}>Sản phẩm</th>
+                                <th scope="col">Thành tiền</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {carts.map((item, index) => (
+                                <tr key={index}>
+                                  <td scope="row">
+                                    <a href={`/${item.slug}`}>
+                                      <img
+                                        src={`${process.env.REACT_APP_IMG_URL}products/${item.image}`}
+                                        width={150}
+                                        alt=""
+                                      />
+                                    </a>
+                                  </td>
+                                  <td>
+                                    <h5 className="fw-bold mb-0">
+                                      <a
+                                        style={{ textDecoration: "none" }}
+                                        href={`/${item.slug}`}
+                                      >
+                                        {item.name ? item.name : "Item"}
+                                      </a>
+                                    </h5>
+                                    <div className="product-price d-flex align-items-center gap-2 mt-3">
+                                      <div className="h6 fw-bold">
+                                        <span className="text-decoration-line-through pe-2">
+                                          {Intl.NumberFormat("en-US").format(
+                                            Number(item.price)
+                                          )}
+                                        </span>
+                                        <span className="text-danger">
+                                          {Intl.NumberFormat("en-US").format(
+                                            Number(item.discount)
+                                          )}
+                                        </span>
+                                        <br />
+                                        <label htmlFor="" className="mt-2">
+                                          Số lượng
+                                        </label>
+                                        <div className="input-group mb-3">
+                                          <input
+                                            type="number"
+                                            className="form-control mt-2"
+                                            value={item.quantity}
+                                            onChange={(e) =>
+                                              updateQuantity(item.id, e)
+                                            }
+                                          />
+                                          <button
+                                            className="btn btn-outline-danger mt-2"
+                                            type="button"
+                                            onClick={() => deleteItem(item.id)}
+                                          >
+                                            Xoá
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    {Intl.NumberFormat("en-US").format(
+                                      Number(item.total)
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      ) : (
+                        <h4>Giỏ hàng rỗng</h4>
+                      )}
+                    </>
+                  )}
 
                   {window.innerWidth <= 768 && (
                     <>
@@ -263,12 +307,11 @@ function Cart() {
                         ))
                       ) : (
                         <div className="card p-3">
-                            <h4>Giỏ hàng rỗng</h4>
+                          <h4>Giỏ hàng rỗng</h4>
                         </div>
                       )}
                     </>
                   )}
-                  
                 </div>
               </div>
             </div>

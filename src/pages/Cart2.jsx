@@ -93,7 +93,32 @@ function Cart2() {
   };
 
   const submitBook = () => {
-    // Implement the submit book logic here
+    if (!fullname || !email || !phone || !address) {
+      notyf.error("Please fill in all the fields.");
+      return;
+    }else{
+      axios
+      .post(process.env.REACT_APP_API_URL + "bills/login",{
+        name:fullname,
+        email:email,
+        phone:phone,
+        address:address,
+        id_customer:Number(localStorage.getItem('id'))
+      })
+      .then((response) => {
+        if (response.data.check==true) {
+          notyf.success("Đặt hàng thành công!");
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
+        } else {
+          notyf.error("Fail đặt hàng.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting order:", error);
+      });
+    }
   };
 
   const deleteItem = (id) => {
