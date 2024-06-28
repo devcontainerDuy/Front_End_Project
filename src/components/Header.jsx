@@ -144,7 +144,7 @@ function Header() {
                     </li>
                     {collections && collections.map((item,index)=>(
                          <li>
-                         <a className="dropdown-item" href="/san-pham">
+                         <a className="dropdown-item" href={"/categories/"+item.slug}>
                           {item.name}
                          </a>
                        </li>
@@ -165,7 +165,7 @@ function Header() {
                   <ul className="dropdown-menu">
                     {brands && brands.map((item,index)=>(
                          <li>
-                         <a className="dropdown-item" href="/san-pham">
+                         <a className="dropdown-item" href={"/brands/"+item.slug}>
                           {item.name}
                          </a>
                        </li>

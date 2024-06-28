@@ -10,6 +10,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart2 from './pages/Cart2';
 import Products from './pages/Products';
+import Categories from './pages/Categories';
+import Brands from './pages/Brands';
 function App() {
   return (
     < >
@@ -17,6 +19,9 @@ function App() {
       <Routes>
         <Route path='/'  element={<Home/>}/>
         <Route path='/san-pham'  element={<Products/>}/>
+        <Route path='/categories/:id'  element={<Categories/>}/>
+        <Route path='/brands/:id'  element={<Brands/>}/>
+
         <Route path='/:id'  element={<Single/>}/>
         {localStorage.getItem('id') && <>
           <Route path='/gio-hang'  element={<Cart2/>}/>
