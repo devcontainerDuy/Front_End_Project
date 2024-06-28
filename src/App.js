@@ -9,12 +9,14 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart2 from './pages/Cart2';
+import Products from './pages/Products';
 function App() {
   return (
     < >
     <BrowserRouter>
       <Routes>
         <Route path='/'  element={<Home/>}/>
+        <Route path='/san-pham'  element={<Products/>}/>
         <Route path='/:id'  element={<Single/>}/>
         {localStorage.getItem('id') && <>
           <Route path='/gio-hang'  element={<Cart2/>}/>
