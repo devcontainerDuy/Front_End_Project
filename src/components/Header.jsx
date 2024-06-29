@@ -99,7 +99,7 @@ function Header() {
             <div className="offcanvas-header">
               <div className="offcanvas-logo">
                 <img
-                  src="assets/images/logo.webp"
+                  src="/assets/images/logo.webp"
                   className="logo-img"
                   alt=""
                 />
