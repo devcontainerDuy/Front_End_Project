@@ -17,20 +17,27 @@ function Products() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
 
-  const setProductFilter = ()=>{
+  const setProductFilter = () => {
     if (min != 0 && max == 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) => Number(product.price) >= min
+      );
+      setFilterProducts(sortedProducts);
     } else if (min == 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) => Number(product.price) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else if (min != 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min && Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) =>
+          Number(product.price) >= min && Number(product.price) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else {
-        setFilterProducts(products)
+      setFilterProducts(products);
     }
-  }
+  };
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "products?page=" + page)
@@ -85,7 +92,7 @@ function Products() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá thấp nhất"
-                              onChange={(e)=>setMin(e.target.value)}
+                              onChange={(e) => setMin(e.target.value)}
                             />
                             <span className="input-group-text bg-section-1 border-0">
                               -
@@ -94,15 +101,14 @@ function Products() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá cao nhất"
-                              onChange={(e)=>setMax(e.target.value)}
+                              onChange={(e) => setMax(e.target.value)}
                             />
                             <button
                               type="button"
                               className="btn btn-outline-dark rounded-0 ms-2"
-                                onClick={(e)=>setProductFilter()}
+                              onClick={(e) => setProductFilter()}
                             >
                               <i className="bi bi-chevron-right" />
-                            
                             </button>
                           </div>
                         </div>
@@ -283,15 +289,15 @@ function Products() {
                           )}
                         </>
                       )}
-                      <li className="page-item">
-                        <a
-                          className="page-link"
-                          onClick={(e) => setPage(page + 1)}
-                          href="javascript:;"
-                        >
-                          Next
-                        </a>
-                      </li>
+                        <li className={page != lastPage?"page-item":"disabled page-item"}>
+                          <a
+                            className="page-link"
+                            onClick={(e) => setPage(page + 1)}
+                            href="javascript:;"
+                          >
+                            Next
+                          </a>
+                        </li>
                     </ul>
                   </nav>
                 </div>
