@@ -12,6 +12,7 @@ import Cart2 from './pages/Cart2';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
 import Brands from './pages/Brands';
+import Search from './pages/Search';
 function App() {
   return (
     < >
@@ -31,6 +32,7 @@ function App() {
         </>}
         <Route path='/dang-ky' element={<Register/>}/>
         <Route path='/dang-nhap' element={<Login/>}/>
+        <Route path='/tim-kiem/:id' element={<Search/>}/>
         <Route path='/not-found'  element={<NotFound/>}/>
         <Route path='*'  element={<NotFound/>}/>
     

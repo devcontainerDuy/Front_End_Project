@@ -11,6 +11,7 @@ import Modal from "react-bootstrap/Modal";
 function Header() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+  const [search,setSearch]= useState('');
   const [show, setShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
   const notyf = new Notyf({
@@ -52,6 +53,18 @@ function Header() {
       },
     ],
   });
+  const changeSearch=(item)=>{
+    var result = generateSlug(item);
+    setSearch(result);
+  }
+  function generateSlug(text) {
+    return text
+      .toString()                       
+      .toLowerCase()                    
+      .trim()                           
+      .replace(/\s+/g, '-')             
+      .replace(/\-\-+/g, '-');
+  }
   const logout = () => {
     localStorage.clear();
     notyf.open({
@@ -92,12 +105,16 @@ function Header() {
                 className="form-control"
                 placeholder="Nhập tên sản phẩm"
                 aria-label="Recipient's username"
+                onChange={(e)=>changeSearch(e.target.value)}
                 aria-describedby="button-addon2"
               />
               <button
                 className="btn btn-outline-success"
                 type="button"
                 id="button-addon2"
+                onClick={(e)=>{
+                  window.location.replace('/tim-kiem/'+search)
+                }}
               >
                 Tìm kiếm
               </button>
