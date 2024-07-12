@@ -32,7 +32,7 @@ function App() {
           <Route path='/gio-hang'  element={<Cart/>}/>
         </>}
         {localStorage.getItem('token')&& <>
-          <Route path='/hoa-don'  element={<Bills/>}/>
+          <Route path='/tai-khoan'  element={<Bills/>}/>
         </>}
         <Route path='/dang-ky' element={<Register/>}/>
         <Route path='/dang-nhap' element={<Login/>}/>

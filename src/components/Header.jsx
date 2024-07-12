@@ -242,13 +242,8 @@ function Header() {
                     {localStorage.getItem("token") && (
                       <>
                         <li>
-                          <a className="dropdown-item" href="/hoa-don">
-                            Hóa đơn
-                          </a>
-                        </li>
-                        <li>
                           <a className="dropdown-item" href="/tai-khoan">
-                            Tài khoản
+                           Tài khoản
                           </a>
                         </li>
                         <li>
