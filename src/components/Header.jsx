@@ -256,7 +256,9 @@ function Header() {
                         </li>
                       </>
                     )}
-                    <li>
+                    {!localStorage.getItem('token') && (
+                      <>
+                       <li>
                       <a className="dropdown-item" href="/dang-nhap">
                         Đăng nhập
                       </a>
@@ -266,6 +268,9 @@ function Header() {
                         Đăng ký
                       </a>
                     </li>
+                      </>
+                    )}
+                   
                     {localStorage.getItem("token") && (
                       <>
                         <li>
@@ -305,7 +310,7 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/dang-nhap">
+              <a className="nav-link" href={localStorage.getItem('token')?"/hoa-don": "/dang-nhap"}>
                 <i className="bi bi-person-circle" />
               </a>
             </li>

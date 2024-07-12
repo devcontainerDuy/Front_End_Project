@@ -13,6 +13,7 @@ import Products from './pages/Products';
 import Categories from './pages/Categories';
 import Brands from './pages/Brands';
 import Search from './pages/Search';
+import Bills from './pages/Personal';
 function App() {
   return (
     < >
@@ -29,6 +30,9 @@ function App() {
         </>}
         {!localStorage.getItem('id') && <>
           <Route path='/gio-hang'  element={<Cart/>}/>
+        </>}
+        {localStorage.getItem('token')&& <>
+          <Route path='/hoa-don'  element={<Bills/>}/>
         </>}
         <Route path='/dang-ky' element={<Register/>}/>
         <Route path='/dang-nhap' element={<Login/>}/>
