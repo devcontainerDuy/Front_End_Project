@@ -19,11 +19,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/'  element={<Home/>}/>
-        <Route path='/san-pham'  element={<Products/>}/>
-        <Route path='/categories/:id'  element={<Categories/>}/>
-        <Route path='/brands/:id'  element={<Brands/>}/>
-
         <Route path='/:id'  element={<Single/>}/>
+        <Route path='/san-pham'  element={<Products/>}/>
+        <Route path='/san-pham/:id'  element={<Categories/>}/>
+        <Route path='/thuong-hieu/:id'  element={<Brands/>}/>
+
         {localStorage.getItem('id') && <>
           <Route path='/gio-hang'  element={<Cart2/>}/>
         </>}

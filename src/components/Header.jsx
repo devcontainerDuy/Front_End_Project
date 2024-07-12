@@ -192,7 +192,7 @@ function Header() {
                         <li>
                           <a
                             className="dropdown-item"
-                            href={"/categories/" + item.slug}
+                            href={"/san-pham/" + item.slug}
                           >
                             {item.name}
                           </a>
@@ -217,7 +217,7 @@ function Header() {
                         <li>
                           <a
                             className="dropdown-item"
-                            href={"/brands/" + item.slug}
+                            href={"/thuong-hieu/" + item.slug}
                           >
                             {item.name}
                           </a>

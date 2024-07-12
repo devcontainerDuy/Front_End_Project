@@ -205,7 +205,10 @@ function Single() {
                         <a href="/">Home</a>
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
-                        {product?.brands?.name} - {product?.categories?.name}
+                        {product && (<>
+                          <a href={"/thuong-hieu/"+product?.brands?.slug}> {product?.brands?.name}</a> - <a href={"/san-pham/"+product?.categories?.slug}> {product?.categories?.name}</a>
+                        </>
+                        )}
                       </li>
                       <li
                         className="breadcrumb-item active"
@@ -236,7 +239,7 @@ function Single() {
                 <div className="col-md-5 p-3">
                   <h4>{product?.name}</h4>
 
-                  <h5>
+                  <h5 style={{fontSize:'15px', fontFamily:'Time News Romance'}} className="pt-3">
                     Giá sản phẩm :{" "}
                     <span className="text-decoration-line-through pe-2">
                       {Intl.NumberFormat("en-US").format(Number(product.price))}
@@ -262,7 +265,7 @@ function Single() {
                         Chi tiết sản phẩm
                       </button>
                     </li>
-                    <li className="nav-item" role="presentation">
+                    {/* <li className="nav-item" role="presentation">
                       <button
                         className="nav-link"
                         id="profile-tab"
@@ -289,7 +292,7 @@ function Single() {
                       >
                         Review sản phẩm
                       </button>
-                    </li>
+                    </li> */}
                   </ul>
                   <div className="tab-content" id="myTabContent">
                     <div
