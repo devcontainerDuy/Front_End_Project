@@ -157,7 +157,7 @@ function Cart() {
             </div>
             <div className="ms-auto">
               <a href="/san-pham" className="btn btn-light btn-ecomm">
-                Continue Shopping
+                Tiếp tục mua sắm
               </a>
             </div>
           </div>
@@ -343,55 +343,37 @@ function Cart() {
                   <hr />
                   {carts.length > 0 && (
                     <>
-                      <div className="hstack align-items-center justify-content-between">
-                        <p className="mb-0">Tên</p>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Tên người mua"
-                          onChange={(e) => setFullname(e.target.value)}
-                        />
-                      </div>
-                      <hr />
-                      <div className="hstack align-items-center justify-content-between">
-                        <p className="mb-0">Email</p>
-                        <input
-                          type="text"
-                          placeholder="Email"
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="form-control"
-                        />
-                      </div>
-                      <hr />
-                      <div className="hstack align-items-center justify-content-between">
-                        <p className="mb-0">SDT</p>
-                        <br />
-                        <input
-                          type="text"
-                          placeholder="Số điện thoại"
-                          onChange={(e) => setPhone(e.target.value)}
-                          className="form-control"
-                        />
-                      </div>
-                      <hr />
-                      <div className="hstack align-items-center justify-content-between">
-                        <p className="mb-0">Địa chỉ</p>
-                        <input
-                          type="text"
-                          placeholder="Địa chỉ nhận hàng"
-                          onChange={(e) => setAddress(e.target.value)}
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="d-grid mt-4">
-                        <button
-                          onClick={(e) => submitBook()}
-                          type="button"
-                          className="btn btn-dark btn-ecomm py-3 px-5"
-                        >
-                          Place Order
-                        </button>
-                      </div>
+                      									<div className="container mt-4">
+												<div className="mb-3">
+													<label htmlFor="formGroupFullname" className="form-label fw-bold">
+														Tên người mua
+													</label>
+													<input type="text" className="form-control" id="formGroupFullname" placeholder="Nhập tên của người mua..." onChange={(e) => setFullname(e.target.value)} />
+												</div>
+												<div className="mb-3">
+													<label htmlFor="formGroupEmail" className="form-label fw-bold">
+														Địa chỉ email
+													</label>
+													<input type="email" className="form-control" id="formGroupEmail" placeholder="Nhập vào địa chỉ email của bạn..." onChange={(e) => setEmail(e.target.value)} />
+												</div>
+												<div className="mb-3">
+													<label htmlFor="formGroupPhone" className="form-label fw-bold">
+														Số điện thoại
+													</label>
+													<input type="tel" className="form-control" id="formGroupPhone" placeholder="Nhập số điện thoại của bạn..." onChange={(e) => setPhone(e.target.value)} />
+												</div>
+												<div className="mb-3">
+													<label htmlFor="formGroupAddress" className="form-label fw-bold">
+														Địa chỉ nhận hàng
+													</label>
+													<input type="text" className="form-control" id="formGroupAddress" placeholder="Nhập vào địa chỉ nhận hàng của bạn..." onChange={(e) => setAddress(e.target.value)} />
+												</div>
+												<div className="d-grid mt-4">
+													<button onClick={submitBook} type="button" className="btn btn-dark btn-ecomm py-3 px-5">
+														Thanh toán hóa đơn
+													</button>
+												</div>
+											</div>
                     </>
                   )}
                 </div>
