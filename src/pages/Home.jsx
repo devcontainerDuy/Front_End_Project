@@ -8,9 +8,9 @@ import Footer from "../components/Footer";
 function Home() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(8);
   useEffect(() => {
-    if(limit==4){
+    if(limit==8){
       fetch(process.env.REACT_APP_API_URL + "products" )
       .then((res) => res.json())
       .then((res) => {
