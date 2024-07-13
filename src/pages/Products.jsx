@@ -54,7 +54,7 @@ function Products() {
   return (
     <>
       <Header />
-      <div className="page-content">
+      <div className="page-content mb-2">
         <div className="row mt-3 text-center w-100">
           <div className="py-4 border-bottom">
             <div className="container d-flex justify-content-between align-items-center">
