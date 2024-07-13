@@ -119,7 +119,7 @@ function Register() {
             </ol>
           </nav>
           <div class="card rounded text-white border-0 ">
-            <div class="card-body bg-success p-3 text-dark bg-opacity-25 rounded">
+            <div class="card-body shadow p-3 text-dark bg-opacity-25 rounded">
               <div className="row">
                 <div className="col-md-6">
                   <img
