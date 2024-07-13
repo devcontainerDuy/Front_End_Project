@@ -21,18 +21,18 @@ function Products() {
   const setProductFilter = () => {
     if (min != 0 && max == 0) {
       var sortedProducts = products.filter(
-        (product) => Number(product.price) >= min
+        (product) => Number(product.discount) >= min
       );
       setFilterProducts(sortedProducts);
     } else if (min == 0 && max != 0) {
       var sortedProducts = products.filter(
-        (product) => Number(product.price) <= max
+        (product) => Number(product.discount) <= max
       );
       setFilterProducts(sortedProducts);
     } else if (min != 0 && max != 0) {
       var sortedProducts = products.filter(
         (product) =>
-          Number(product.price) >= min && Number(product.price) <= max
+          Number(product.discount) >= min && Number(product.discount) <= max
       );
       setFilterProducts(sortedProducts);
     } else {

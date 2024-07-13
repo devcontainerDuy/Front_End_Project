@@ -18,20 +18,28 @@ function Brands() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
 
-  const setProductFilter = ()=>{
+  const setProductFilter = () => {
     if (min != 0 && max == 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.products.filter(
+        (product) => Number(product.discount) >= min
+      );
+      setFilterProducts(sortedProducts);
     } else if (min == 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.products.filter(
+        (product) => Number(product.discount) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else if (min != 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min && Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.products.filter(
+        (product) =>
+          Number(product.discount) >= min && Number(product.discount) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else {
-        setFilterProducts(products)
+      setFilterProducts(products.products);
     }
-  }
+  };
+  
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "brands/"+id )
