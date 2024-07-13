@@ -9,14 +9,30 @@ function Home() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(8);
+  const [banners, setBanners] = useState([]);
+  const [collections, setCollections] = useState([]);
+  const [services, setServices] = useState([]);
+
   useEffect(() => {
-    if(limit==8){
-      fetch(process.env.REACT_APP_API_URL + "products" )
+    fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
       .then((res) => {
-        setProducts(res.data);
-        setTotal(res.total);
+        setBanners(res);
       });
+    fetch(process.env.REACT_APP_API_URL + "highlight-service-collections")
+      .then((res) => res.json())
+      .then((res) => {
+        setCollections(res);
+      });
+  }, []);
+  useEffect(() => {
+    if (limit == 8) {
+      fetch(process.env.REACT_APP_API_URL + "products")
+        .then((res) => res.json())
+        .then((res) => {
+          setProducts(res.data);
+          setTotal(res.total);
+        });
     }
     fetch(process.env.REACT_APP_API_URL + "products?limit=" + limit)
       .then((res) => res.json())
@@ -63,9 +79,31 @@ function Home() {
               )}
             </div>
           </div>
+          <div className="row mt-2">
+            <div className="col-md mb-2">
+              <img
+                className="w-100"
+                src={
+                  process.env.REACT_APP_IMG_URL +
+                  "slides/" +
+                  banners[0]?.desktop
+                }
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="row mb-2 mt-2">
+            <h3 className="text-center">Dịch vụ </h3>
+            <ul className="list-inline text-center">
+              {collections &&
+                collections.map((collection, index) => (
+                  <li style={{cursor:'pointer'}} className="list-inline-item ps-4">{collection.name}</li>
+                ))}
+            </ul>
+          </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
