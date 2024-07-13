@@ -7,6 +7,7 @@ import { getBrands } from "../redux/BrandSlice";
 import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
+import Product from "../components/Product";
 function Categories() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -113,101 +114,31 @@ function Categories() {
 
               <div className="shop-right-sidebar">
                 <div className="product-grid mt-4">
-                  <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    {filterProducts.length > 0 &&
-                      filterProducts.slice(0, 3).map((item, index) => (
-                        <div className="col" key={index}>
-                          <a
-                            style={{ textDecoration: "none" }}
-                            href={"/" + item.slug}
-                          >
-                            <div className="card border shadow-none">
-                              <div className="position-relative overflow-hidden">
-                                <img
-                                  src={
-                                    process.env.REACT_APP_IMG_URL +
-                                    "products/" +
-                                    item.gallery[0].image
-                                  }
-                                  className="card-img-top"
-                                  alt="..."
-                                />
-                              </div>
-                              <div className="card-body border-top">
-                                <h5 className="mb-0 fw-bold product-short-title">
-                                  {item.name}
-                                </h5>
-                                <div className="product-price d-flex align-items-center gap-2 mt-2">
-                                  <div className="h6 fw-bold">
-                                    {" "}
-                                    {Intl.NumberFormat("en-US").format(
-                                      Number(item.price)
-                                    )}
-                                  </div>
-                                  <div className="h6 fw-light text-muted text-decoration-line-through">
-                                    {Intl.NumberFormat("en-US").format(
-                                      Number(item.discount)
-                                    )}
-                                  </div>
-                                  <div className="h6 fw-bold text-danger">
-                                    (30% off)
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      ))}
-                  </div>
-                  {/* Second row */}
-                  <div className="row g-4 mt-4 justify-content-center">
-                    {filterProducts.length > 3 && (
-                      <div className="col-md-6 col-lg-4">
-                        <a
-                          style={{ textDecoration: "none" }}
-                          href={"/" + filterProducts[3].slug}
-                        >
-                          <div className="card border shadow-none">
-                            <div className="position-relative overflow-hidden">
-                              <div className="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0"></div>
-
-                              <img
-                                src={
-                                  process.env.REACT_APP_IMG_URL +
-                                  "products/" +
-                                  filterProducts[3].gallery[0].image
-                                }
-                                className="card-img-top"
-                                alt="..."
-                              />
-                            </div>
-                            <div className="card-body border-top">
-                              <h5 className="mb-0 fw-bold product-short-title">
-                                {filterProducts[3].name}
-                              </h5>
-                              <div className="product-price d-flex align-items-center gap-2 mt-2">
-                                <div className="h6 fw-bold">
-                                  {" "}
-                                  {Intl.NumberFormat("en-US").format(
-                                    Number(filterProducts[3].discount)
-                                  )}
-                                </div>
-                                <div className="h6 fw-light text-muted text-decoration-line-through">
-                                  {Intl.NumberFormat("en-US").format(
-                                    Number(filterProducts[3].price)
-                                  )}
-                                </div>
-                                <div className="h6 fw-bold text-danger">
-                                  (30% off)
-                                </div>
-                              </div>
-                            </div>
+                <div className="row mb-3">
+                    {filterProducts.length > 0
+                      ? filterProducts.map((product, index) => (
+                          <div className="col-md-3 mb-3" key={index}>
+                            <Product  
+                              name={product.name}
+                              image={product.gallery[0].image}
+                              price={product.price}
+                              slug={product.slug}
+                              discount={product.discount}
+                            />
                           </div>
-                        </a>
-                      </div>
-                    )}
+                        ))
+                      : products.map((product, index) => (
+                          <div className="col-md-3 mb-3" key={index}>
+                            <Product
+                              name={product.name}
+                              image={product.gallery[0]}
+                              price={product.price}
+                              slug={product.slug}
+                              discount={product.discount}
+                            />
+                          </div>
+                        ))}
                   </div>
-                  {/*end row*/}
                 </div>
 
                 <hr className="my-4" />
