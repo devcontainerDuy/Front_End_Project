@@ -121,22 +121,35 @@ function Products() {
 
               <div className="shop-right-sidebar">
                 <div className="product-grid mt-4">
-                 <div className="row mb-3">
-                 {products.map((product,index)=>(
-                      <div className="col-md-3 mb-3">
-                         <Product
-                                      name={product.name}
-                                      image={product.image}
-                                      price={product.price}
-                                      slug={product.slug}
-                                      discount={product.discount}
-                                    />
-                      </div>
-                  ))}
-                 </div>
+                  <div className="row mb-3">
+                    {filterProducts.length > 0
+                      ? filterProducts.map((product, index) => (
+                          <div className="col-md-3 mb-3" key={index}>
+                            <Product
+                              name={product.name}
+                              image={product.image}
+                              price={product.price}
+                              slug={product.slug}
+                              discount={product.discount}
+                            />
+                          </div>
+                        ))
+                      : products.map((product, index) => (
+                          <div className="col-md-3 mb-3" key={index}>
+                            <Product
+                              name={product.name}
+                              image={product.image}
+                              price={product.price}
+                              slug={product.slug}
+                              discount={product.discount}
+                            />
+                          </div>
+                        ))}
+                  </div>
                 </div>
-
-                <hr className="my-4" />
+                {min==0 && max==0 && (
+                  <>
+                                  <hr className="my-4" />
                 <div className="product-pagination">
                   <nav>
                     <ul className="pagination justify-content-center">
@@ -208,18 +221,25 @@ function Products() {
                           )}
                         </>
                       )}
-                        <li className={page != lastPage?"page-item":"disabled page-item"}>
-                          <a
-                            className="page-link"
-                            onClick={(e) => setPage(page + 1)}
-                            href="javascript:;"
-                          >
-                            Next
-                          </a>
-                        </li>
+                      <li
+                        className={
+                          page != lastPage ? "page-item" : "disabled page-item"
+                        }
+                      >
+                        <a
+                          className="page-link"
+                          onClick={(e) => setPage(page + 1)}
+                          href="javascript:;"
+                        >
+                          Next
+                        </a>
+                      </li>
                     </ul>
                   </nav>
                 </div>
+                  </>
+                )}
+
               </div>
             </div>
           </div>
