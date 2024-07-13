@@ -76,7 +76,16 @@ function Cart() {
         cart: JSON.parse(localStorage.getItem("cart")),
       })
       .then((res) => {
+        if(res.data.length>0){
+          var sum =0
+          res.data.forEach(el => {
+              sum+=el.discount;
+          });
+        }else{
+          var sum =0;
+        }
         setCart(res.data);
+        setTotal(sum)
       });
   };
 
@@ -123,8 +132,14 @@ function Cart() {
         arr.push(el);
       }
     });
-    localStorage.setItem("cart", JSON.stringify(arr));
-    loadCart();
+    if(arr.length>0){
+      localStorage.setItem("cart", JSON.stringify(arr));
+      loadCart();
+    }else{
+      setCart([]);  
+      setTotal(0);
+      localStorage.removeItem('cart');
+    }
   };
   useEffect(() => {
     loadCart();
@@ -166,7 +181,7 @@ function Cart() {
                               </tr>
                             </thead>
                             <tbody>
-                              {carts.map((item, index) => (
+                              {carts &&carts.length>0 && carts.map((item, index) => (
                                 <tr key={index}>
                                   <td scope="row">
                                     <a href={`/${item.slug}`}>
