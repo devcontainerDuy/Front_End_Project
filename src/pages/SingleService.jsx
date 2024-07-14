@@ -32,6 +32,17 @@ function SingleService() {
 
                     <div class="card shadow">
                         <div class="card-body">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <h3 className='text-danger'>{service.name}</h3>
+
+                                </div>
+                                <div className="col-md text-end">
+                                    <span className='text-decoration-line-through'>{Intl.NumberFormat("en-US").format(Number(service.compare_price))}</span> <span className='text-danger'> {Intl.NumberFormat("en-US").format(Number(service.price))}</span>
+                                   <br /> <button className='btn btn-primary'>Đặt lịch</button>
+                                </div>
+                            </div>
+
                             <div
                                 dangerouslySetInnerHTML={{ __html: service.content }}
                             />
