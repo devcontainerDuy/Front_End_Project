@@ -126,7 +126,7 @@ function Home() {
                 <div className="col-md-4 mb-2">
                   <div class="card">
                     <div class="card-header text-center">
-                      <img className="img-fluid" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" />
+                      <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" />
                     </div>
                     <div class="card-body">
                       <h4 class="card-title text-center">{service.name}</h4>
