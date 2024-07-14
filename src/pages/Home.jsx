@@ -13,6 +13,7 @@ function Home() {
   const [collections, setCollections] = useState([]);
   const [services, setServices] = useState([]);
   const [idCollection,setIdCollection]= useState(null);
+  const [filterServices,setFilterServices]= useState(services);
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
@@ -27,7 +28,8 @@ function Home() {
       fetch(process.env.REACT_APP_API_URL + "services/home")
       .then((res) => res.json())
       .then((res) => {
-        setServices(res);
+        setServices(res.data);
+        setFilterServices(res.data);
       });
   }, []);
   useEffect(() => {
@@ -47,6 +49,16 @@ function Home() {
     }
 
   }, [limit]);
+  useEffect(()=>{
+    if(idCollection!=null){
+      var result = services;
+      result = result.filter((item)=>item.id_collection==idCollection);
+      setFilterServices(result);
+    }else{
+      setFilterServices(services);
+    }
+
+  },[idCollection])
   const changeLimit = () => {
     if (limit == 0) {
       setLimit(8);
@@ -102,12 +114,29 @@ function Home() {
           <div className="row mb-2 mt-2">
             <h3 className="text-center">Dịch vụ </h3>
             <ul className="list-inline text-center" style={{fontSize:'20px'}}>
-            <li style={{cursor:'pointer'}} className="list-inline-item ps-4">Tát cả</li>
+            <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(null)} className="list-inline-item ps-4">Tát cả</li>
               {collections &&
                 collections.map((collection, index) => (
-                  <li style={{cursor:'pointer'}} className="list-inline-item ps-4">{collection.name}</li>
+                  <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(collection.id)} className="list-inline-item ps-4">{collection.name}</li>
                 ))}
             </ul>
+            <div className="row text-center">
+              <div className="row">
+              {filterServices.map((service,index)=>(
+                <div className="col-md-4 mb-2">
+                  <div class="card">
+                    <div class="card-header text-center">
+                      <img className="img-fluid" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" />
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title text-center">{service.name}</h4>
+                      <h4 class="card-title text-center">{Intl.NumberFormat("en-US").format(service.price)} <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
