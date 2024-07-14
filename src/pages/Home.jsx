@@ -8,11 +8,11 @@ import Footer from "../components/Footer";
 function Home() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(4);
   const [banners, setBanners] = useState([]);
   const [collections, setCollections] = useState([]);
   const [services, setServices] = useState([]);
-
+  const [idCollection,setIdCollection]= useState(null);
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
@@ -24,21 +24,28 @@ function Home() {
       .then((res) => {
         setCollections(res);
       });
+      fetch(process.env.REACT_APP_API_URL + "services/home")
+      .then((res) => res.json())
+      .then((res) => {
+        setServices(res);
+      });
   }, []);
   useEffect(() => {
-    if (limit == 8) {
+    if (limit == 4) {
       fetch(process.env.REACT_APP_API_URL + "products")
         .then((res) => res.json())
         .then((res) => {
           setProducts(res.data);
           setTotal(res.total);
         });
-    }
-    fetch(process.env.REACT_APP_API_URL + "products?limit=" + limit)
+    }else{
+      fetch(process.env.REACT_APP_API_URL + "products?limit=" + limit)
       .then((res) => res.json())
       .then((res) => {
         setProducts(res);
       });
+    }
+
   }, [limit]);
   const changeLimit = () => {
     if (limit == 0) {
@@ -94,7 +101,8 @@ function Home() {
           </div>
           <div className="row mb-2 mt-2">
             <h3 className="text-center">Dịch vụ </h3>
-            <ul className="list-inline text-center">
+            <ul className="list-inline text-center" style={{fontSize:'20px'}}>
+            <li style={{cursor:'pointer'}} className="list-inline-item ps-4">Tát cả</li>
               {collections &&
                 collections.map((collection, index) => (
                   <li style={{cursor:'pointer'}} className="list-inline-item ps-4">{collection.name}</li>

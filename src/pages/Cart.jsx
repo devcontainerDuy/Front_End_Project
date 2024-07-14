@@ -23,7 +23,7 @@ function Cart() {
     var cart = JSON.parse(localStorage.getItem("cart"));
     cart.forEach((el) => {
       if (el[0] == id) {
-        el[1] = e.target.value;
+        el[1] = Number(e.target.value);
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -79,12 +79,13 @@ function Cart() {
         if(res.data.length>0){
           var sum =0
           res.data.forEach(el => {
-              sum+=el.discount;
+              sum+=el.discount*el.quantity;
           });
         }else{
           var sum =0;
         }
         setCart(res.data);
+        console.log(sum);
         setTotal(sum)
       });
   };
