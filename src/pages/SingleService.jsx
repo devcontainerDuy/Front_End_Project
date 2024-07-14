@@ -39,7 +39,7 @@ function SingleService() {
                                 </div>
                                 <div className="col-md text-end">
                                     <span className='text-decoration-line-through'>{Intl.NumberFormat("en-US").format(Number(service.compare_price))}</span> <span className='text-danger'> {Intl.NumberFormat("en-US").format(Number(service.price))}</span>
-                                   <br /> <button className='btn btn-primary'>Đặt lịch</button>
+                                   <br />  <button className='btn btn-primary'>Đặt lịch</button>
                                 </div>
                             </div>
 
