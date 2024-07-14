@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Slider from "../components/Slider";
 import Product from "../components/Product";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -112,7 +113,7 @@ function Home() {
             </div>
           </div>
           <div className="row mb-2 mt-2">
-            <h3 className="text-center">Services</h3>
+            <h3 className="text-center">Dịch vụ</h3>
             <ul className="list-inline text-center" style={{fontSize:'20px'}}>
             <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(null)} className="list-inline-item ps-4">Tát cả</li>
               {collections &&
@@ -126,11 +127,11 @@ function Home() {
                 <div className="col-md-4 mb-2">
                   <div class="card">
                     <div class="card-header text-center">
-                      <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" />
+                     <Link to={'/dich-vu/'+service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" /></Link>
                     </div>
                     <div class="card-body">
-                      <h4 class="card-title text-center">{service.name}</h4>
-                      <h4 class="card-title text-center">{Intl.NumberFormat("en-US").format(service.price)} <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
+                    <Link style={{textDecoration:'none'}} to={'/dich-vu/'+service.slug}> <h4 class="card-title text-center">{service.name}</h4></Link>
+                      <h4 class="card-title text-center"><span className="text-danger">{Intl.NumberFormat("en-US").format(service.price)}</span> <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
                     </div>
                   </div>
                 </div>
