@@ -8,7 +8,7 @@ function SingleService() {
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL + 'services/service/' + id).then((res) => res.json())
             .then((res) => {
-                setService(res.data[0]);
+                setService(res[0]);
             })
     }, [id])
     return (
