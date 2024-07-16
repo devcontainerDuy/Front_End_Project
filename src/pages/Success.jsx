@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Icon from "../components/Icon";
+import Icon2 from "../components/Icon2";
 
 function Success() {
   return (
@@ -12,7 +12,7 @@ function Success() {
           <div className="container">
             <div className="row g-4">
               <div className="col-md-6">
-                <Icon />
+                <Icon2 />
               </div>
               <div className="col-md-6 d-flex align-items-center justify-content-center">
           <div className="text-center">
