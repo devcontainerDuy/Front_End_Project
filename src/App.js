@@ -42,6 +42,7 @@ function App() {
         <Route path='/dang-nhap' element={<Login/>}/>
         <Route path='/tim-kiem/:id' element={<Search/>}/>
         <Route path='/not-found'  element={<NotFound/>}/>
+        <Route path='/pay-success'  element={<NotFound/>}/>
         <Route path='*'  element={<NotFound/>}/>
     
       </Routes>
