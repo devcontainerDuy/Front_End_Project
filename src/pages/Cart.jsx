@@ -89,7 +89,44 @@ function Cart() {
         setTotal(sum)
       });
   };
+  const vnpaycheckout =()=>{
+        if (!fullname || !email || !phone || !address) {
+      notyf.error("Please fill in all the fields.");
+      return;
+    }
 
+    const orderDetails = {
+      name: fullname,
+      email: email,
+      phone: phone,
+      vnpay:true,
+      total:total,
+      address: address,
+      cart: JSON.parse(localStorage.getItem('cart')),
+    };
+
+    axios
+      .post(process.env.REACT_APP_API_URL + "bills", orderDetails)
+      .then((response) => {
+        if (response.data.check==true) {
+          if(response.data.url){
+            window.open(response.data.url, '_blank');
+          }
+          localStorage.removeItem("cart");
+          setCart([]);
+          setFullname("");
+          setEmail("");
+          setPhone("");
+          setAddress("");
+          setTotal(0);
+        } else {
+          notyf.error("Fail đặt hàng.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting order:", error);
+      });
+  }
   const submitBook = () => {
     if (!fullname || !email || !phone || !address) {
       notyf.error("Please fill in all the fields.");
@@ -374,6 +411,13 @@ function Cart() {
 														Thanh toán hóa đơn
 													</button>
 												</div>
+                        <div className="row mt-3 text-center">
+                          <div className="col-md-5 w-100">
+                          <button className="btn btn-primary" onClick={(e)=>vnpaycheckout()}>
+                          <i class="bi bi-menu-button-wide me-3"></i> VNPay
+                          </button>
+                          </div>
+                        </div>
 											</div>
                     </>
                   )}
