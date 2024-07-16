@@ -130,6 +130,7 @@ function Cart2() {
         name:fullname,
         email:email,
         phone:phone,
+        total:total,
         vnpay:true,
         address:address,
         id_customer:Number(localStorage.getItem('id'))
