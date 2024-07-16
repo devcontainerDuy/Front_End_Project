@@ -16,6 +16,7 @@ import Search from './pages/Search';
 import Bills from './pages/Personal';
 import Services from './pages/Services';
 import SingleService from './pages/SingleService';
+import Success from './pages/Success';
 function App() {
   return (
     < >
@@ -42,7 +43,7 @@ function App() {
         <Route path='/dang-nhap' element={<Login/>}/>
         <Route path='/tim-kiem/:id' element={<Search/>}/>
         <Route path='/not-found'  element={<NotFound/>}/>
-        <Route path='/pay-success'  element={<NotFound/>}/>
+        <Route path='/pay-success'  element={<Success/>}/>
         <Route path='*'  element={<NotFound/>}/>
     
       </Routes>

@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Icon from "../components/Icon";
 
-function NotFound() {
+function Success() {
   return (
     <>
       <Header />
@@ -30,4 +30,5 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default function Success() {
+    ;
