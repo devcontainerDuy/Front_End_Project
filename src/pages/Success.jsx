@@ -30,5 +30,4 @@ function Success() {
   );
 }
 
-export default function Success() {
-    ;
+export default Success;
