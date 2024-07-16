@@ -110,7 +110,7 @@ function Cart() {
       .then((response) => {
         if (response.data.check==true) {
           if(response.data.url){
-            window.open(response.data.url, '_blank');
+            window.open(response.data.url, "_blank", "noreferrer");
           }
           localStorage.removeItem("cart");
           setCart([]);

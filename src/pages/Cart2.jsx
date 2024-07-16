@@ -120,7 +120,37 @@ function Cart2() {
       });
     }
   };
-
+  const vnpaycheckout = () => {
+    if (!fullname || !email || !phone || !address) {
+      notyf.error("Please fill in all the fields.");
+      return;
+    }else{
+      axios
+      .post(process.env.REACT_APP_API_URL + "bills/login",{
+        name:fullname,
+        email:email,
+        phone:phone,
+        vnpay:true,
+        address:address,
+        id_customer:Number(localStorage.getItem('id'))
+      })
+      .then((response) => {
+        if (response.data.check==true) {
+          if(response.data.url){
+            window.open(response.data.url, "_blank", "noreferrer");
+          } 
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
+        } else {
+          notyf.error("Fail đặt hàng.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting order:", error);
+      });
+    }
+  };
   const deleteItem = (id) => {
     axios.delete(process.env.REACT_APP_API_URL+'carts/'+id,{
       }).then((res)=>{
@@ -346,6 +376,13 @@ function Cart2() {
 														Thanh toán hóa đơn
 													</button>
 												</div>
+                        <div className="row mt-3 text-center">
+                          <div className="col-md-5 w-100">
+                          <button className="btn btn-primary" onClick={(e)=>vnpaycheckout()}>
+                          <i class="bi bi-menu-button-wide me-3"></i> VNPay
+                          </button>
+                          </div>
+                        </div>
 											</div>
                     </>
                   )}
