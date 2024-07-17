@@ -161,13 +161,13 @@ function Header() {
               <ul className="navbar-nav justify-content-start flex-grow-1 gap-1">
                 <li className="nav-item">
                   <a className="nav-link" href="/">
-                    Home
+                    Trang chủ 
                   </a>
                 </li>
 
                 <li className="nav-item">
                   <a className="nav-link" href="/about">
-                    About
+                    Liên hệ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
@@ -227,7 +227,7 @@ function Header() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/lien-he">
-                    Contact
+                    Liên hệ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
