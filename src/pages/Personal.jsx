@@ -430,7 +430,7 @@ function Personal() {
                                 <tr class="">
                                   <td>{++index}</td>
                                   <td scope="row">
-                                    {formatDate(item.created_at)}
+                                    {formatDate(item.updated_at)}
                                   </td>
                                   <td>HD_00{item.id}</td>
                                   <td>
