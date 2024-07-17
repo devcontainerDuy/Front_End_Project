@@ -122,21 +122,19 @@ function Home() {
                 ))}
             </ul>
             <div className="row text-center">
-              <div className="row">
-              {filterServices.map((service,index)=>(
+            {filterServices.map((service,index)=>(
                 <div className="col-md-4 mb-2">
-                  <div class="card">
+                  <div class="card border-0">
                     <div class="card-header text-center">
                      <Link to={'/dich-vu/'+service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" /></Link>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body border border-1">
                     <Link style={{textDecoration:'none'}} to={'/dich-vu/'+service.slug}> <h4 class="card-title text-center">{service.name}</h4></Link>
                       <h4 class="card-title text-center"><span className="text-danger">{Intl.NumberFormat("en-US").format(service.price)}</span> <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
                     </div>
                   </div>
                 </div>
               ))}
-              </div>
             </div>
           </div>
         </div>
