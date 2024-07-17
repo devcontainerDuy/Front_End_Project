@@ -124,7 +124,7 @@ function Home() {
             <div className="row text-center">
             {filterServices.map((service,index)=>(
                 <div className="col-md-4 mb-2">
-                  <div class="card border-0">
+                  <div class="card shadow  border-0">
                     <div class="card-header text-center">
                      <Link to={'/dich-vu/'+service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" /></Link>
                     </div>
