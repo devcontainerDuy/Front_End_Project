@@ -430,7 +430,7 @@ function Personal() {
                                 <tr class="">
                                   <td>{++index}</td>
                                   <td scope="row">
-                                    {formatDate(item.updated_at)}
+                                    {item.updated_at && formatDate(item.updated_at)}
                                   </td>
                                   <td>HD_00{item.id}</td>
                                   <td>
@@ -497,12 +497,12 @@ function Personal() {
                                 aria-current="true"
                               >
                                 HD_00{bill.id} <br />
-                                {formatDate(bill.created_at)}
+                                {item.updated_at && formatDate(item.updated_at)}
                               </li>
                             ))}
                           </ul>
                           <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-6  d-flex">
                               {page > 1 && (
                                 <button
                                   className="btn btn-outline-secondary mt-2"
