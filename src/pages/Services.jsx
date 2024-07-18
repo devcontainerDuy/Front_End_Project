@@ -135,13 +135,15 @@ function Services() {
                               alt={service.name}
                             />
                           </Link> */}
-                          <Service
+                         <Link to={`/dich-vu/${service.slug}`}>
+                         <Service
                             name={service.name}
                             image={service.image}
                             price={service.price}
                             slug={service.slug}
                             compare_price={service.compare_price}
                           />
+                         </Link>
                         </div>
                       ))
                     ) : services && services.length > 0 ? (
@@ -154,6 +156,8 @@ function Services() {
                               alt={service.name}
                             />
                           </Link> */}
+                         <Link to={`/dich-vu/${service.slug}`}>
+
                           <Service
                             name={service.name}
                             image={service.image}
@@ -161,6 +165,8 @@ function Services() {
                             slug={service.slug}
                             compare_price={service.compare_price}
                           />
+                         </Link>
+
                         </div>
                       ))
                     ) : (
