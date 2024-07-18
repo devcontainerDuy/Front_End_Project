@@ -105,15 +105,15 @@ function Header() {
                 className="form-control"
                 placeholder="Nhập tên sản phẩm"
                 aria-label="Recipient's username"
-                onChange={(e)=>changeSearch(e.target.value)}
+                onChange={(e) => changeSearch(e.target.value)}
                 aria-describedby="button-addon2"
               />
               <button
                 className="btn btn-outline-success"
                 type="button"
                 id="button-addon2"
-                onClick={(e)=>{
-                  window.location.replace('/tim-kiem/'+search)
+                onClick={(e) => {
+                  window.location.replace("/tim-kiem/" + search);
                 }}
               >
                 Tìm kiếm
@@ -161,13 +161,18 @@ function Header() {
               <ul className="navbar-nav justify-content-start flex-grow-1 gap-1">
                 <li className="nav-item">
                   <a className="nav-link" href="/">
-                    Trang chủ 
+                    Trang chủ
                   </a>
                 </li>
 
                 <li className="nav-item">
                   <a className="nav-link" href="/about">
                     Thông tin
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/dich-vu">
+                   Dịch vụ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
@@ -243,7 +248,7 @@ function Header() {
                       <>
                         <li>
                           <a className="dropdown-item" href="/tai-khoan">
-                           Tài khoản
+                            Tài khoản
                           </a>
                         </li>
                         <li>
@@ -251,21 +256,21 @@ function Header() {
                         </li>
                       </>
                     )}
-                    {!localStorage.getItem('token') && (
+                    {!localStorage.getItem("token") && (
                       <>
-                       <li>
-                      <a className="dropdown-item" href="/dang-nhap">
-                        Đăng nhập
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="/dang-ky">
-                        Đăng ký
-                      </a>
-                    </li>
+                        <li>
+                          <a className="dropdown-item" href="/dang-nhap">
+                            Đăng nhập
+                          </a>
+                        </li>
+                        <li>
+                          <a className="dropdown-item" href="/dang-ky">
+                            Đăng ký
+                          </a>
+                        </li>
                       </>
                     )}
-                   
+
                     {localStorage.getItem("token") && (
                       <>
                         <li>
@@ -305,7 +310,12 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href={localStorage.getItem('token')?"/tai-khoan": "/dang-nhap"}>
+              <a
+                className="nav-link"
+                href={
+                  localStorage.getItem("token") ? "/tai-khoan" : "/dang-nhap"
+                }
+              >
                 <i className="bi bi-person-circle" />
               </a>
             </li>

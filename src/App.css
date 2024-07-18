@@ -829,7 +829,7 @@ h6 {
 }
 
 .width-content {
-  width: fit-content
+  /* width: fit-content */
 }
 
 .rating-number {

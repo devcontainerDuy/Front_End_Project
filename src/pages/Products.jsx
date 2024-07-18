@@ -8,15 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
 import Product from "../components/Product";
 function Products() {
-  const dispatch = useDispatch();
-  const { collections, loading1 } = useSelector((state) => state.collections);
-  const { brands, loading } = useSelector((state) => state.brands);
-  const [filter, setFilter] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(0);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+    const dispatch = useDispatch();
+    const { collections, loading1 } = useSelector((state) => state.collections);
+    const { brands, loading } = useSelector((state) => state.brands);
+    const [filter, setFilter] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState(0);
+    const [min, setMin] = useState(0);
+    const [max, setMax] = useState(0);
 
   const setProductFilter = () => {
     if (min != 0 && max == 0) {
