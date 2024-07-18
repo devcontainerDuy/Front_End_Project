@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Slider from "../components/Slider";
 import Product from "../components/Product";
 import Footer from "../components/Footer";
+import Service from "../components/Service";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -114,27 +115,52 @@ function Home() {
           </div>
           <div className="row mb-2 mt-2">
             <h3 className="text-center">Dịch vụ</h3>
-            <ul className="list-inline text-center" style={{fontSize:'20px'}}>
-            <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(null)} className="list-inline-item ps-4">Tát cả</li>
+            <ul
+              className="list-inline text-center"
+              style={{ fontSize: "20px" }}
+            >
+              <li
+                style={{ cursor: "pointer" }}
+                onClick={(e) => setIdCollection(null)}
+                className="list-inline-item ps-4"
+              >
+                Tất cả
+              </li>
               {collections &&
                 collections.map((collection, index) => (
-                  <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(collection.id)} className="list-inline-item ps-4">{collection.name}</li>
+                  <li
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => setIdCollection(collection.id)}
+                    className="list-inline-item ps-4"
+                  >
+                    {collection.name}
+                  </li>
                 ))}
             </ul>
             <div className="row text-center">
-            {filterServices.map((service,index)=>(
-                <div className="col-md-4 mb-3">
-                  <div class="card shadow border-0">
-                    <div class="card-header text-center">
-                     <Link to={'/dich-vu/'+service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" /></Link>
-                    </div>
-                    <div class="card-body border border-1">
-                    <Link style={{textDecoration:'none'}} to={'/dich-vu/'+service.slug}> <h4 class="card-title text-center">{service.name}</h4></Link>
-                      <h4 class="card-title text-center"><span className="text-danger">{Intl.NumberFormat("en-US").format(service.price)}</span> <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
-                    </div>
-                  </div>
+              {filterServices.slice(0, 4).map((service, index) => (
+                <div className="col-md-3 mb-3" key={index}>
+                  <Service
+                    name={service.name}
+                    image={service.image}
+                    price={service.price}
+                    slug={service.slug}
+                    compare_price={service.compare_price}
+                  />
                 </div>
               ))}
+            </div>
+            <div className="row mb-4 text-center">
+              <div className="col-md">
+                {limit < total && (
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={(e) => changeLimit()}
+                  >
+                    Xem thêm
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
