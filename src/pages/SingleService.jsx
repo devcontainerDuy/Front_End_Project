@@ -64,14 +64,11 @@ function SingleService() {
 		let token = localStorage.getItem("token");
 		let idusr = localStorage.getItem("id");
 
-		if (!token || !idusr) {
-			notyf.error("Vui lòng đăng nhập để đặt lịch");
-		} else {
+
 			if (!name || !phone || !email || !time || !date) {
 				notyf.error("Vui lòng điền đầy đủ thông tin đặt lịch");
 			} else {
 				if (checkbox === true) {
-					console.log(name, phone, email, time, date, service.id);
 					axios
 						.post(process.env.REACT_APP_API_URL + "bookings", {
 							email: email,
@@ -91,7 +88,6 @@ function SingleService() {
 				} else {
 					notyf.error("Vui lòng phải đồng ý chính sách");
 				}
-			}
 		}
 	};
 
