@@ -1,7 +1,17 @@
-/* eslint-disable*/
+/* eslint-disable */
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
+
+// Create an instance of Notyf and configure it to show notifications in the top right corner
+const notyf = new Notyf({
+  position: {
+    x: "right",
+    y: "top",
+  },
+});
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -40,8 +50,8 @@ function Contact() {
     }
     if (!formData.email) {
       newErrors.email = "Email là bắt buộc";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email không hợp lệ";
+    } else if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(formData.email)) {
+      newErrors.email = "Email phải kết thúc bằng @gmail.com";
     }
     if (!formData.phone) {
       newErrors.phone = "Số điện thoại là bắt buộc";
@@ -74,9 +84,9 @@ function Contact() {
     });
 
     if (response.ok) {
-      alert("Yêu cầu của bạn đã được gửi thành công!");
+      notyf.success("Yêu cầu của bạn đã được gửi thành công!");
     } else {
-      alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+      notyf.error("Có lỗi xảy ra, vui lòng thử lại sau.");
     }
   };
 
