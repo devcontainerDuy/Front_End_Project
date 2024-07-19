@@ -1,9 +1,85 @@
 /* eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+    setErrors((prevState) => ({
+      ...prevState,
+      [id]: "",
+    }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name) {
+      newErrors.name = "Họ tên là bắt buộc";
+    }
+    if (!formData.email) {
+      newErrors.email = "Email là bắt buộc";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email không hợp lệ";
+    }
+    if (!formData.phone) {
+      newErrors.phone = "Số điện thoại là bắt buộc";
+    } else if (!/^\d+$/.test(formData.phone)) {
+      newErrors.phone = "Số điện thoại không hợp lệ";
+    }
+    if (!formData.subject) {
+      newErrors.subject = "Chủ đề là bắt buộc";
+    }
+    if (!formData.message) {
+      newErrors.message = "Tin nhắn là bắt buộc";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async () => {
+    if (!validate()) {
+      return;
+    }
+
+    const response = await fetch("https://backend.codingfs.com/api/contacts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      alert("Yêu cầu của bạn đã được gửi thành công!");
+    } else {
+      alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -20,8 +96,8 @@ function Contact() {
             </ol>
           </nav>
 
-          <div class="card shadow">
-            <div class="card-body shadow">
+          <div className="card shadow">
+            <div className="card-body shadow">
               <div className="row">
                 <div className="col-md-5">
                   <img
@@ -33,39 +109,88 @@ function Contact() {
                 <div className="col-md align-items-center">
                   <div className="row w-100">
                     <div className="col-md-6 mb-3">
-                      <label htmlFor="fullName">Họ tên</label>
+                      <label htmlFor="name">Họ tên</label>
                       <input
                         type="text"
-                        id="fullName"
+                        id="name"
                         className="form-control"
                         placeholder="Họ tên . . ."
+                        value={formData.name}
+                        onChange={handleChange}
                       />
+                      {errors.name && (
+                        <small className="text-danger">{errors.name}</small>
+                      )}
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label htmlFor="phoneNumber">Số điện thoại</label>
+                      <label htmlFor="email">Email</label>
                       <input
                         type="text"
-                        id="phoneNumber"
+                        id="email"
+                        placeholder="Email . . ."
+                        className="form-control"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                      {errors.email && (
+                        <small className="text-danger">{errors.email}</small>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row w-100">
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="phone">Số điện thoại</label>
+                      <input
+                        type="text"
+                        id="phone"
                         placeholder="Số điện thoại . . ."
                         className="form-control"
+                        value={formData.phone}
+                        onChange={handleChange}
                       />
+                      {errors.phone && (
+                        <small className="text-danger">{errors.phone}</small>
+                      )}
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="subject">Chủ đề</label>
+                      <input
+                        type="text"
+                        id="subject"
+                        placeholder="Chủ đề . . ."
+                        className="form-control"
+                        value={formData.subject}
+                        onChange={handleChange}
+                      />
+                      {errors.subject && (
+                        <small className="text-danger">{errors.subject}</small>
+                      )}
                     </div>
                   </div>
                   <div className="row w-100">
                     <div className="col-md">
-                        <label htmlFor="">Chủ đề</label>
-                        <input type="text" placeholder="Số điện thoại" className="form-control" />
-                    </div>
-                  </div>
-                  <div className="row w-100">
-                    <div className="col-md">
-                        <label htmlFor="">Tin nhắn</label>
-                        <textarea name="" className="form-control" rows={5} id=""></textarea>
+                      <label htmlFor="message">Tin nhắn</label>
+                      <textarea
+                        id="message"
+                        className="form-control"
+                        rows={5}
+                        placeholder="Tin nhắn . . ."
+                        value={formData.message}
+                        onChange={handleChange}
+                      ></textarea>
+                      {errors.message && (
+                        <small className="text-danger">{errors.message}</small>
+                      )}
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md pt-2">
-                        <button className="btn btn-primary">Gửi yêu cầu</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleSubmit}
+                      >
+                        Gửi yêu cầu
+                      </button>
                     </div>
                   </div>
                 </div>
