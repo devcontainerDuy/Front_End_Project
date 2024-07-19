@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 
-// Create an instance of Notyf and configure it to show notifications in the top right corner
+
 const notyf = new Notyf({
   position: {
     x: "right",
@@ -75,17 +75,32 @@ function Contact() {
       return;
     }
 
-    const response = await fetch("https://backend.codingfs.com/api/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch(
+        "https://backend.codingfs.com/api/contacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
-    if (response.ok) {
-      notyf.success("Yêu cầu của bạn đã được gửi thành công!");
-    } else {
+      if (response.ok) {
+        notyf.success("Yêu cầu của bạn đã được gửi thành công!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        notyf.error("Có lỗi xảy ra, vui lòng thử lại sau.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
       notyf.error("Có lỗi xảy ra, vui lòng thử lại sau.");
     }
   };
