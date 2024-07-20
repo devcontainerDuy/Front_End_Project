@@ -202,10 +202,7 @@ function Cart() {
           <div className="row g-4">
             <div className="col-12 col-xl-8">
               <div className="card rounded-0 mb-3">
-                <div
-                  className="card-body"
-                  style={{ fontFamily: "Times New Roman" }}
-                >
+                <div className="card-body" style={{ fontFamily: "Times New Roman" }}>
                   {window.innerWidth > 800 && (
                     <>
                       {carts && carts.length > 0 ? (
@@ -232,10 +229,7 @@ function Cart() {
                                   </td>
                                   <td>
                                     <h5 className="fw-bold mb-0">
-                                      <a
-                                        style={{ textDecoration: "none" }}
-                                        href={`/${item.slug}`}
-                                      >
+                                      <a style={{ textDecoration: "none" }} href={`/${item.slug}`}>
                                         {item.name ? item.name : "Item"}
                                       </a>
                                     </h5>
@@ -298,15 +292,7 @@ function Cart() {
                           <div key={index} className="card mb-3">
                             <div className="card-header">
                               <a href={`/${item.slug}`}>
-                                <img
-                                  style={{ width: "100px", margin: "0px auto" }}
-                                  src={
-                                    process.env.REACT_APP_IMG_URL +
-                                    "products/" +
-                                    item.image
-                                  }
-                                  alt={item.name}
-                                />
+                                <img style={{ width: "100px", margin: "0px auto" }} src={process.env.REACT_APP_IMG_URL + "products/" + item.image} alt={item.name} />
                               </a>
                             </div>
                             <div className="card-body">
@@ -321,38 +307,20 @@ function Cart() {
                                   {item.name}
                                 </a>
                               </h5>
-                              <p className="card-text">
-                                Giá:{" "}
-                                {Intl.NumberFormat("en-US").format(item.price)}
-                              </p>
+                              <p className="card-text">Giá: {Intl.NumberFormat("en-US").format(item.price)}</p>
                               <p className="card-text">
                                 Số lượng:
                                 <input
                                   type="number"
                                   className="form-control d-inline-block w-auto ms-2"
-                                  onChange={(e) =>
-                                    updateQuantity(
-                                      item.purchaseId,
-                                      item.quantity,
-                                      item.id,
-                                      e
-                                    )
-                                  }
+                                  onChange={(e) => updateQuantity(item.purchaseId, item.quantity, item.id, e)}
                                   value={item.quantity}
                                 />
                               </p>
-                              <p className="card-text">
-                                Thành tiền:{" "}
-                                {Intl.NumberFormat("en-US").format(
-                                  item.price * item.quantity
-                                )}
-                              </p>
+                              <p className="card-text">Thành tiền: {Intl.NumberFormat("en-US").format(item.price * item.quantity)}</p>
                             </div>
                             <div className="card-footer text-end">
-                              <button
-                                className="btn btn-danger btn-sm"
-                                onClick={(e) => deleteItem(item.id)}
-                              >
+                              <button className="btn btn-danger btn-sm" onClick={(e) => deleteItem(item.id)}>
                                 Xóa
                               </button>
                             </div>
@@ -373,10 +341,7 @@ function Cart() {
                 <div className="card-body">
                   <h5 className="fw-bold mb-4">Hóa đơn</h5>
                   <div className="hstack align-items-center justify-content-between">
-                    <p className="mb-0">
-                      Tổng hóa đơn :
-                      {Intl.NumberFormat("en-US").format(Number(total))}
-                    </p>
+                    <p className="mb-0">Tổng hóa đơn :{Intl.NumberFormat("en-US").format(Number(total))}</p>
                   </div>
                   <hr />
                   {carts.length > 0 && (
