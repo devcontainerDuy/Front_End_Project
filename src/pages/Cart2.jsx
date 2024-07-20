@@ -8,7 +8,8 @@ import Modal from "react-bootstrap/Modal";
 import "notyf/notyf.min.css";
 import Header from "../components/Header";
 import Swal from "sweetalert2";
-function Cart() {
+
+function Cart2() {
   const [carts, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [fullname, setFullname] = useState("");
@@ -19,16 +20,25 @@ function Cart() {
   const handleShow = () => setShow(true);
   const [address, setAddress] = useState("");
   const [checkOut, setCheckOut] = useState(false);
+
   const updateQuantity = (id, e) => {
-    var cart = JSON.parse(localStorage.getItem("cart"));
-    cart.forEach((el) => {
-      if (el[0] == id) {
-        el[1] = Number(e.target.value);
-      }
-    });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    loadCart();
+    axios.post(process.env.REACT_APP_API_URL+'carts',{
+        id_customer:localStorage.getItem('id'),
+        id_product:id,
+        quantity:e.target.value
+      }).then((res)=>{
+        if(res.data.check==true){
+          notyf.open({
+            type: "success",
+            message: "Đã cập nhật giỏ hàng",
+          });
+          loadCart()
+        }
+      })
+
+    
   };
+
   const notyf = new Notyf({
     duration: 1000,
     position: {
@@ -70,89 +80,37 @@ function Cart() {
     ],
   });
 
-  const loadCart = () => {
-    axios
-      .post(process.env.REACT_APP_API_URL + "products/loadCart", {
-        cart: JSON.parse(localStorage.getItem("cart")),
-      })
-      .then((res) => {
-        if(res.data.length>0){
-          var sum =0
-          res.data.forEach(el => {
-              sum+=el.discount*el.quantity;
-          });
-        }else{
-          var sum =0;
-        }
-        setCart(res.data);
-        console.log(sum);
-        setTotal(sum)
-      });
-  };
-  const vnpaycheckout =()=>{
-        if (!fullname || !email || !phone || !address) {
-      notyf.error("Please fill in all the fields.");
-      return;
+  const loadCart = async () => {
+    try {
+      const res = await axios.get("https://backend.codingfs.com/api/carts/"+localStorage.getItem('id'));
+      setCart(res.data);
+      const totalAmount = res.data.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      setTotal(totalAmount);
+    } catch (error) {
+      notyf.error("Failed to load cart data");
+      console.error(error);
     }
+  };
 
-    const orderDetails = {
-      name: fullname,
-      email: email,
-      phone: phone,
-      vnpay:true,
-      total:total,
-      address: address,
-      cart: JSON.parse(localStorage.getItem('cart')),
-    };
-
-    axios
-      .post(process.env.REACT_APP_API_URL + "bills", orderDetails)
-      .then((response) => {
-        if (response.data.check==true) {
-          if(response.data.url){
-            window.open(response.data.url, "_blank", "noreferrer");
-          }
-          localStorage.removeItem("cart");
-          setCart([]);
-          setFullname("");
-          setEmail("");
-          setPhone("");
-          setAddress("");
-          setTotal(0);
-        } else {
-          notyf.error("Fail đặt hàng.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting order:", error);
-      });
-  }
   const submitBook = () => {
     if (!fullname || !email || !phone || !address) {
       notyf.error("Please fill in all the fields.");
       return;
-    }
-
-    const orderDetails = {
-      name: fullname,
-      email: email,
-      phone: phone,
-      address: address,
-      cart: JSON.parse(localStorage.getItem('cart')),
-    };
-
-    axios
-      .post(process.env.REACT_APP_API_URL + "bills", orderDetails)
+    }else{
+      axios
+      .post(process.env.REACT_APP_API_URL + "bills/login",{
+        name:fullname,
+        email:email,
+        phone:phone,
+        address:address,
+        id_customer:Number(localStorage.getItem('id'))
+      })
       .then((response) => {
         if (response.data.check==true) {
           notyf.success("Đặt hàng thành công!");
-          localStorage.removeItem("cart");
-          setCart([]);
-          setFullname("");
-          setEmail("");
-          setPhone("");
-          setAddress("");
-          setTotal(0);
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
         } else {
           notyf.error("Fail đặt hàng.");
         }
@@ -160,30 +118,59 @@ function Cart() {
       .catch((error) => {
         console.error("Error submitting order:", error);
       });
-  };
-
-  const deleteItem = (id) => {
-    var cart = JSON.parse(localStorage.getItem("cart"));
-    var arr = [];
-    cart.forEach((el) => {
-      if (el[0] != id) {
-        arr.push(el);
-      }
-    });
-    if(arr.length>0){
-      localStorage.setItem("cart", JSON.stringify(arr));
-      loadCart();
-    }else{
-      setCart([]);  
-      setTotal(0);
-      localStorage.removeItem('cart');
     }
   };
+  const vnpaycheckout = () => {
+    if (!fullname || !email || !phone || !address) {
+      notyf.error("Please fill in all the fields.");
+      return;
+    }else{
+      axios
+      .post(process.env.REACT_APP_API_URL + "bills/login",{
+        name:fullname,
+        email:email,
+        phone:phone,
+        total:total,
+        vnpay:true,
+        address:address,
+        id_customer:Number(localStorage.getItem('id'))
+      })
+      .then((response) => {
+        if (response.data.check==true) {
+          if(response.data.url){
+            window.open(response.data.url, "_blank", "noreferrer");
+          } 
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
+        } else {
+          notyf.error("Fail đặt hàng.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting order:", error);
+      });
+    }
+  };
+  const deleteItem = (id) => {
+    axios.delete(process.env.REACT_APP_API_URL+'carts/'+id,{
+      }).then((res)=>{
+        if(res.data.check==true){
+          notyf.open({
+            type: "success",
+            message: "Đã cập nhật giỏ hàng",
+          });
+          loadCart()
+        }
+      })
+  };
+
   useEffect(() => {
     loadCart();
   }, []);
 
   useEffect(() => {}, [localStorage.getItem("cart_token")]);
+
   return (
     <>
       <Header />
@@ -202,7 +189,10 @@ function Cart() {
           <div className="row g-4">
             <div className="col-12 col-xl-8">
               <div className="card rounded-0 mb-3">
-                <div className="card-body" style={{ fontFamily: "Times New Roman" }}>
+                <div
+                  className="card-body"
+                  style={{ fontFamily: "Times New Roman" }}
+                >
                   {window.innerWidth > 800 && (
                     <>
                       {carts && carts.length > 0 ? (
@@ -216,12 +206,12 @@ function Cart() {
                               </tr>
                             </thead>
                             <tbody>
-                              {carts &&carts.length>0 && carts.map((item, index) => (
+                              {carts.map((item, index) => (
                                 <tr key={index}>
                                   <td scope="row">
                                     <a href={`/${item.slug}`}>
                                       <img
-                                        src={`${process.env.REACT_APP_IMG_URL}products/${item.image}`}
+                                        src={`https://backend.codingfs.com/storage/products/${item.image}`}
                                         width={150}
                                         alt=""
                                       />
@@ -229,21 +219,20 @@ function Cart() {
                                   </td>
                                   <td>
                                     <h5 className="fw-bold mb-0">
-                                      <a style={{ textDecoration: "none" }} href={`/${item.slug}`}>
+                                      <a
+                                        style={{ textDecoration: "none" }}
+                                        href={`/${item.slug}`}
+                                      >
                                         {item.name ? item.name : "Item"}
                                       </a>
                                     </h5>
                                     <div className="product-price d-flex align-items-center gap-2 mt-3">
                                       <div className="h6 fw-bold">
                                         <span className="text-decoration-line-through pe-2">
-                                          {Intl.NumberFormat("en-US").format(
-                                            Number(item.price)
-                                          )}
+                                          {Intl.NumberFormat("en-US").format(Number(item.price))}
                                         </span>
                                         <span className="text-danger">
-                                          {Intl.NumberFormat("en-US").format(
-                                            Number(item.discount)
-                                          )}
+                                          {Intl.NumberFormat("en-US").format(Number(item.discount))}
                                         </span>
                                         <br />
                                         <label htmlFor="" className="mt-2">
@@ -254,25 +243,21 @@ function Cart() {
                                             type="number"
                                             className="form-control mt-2"
                                             value={item.quantity}
-                                            onChange={(e) =>
-                                              updateQuantity(item.id, e)
-                                            }
+                                            onChange={(e) => updateQuantity(item.id, e)}
                                           />
                                           <button
                                             className="btn btn-outline-danger mt-2"
                                             type="button"
-                                            onClick={() => deleteItem(item.id)}
+                                            onClick={() => deleteItem(item.id_cart)}
                                           >
-                                            Xoá
+                                            Xoá 
                                           </button>
                                         </div>
                                       </div>
                                     </div>
                                   </td>
                                   <td>
-                                    {Intl.NumberFormat("en-US").format(
-                                      Number(item.total)
-                                    )}
+                                    {Intl.NumberFormat("en-US").format(Number(item.price * item.quantity))}
                                   </td>
                                 </tr>
                               ))}
@@ -292,7 +277,11 @@ function Cart() {
                           <div key={index} className="card mb-3">
                             <div className="card-header">
                               <a href={`/${item.slug}`}>
-                                <img style={{ width: "100px", margin: "0px auto" }} src={process.env.REACT_APP_IMG_URL + "products/" + item.image} alt={item.name} />
+                                <img
+                                  style={{ width: "100px", margin: "0px auto" }}
+                                  src={`https://backend.codingfs.com/storage/products/${item.image}`}
+                                  alt={item.name}
+                                />
                               </a>
                             </div>
                             <div className="card-body">
@@ -307,20 +296,30 @@ function Cart() {
                                   {item.name}
                                 </a>
                               </h5>
-                              <p className="card-text">Giá: {Intl.NumberFormat("en-US").format(item.price)}</p>
+                              <p className="card-text">
+                                Giá: {Intl.NumberFormat("en-US").format(item.price)}
+                              </p>
                               <p className="card-text">
                                 Số lượng:
                                 <input
                                   type="number"
                                   className="form-control d-inline-block w-auto ms-2"
-                                  onChange={(e) => updateQuantity(item.purchaseId, item.quantity, item.id, e)}
+                                  onChange={(e) => updateQuantity(item.id, e)}
                                   value={item.quantity}
                                 />
                               </p>
-                              <p className="card-text">Thành tiền: {Intl.NumberFormat("en-US").format(item.price * item.quantity)}</p>
+                              <p className="card-text">
+                                Thành tiền:{" "}
+                                {Intl.NumberFormat("en-US").format(
+                                  item.price * item.quantity
+                                )}
+                              </p>
                             </div>
                             <div className="card-footer text-end">
-                              <button className="btn btn-danger btn-sm" onClick={(e) => deleteItem(item.id)}>
+                              <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => deleteItem(item.id)}
+                              >
                                 Xóa
                               </button>
                             </div>
@@ -341,12 +340,14 @@ function Cart() {
                 <div className="card-body">
                   <h5 className="fw-bold mb-4">Hóa đơn</h5>
                   <div className="hstack align-items-center justify-content-between">
-                    <p className="mb-0">Tổng hóa đơn :{Intl.NumberFormat("en-US").format(Number(total))}</p>
+                    <p className="mb-0">
+                      Tổng hóa đơn: {Intl.NumberFormat("en-US").format(Number(total))}
+                    </p>
                   </div>
                   <hr />
                   {carts.length > 0 && (
                     <>
-                      									<div className="container mt-4">
+											<div className="container mt-4">
 												<div className="mb-3">
 													<label htmlFor="formGroupFullname" className="form-label fw-bold">
 														Tên người mua
@@ -397,4 +398,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default Cart2;

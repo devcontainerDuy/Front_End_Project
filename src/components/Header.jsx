@@ -1,14 +1,19 @@
 /* eslint-disable*/
 import React, { useEffect, useState } from "react";
 import { Notyf } from "notyf";
-import { useDispatch, useSelector } from 'react-redux';
-import { getCollection } from '../redux/CollectionSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { getCollection } from "../redux/CollectionSlice";
 import "notyf/notyf.min.css";
 import { getBrands } from "../redux/BrandSlice";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
 function Header() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+  const [search,setSearch]= useState('');
   const [show, setShow] = useState(false);
+  const [lgShow, setLgShow] = useState(false);
   const notyf = new Notyf({
     duration: 1000,
     position: {
@@ -48,6 +53,18 @@ function Header() {
       },
     ],
   });
+  const changeSearch=(item)=>{
+    var result = generateSlug(item);
+    setSearch(result);
+  }
+  function generateSlug(text) {
+    return text
+      .toString()                       
+      .toLowerCase()                    
+      .trim()                           
+      .replace(/\s+/g, '-')             
+      .replace(/\-\-+/g, '-');
+  }
   const logout = () => {
     localStorage.clear();
     notyf.open({
@@ -65,17 +82,45 @@ function Header() {
       setShow(true);
     }
   };
-  const {collections,loading1}= useSelector((state)=>state.collections);
-  const {brands,loading}= useSelector((state)=>state.brands);
+  const { collections, loading1 } = useSelector((state) => state.collections);
+  const { brands, loading } = useSelector((state) => state.brands);
 
   useEffect(() => {
     dispatch(getCollection());
     dispatch(getBrands());
-
-}, [])
+  }, []);
   return (
     <>
       <header className="top-header">
+        <Modal
+          size="lg"
+          show={lgShow}
+          onHide={() => setLgShow(false)}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Body>
+            <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập tên sản phẩm"
+                aria-label="Recipient's username"
+                onChange={(e) => changeSearch(e.target.value)}
+                aria-describedby="button-addon2"
+              />
+              <button
+                className="btn btn-outline-success"
+                type="button"
+                id="button-addon2"
+                onClick={(e) => {
+                  window.location.replace("/tim-kiem/" + search);
+                }}
+              >
+                Tìm kiếm
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
         <nav className="navbar navbar-expand-xl w-100 navbar-dark container gap-3">
           <a className="navbar-brand d-none d-xl-inline" href="/">
             <img src="assets/images/logo.webp" className="logo-img" alt="" />
@@ -99,7 +144,7 @@ function Header() {
             <div className="offcanvas-header">
               <div className="offcanvas-logo">
                 <img
-                  src="assets/images/logo.webp"
+                  src="/assets/images/logo.webp"
                   className="logo-img"
                   alt=""
                 />
@@ -116,13 +161,18 @@ function Header() {
               <ul className="navbar-nav justify-content-start flex-grow-1 gap-1">
                 <li className="nav-item">
                   <a className="nav-link" href="/">
-                    Home
+                    Trang chủ
                   </a>
                 </li>
-               
+
                 <li className="nav-item">
                   <a className="nav-link" href="/about">
-                    About
+                    Thông tin
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/dich-vu">
+                   Dịch vụ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
@@ -139,16 +189,20 @@ function Header() {
                   <ul className="dropdown-menu">
                     <li>
                       <a className="dropdown-item" href="/san-pham">
-                       Sản phẩm 
+                        Sản phẩm
                       </a>
                     </li>
-                    {collections && collections.map((item,index)=>(
-                         <li>
-                         <a className="dropdown-item" href="/san-pham">
-                          {item.name}
-                         </a>
-                       </li>
-                    ))}
+                    {collections &&
+                      collections.map((item, index) => (
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href={"/san-pham/" + item.slug}
+                          >
+                            {item.name}
+                          </a>
+                        </li>
+                      ))}
                   </ul>
                 </li>
                 <li className="nav-item dropdown">
@@ -160,21 +214,25 @@ function Header() {
                     href="javascript:;"
                     data-bs-toggle="dropdown"
                   >
-                   Thương hiệu
+                    Thương hiệu
                   </a>
                   <ul className="dropdown-menu">
-                    {brands && brands.map((item,index)=>(
-                         <li>
-                         <a className="dropdown-item" href="/san-pham">
-                          {item.name}
-                         </a>
-                       </li>
-                    ))}
+                    {brands &&
+                      brands.map((item, index) => (
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href={"/thuong-hieu/" + item.slug}
+                          >
+                            {item.name}
+                          </a>
+                        </li>
+                      ))}
                   </ul>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/lien-he">
-                    Contact
+                    Liên hệ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
@@ -189,11 +247,6 @@ function Header() {
                     {localStorage.getItem("token") && (
                       <>
                         <li>
-                          <a className="dropdown-item" href="/hoa-don">
-                            Hóa đơn
-                          </a>
-                        </li>
-                        <li>
                           <a className="dropdown-item" href="/tai-khoan">
                             Tài khoản
                           </a>
@@ -203,16 +256,21 @@ function Header() {
                         </li>
                       </>
                     )}
-                    <li>
-                      <a className="dropdown-item" href="/dang-nhap">
-                        Đăng nhập
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="/dang-ky">
-                        Đăng ký
-                      </a>
-                    </li>
+                    {!localStorage.getItem("token") && (
+                      <>
+                        <li>
+                          <a className="dropdown-item" href="/dang-nhap">
+                            Đăng nhập
+                          </a>
+                        </li>
+                        <li>
+                          <a className="dropdown-item" href="/dang-ky">
+                            Đăng ký
+                          </a>
+                        </li>
+                      </>
+                    )}
+
                     {localStorage.getItem("token") && (
                       <>
                         <li>
@@ -238,7 +296,7 @@ function Header() {
           </div>
           <ul className="navbar-nav secondary-menu flex-row">
             <li className="nav-item">
-              <a className="nav-link" href="/tim-kiem">
+              <a className="nav-link" href="#" onClick={(e) => setLgShow(true)}>
                 <i className="bi bi-search" />
               </a>
             </li>
@@ -252,7 +310,12 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/dang-nhap">
+              <a
+                className="nav-link"
+                href={
+                  localStorage.getItem("token") ? "/tai-khoan" : "/dang-nhap"
+                }
+              >
                 <i className="bi bi-person-circle" />
               </a>
             </li>
