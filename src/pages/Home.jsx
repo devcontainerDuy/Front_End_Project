@@ -13,8 +13,9 @@ function Home() {
   const [banners, setBanners] = useState([]);
   const [collections, setCollections] = useState([]);
   const [services, setServices] = useState([]);
-  const [idCollection,setIdCollection]= useState(null);
-  const [filterServices,setFilterServices]= useState(services);
+  const [idCollection, setIdCollection] = useState(null);
+  const [filterServices, setFilterServices] = useState(services);
+  const [post, setPost] = useState({});
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
@@ -26,12 +27,17 @@ function Home() {
       .then((res) => {
         setCollections(res);
       });
-      fetch(process.env.REACT_APP_API_URL + "services/home")
+    fetch(process.env.REACT_APP_API_URL + "services/home")
       .then((res) => res.json())
       .then((res) => {
         setServices(res.data);
         setFilterServices(res.data);
       });
+    fetch(process.env.REACT_APP_API_URL + 'highlight-posts')
+      .then((res) => res.json())
+      .then((res) => {
+        setPost(res);
+      })
   }, []);
   useEffect(() => {
     if (limit == 4) {
@@ -41,25 +47,25 @@ function Home() {
           setProducts(res.data);
           setTotal(res.total);
         });
-    }else{
+    } else {
       fetch(process.env.REACT_APP_API_URL + "products?limit=" + limit)
-      .then((res) => res.json())
-      .then((res) => {
-        setProducts(res);
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          setProducts(res);
+        });
     }
 
   }, [limit]);
-  useEffect(()=>{
-    if(idCollection!=null){
+  useEffect(() => {
+    if (idCollection != null) {
       var result = services;
-      result = result.filter((item)=>item.id_collection==idCollection);
+      result = result.filter((item) => item.id_collection == idCollection);
       setFilterServices(result);
-    }else{
+    } else {
       setFilterServices(services);
     }
 
-  },[idCollection])
+  }, [idCollection])
   const changeLimit = () => {
     if (limit == 0) {
       setLimit(8);
@@ -114,28 +120,62 @@ function Home() {
           </div>
           <div className="row mb-2 mt-2">
             <h3 className="text-center">Dịch vụ</h3>
-            <ul className="list-inline text-center" style={{fontSize:'20px'}}>
-            <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(null)} className="list-inline-item ps-4">Tất cả</li>
+            <ul className="list-inline text-center" style={{ fontSize: '20px' }}>
+              <li style={{ cursor: 'pointer' }} onClick={(e) => setIdCollection(null)} className="list-inline-item ps-4">Tất cả</li>
               {collections &&
                 collections.map((collection, index) => (
-                  <li style={{cursor:'pointer'}} onClick={(e)=>setIdCollection(collection.id)} className="list-inline-item ps-4">{collection.name}</li>
+                  <li style={{ cursor: 'pointer' }} onClick={(e) => setIdCollection(collection.id)} className="list-inline-item ps-4">{collection.name}</li>
                 ))}
             </ul>
             <div className="row text-center">
-            {filterServices.map((service,index)=>(
+              {filterServices.map((service, index) => (
                 <div className="col-md-4 mb-3">
                   <div class="card shadow border-0">
                     <div class="card-header text-center">
-                     <Link to={'/dich-vu/'+service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL+'services/'+service.image} alt="" /></Link>
+                      <Link to={'/dich-vu/' + service.slug}> <img className="w-100" src={process.env.REACT_APP_IMG_URL + 'services/' + service.image} alt="" /></Link>
                     </div>
                     <div class="card-body border border-1">
-                    <Link style={{textDecoration:'none'}} to={'/dich-vu/'+service.slug}> <h4 class="card-title text-center">{service.name}</h4></Link>
+                      <Link style={{ textDecoration: 'none' }} to={'/dich-vu/' + service.slug}> <h4 class="card-title text-center">{service.name}</h4></Link>
                       <h4 class="card-title text-center"><span className="text-danger">{Intl.NumberFormat("en-US").format(service.price)}</span> <span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(service.compare_price)}</span></h4>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-md mb-2">
+              <img
+                className="w-100"
+                src={
+                  process.env.REACT_APP_IMG_URL +
+                  "slides/" +
+                  banners[1]?.desktop
+                }
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="row mt-2 mb-4">
+            <div className="col-md">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div className="row">
+                    <div className="col-md-5">
+                      <a href={"/tin-tuc/"+post.slug}><img className="img-fluid rounded-circle" src={process.env.REACT_APP_IMG_URL + 'posts/' + post.image} alt="" /></a>
+                    </div>
+                    <div className="col-md-7 d-flex align-items-center">
+                      <div>
+                        <h3><a style={{textDecoration:'none'}} href={"/tin-tuc/"+post.slug}>{post.title}</a></h3>
+                        <p>{post.summary}</p>
+                        <a href={"/tin-tuc/"+post.slug} className="btn btn-outline-primary">Xem thêm</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
