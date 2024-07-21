@@ -10,7 +10,6 @@ function Footer() {
       setSiteMap(res.data);
     });
   }, []);
-  console.log(sitemap);
 
   return (
     <>

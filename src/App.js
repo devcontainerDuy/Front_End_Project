@@ -18,6 +18,7 @@ import Services from './pages/Services';
 import SingleService from './pages/SingleService';
 import Success from './pages/Success';
 import Contact from './pages/Contact';
+import About from './pages/About';
 function App() {
   return (
     <>
@@ -44,6 +45,7 @@ function App() {
               <Route path="/tai-khoan" element={<Bills />} />
             </>
           )}
+          <Route path="/about" element={<About />} />
           <Route path="/dang-ky" element={<Register />} />
           <Route path="/dich-vu" element={<Services />} />
           <Route path="/dich-vu/:id" element={<SingleService />} />
