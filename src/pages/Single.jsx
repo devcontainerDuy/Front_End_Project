@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import "swiper/css";
 import { Notyf } from "notyf";
+import { Helmet } from 'react-helmet';
 import "notyf/notyf.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
@@ -194,6 +195,10 @@ function Single() {
       )}
       {product && (
         <>
+         <Helmet>
+        <title>{product.name}</title>
+        <meta name="description" content={product.description} />
+      </Helmet>
           <Header />
           <section className="page-content">
             <div className="container mt-5">
