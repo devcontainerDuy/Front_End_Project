@@ -94,7 +94,7 @@ function Home() {
 						</div>
 					</div>
 					<div className="row mb-2 mt-2">
-						<h3 className="text-center">service</h3>
+						<h3 className="text-center">Dịch vụ</h3>
 						<ul className="list-inline text-center" style={{ fontSize: "20px" }}>
 							<li style={{ cursor: "pointer" }} onClick={(e) => setIdCollection(null)} className="list-inline-item ps-4">
 								Tát cả
