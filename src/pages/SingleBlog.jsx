@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import Product from '../components/Product';
 import Post from '../components/Post';
+import { Helmet } from 'react-helmet';
 
 function SingleBlog() {
     const [post, setPost] = useState({});
@@ -26,6 +27,10 @@ function SingleBlog() {
     return (
         <>
             <Header />
+            <Helmet>
+                <title>{product.name}</title>
+                <meta name="description" content={product.description} />
+            </Helmet>
             <div className="page-content">
                 <div className="pt-4 container pb-4">
                     <nav aria-label="breadcrumb">
@@ -128,9 +133,9 @@ function SingleBlog() {
                                         posts.map((post, index) => (
                                             <SwiperSlide key={index}>
                                                 <Post
-                                                title={post.title}
-                                                slug={post.slug}
-                                                image={post.image}
+                                                    title={post.title}
+                                                    slug={post.slug}
+                                                    image={post.image}
                                                 />
                                             </SwiperSlide>
                                         ))}
