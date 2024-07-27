@@ -7,6 +7,7 @@ import { getBrands } from "../redux/BrandSlice";
 import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
+import { Helmet } from 'react-helmet';
 import Product from "../components/Product";
 function Brands() {
   const dispatch = useDispatch();
@@ -53,6 +54,10 @@ function Brands() {
   }, [id]);
   return (
     <>
+     <Helmet>
+        <title>{products.name}</title>
+        <meta name="description" content={products.name} />
+      </Helmet>
       <Header />
       <div className="page-content">
         <div className="row mt-3 text-center w-100">

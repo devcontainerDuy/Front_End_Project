@@ -8,6 +8,8 @@ import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
 import Product from "../components/Product";
+import { Helmet } from 'react-helmet';
+
 function Categories() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -41,7 +43,7 @@ function Categories() {
   };
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "categories/"+id )
+    fetch(process.env.REACT_APP_API_URL + "categories/" + id)
       .then((res) => res.json())
       .then((res) => {
         setProducts(res[0]);
@@ -52,6 +54,10 @@ function Categories() {
   }, [id]);
   return (
     <>
+      <Helmet>
+        <title>{products.name}</title>
+        <meta name="description" content={products.name} />
+      </Helmet>
       <Header />
       <div className="page-content">
         <div className="row mt-3 text-center w-100">
@@ -92,7 +98,7 @@ function Categories() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá thấp nhất"
-                              onChange={(e)=>setMin(e.target.value)}
+                              onChange={(e) => setMin(e.target.value)}
                             />
                             <span className="input-group-text bg-section-1 border-0">
                               -
@@ -101,15 +107,15 @@ function Categories() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá cao nhất"
-                              onChange={(e)=>setMax(e.target.value)}
+                              onChange={(e) => setMax(e.target.value)}
                             />
                             <button
                               type="button"
                               className="btn btn-outline-dark rounded-0 ms-2"
-                                onClick={(e)=>setProductFilter()}
+                              onClick={(e) => setProductFilter()}
                             >
                               <i className="bi bi-chevron-right" />
-                            
+
                             </button>
                           </div>
                         </div>
@@ -121,30 +127,30 @@ function Categories() {
 
               <div className="shop-right-sidebar">
                 <div className="product-grid mt-4">
-                <div className="row mb-3">
+                  <div className="row mb-3">
                     {filterProducts.length > 0
                       ? filterProducts.map((product, index) => (
-                          <div className="col-md-3 mb-3" key={index}>
-                            <Product  
-                              name={product.name}
-                              image={product.gallery[0].image}
-                              price={product.price}
-                              slug={product.slug}
-                              discount={product.discount}
-                            />
-                          </div>
-                        ))
+                        <div className="col-md-3 mb-3" key={index}>
+                          <Product
+                            name={product.name}
+                            image={product.gallery[0].image}
+                            price={product.price}
+                            slug={product.slug}
+                            discount={product.discount}
+                          />
+                        </div>
+                      ))
                       : products.map((product, index) => (
-                          <div className="col-md-3 mb-3" key={index}>
-                            <Product
-                              name={product.name}
-                              image={product.gallery[0]}
-                              price={product.price}
-                              slug={product.slug}
-                              discount={product.discount}
-                            />
-                          </div>
-                        ))}
+                        <div className="col-md-3 mb-3" key={index}>
+                          <Product
+                            name={product.name}
+                            image={product.gallery[0]}
+                            price={product.price}
+                            slug={product.slug}
+                            discount={product.discount}
+                          />
+                        </div>
+                      ))}
                   </div>
                 </div>
 
