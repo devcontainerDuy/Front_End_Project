@@ -123,7 +123,7 @@ function Header() {
         </Modal>
         <nav className="navbar navbar-expand-xl w-100 navbar-dark container gap-3">
           <a className="navbar-brand d-none d-xl-inline" href="/">
-            <img src="assets/images/codevui_shop.png" className="logo-img" alt="" />
+            <img src="/assets/images/codevui_shop.png" className="logo-img" alt="" />
           </a>
           <a
             className="mobile-menu-btn d-inline d-xl-none"
