@@ -26,7 +26,7 @@ function Post({ title ,image,slug}) {
           />
         </a>
       </div>
-      <div className="card-body" style={{ minHeight:'120px' }}>
+      <div className="card-body" style={{ minHeight:'100px' }}>
         <div className="product-info text-center">
         <a style={{ textDecoration:'none' }} href={`/tin-tuc/${slug}`}><h6 className="mb-1 fw-bold product-name">{title}</h6></a>
         </div>
