@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-
+import "../assets/css/services.css";
 function Service({ name, price, compare_price, slug, image }) {
   return (
     <a style={{ textDecoration: "none" }} href={`/${slug}`}>
@@ -10,19 +10,6 @@ function Service({ name, price, compare_price, slug, image }) {
           style={{ margin: "0px auto" }}
         >
           <div className="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-            <a href="javascript:;">
-              <i className="bi bi-heart" />
-            </a>
-            <a href="javascript:;">
-              <i className="bi bi-basket3" />
-            </a>
-            <a
-              href="javascript:;"
-              data-bs-toggle="modal"
-              data-bs-target="#QuickViewModal"
-            >
-              <i className="bi bi-zoom-in" />
-            </a>
           </div>
           <a href={`/${slug}`}>
             <img
