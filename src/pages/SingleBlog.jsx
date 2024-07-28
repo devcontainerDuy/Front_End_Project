@@ -28,8 +28,8 @@ function SingleBlog() {
         <>
             <Header />
             <Helmet>
-                <title>{product.name}</title>
-                <meta name="description" content={product.description} />
+                <title>{posts.title}</title>
+                <meta name="description" content={posts.title} />
             </Helmet>
             <div className="page-content">
                 <div className="pt-4 container pb-4">
