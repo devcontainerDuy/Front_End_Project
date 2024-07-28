@@ -4,7 +4,7 @@ import React from "react";
 function Post({ title ,image,slug}) {
   return (
     <a style={{ textDecoration:'none' }} href={`/${slug}`}>
-    <div className="card shadow pt-2 border-0">
+    <div className="card shadow pt-2 mb-2 border-0">
       <div className="position-relative overflow-hidden" style={{ margin:'0px auto' }}>
         <div className="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
           <a href="javascript:;">
