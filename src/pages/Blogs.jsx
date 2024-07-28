@@ -32,7 +32,7 @@ function Blogs() {
                         </ol>
                     </nav>
                     <div class="card shadow mt-4 mb-4 pb-3">
-                        <div class="card-body pb-3">
+                        <div class="card-body">
                             <Swiper
 
                                 slidesPerView={1}
