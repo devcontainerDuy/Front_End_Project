@@ -376,6 +376,11 @@ function Cart() {
 														Thanh toán hóa đơn
 													</button>
 												</div>
+                        <div className="row">
+                       <div className="col-md mt-3">
+                       <img src={'https://qr.sepay.vn/img?acc=0977766653&bank=TPBank&amount='+total}/>
+                       </div>
+                        </div>
                         <div className="row mt-3 text-center">
                           <div className="col-md-5 w-100">
                           <button className="btn btn-primary" onClick={(e)=>vnpaycheckout()}>
