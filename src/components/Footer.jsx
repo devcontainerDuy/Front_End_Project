@@ -13,7 +13,7 @@ function Footer() {
 
   return (
     <>
-      <section className="footer-section bg-section-2 section-padding">
+      <section className="footer-section bg-section-2 section-padding mt-0">
         <div className="container">
           <div className="row row-cols-1 row-cols-lg-4 g-4">
             <div className="col">
