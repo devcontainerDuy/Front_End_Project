@@ -206,9 +206,6 @@ function Header() {
                   </ul>
                 </li>
                 <li className="nav-item dropdown">
-                  {/* <a className="nav-link" href="/san-pham">
-                                    Shop
-                                    </a> */}
                   <a
                     className="nav-link dropdown-toggle dropdown-toggle-nocaret"
                     href="javascript:;"
