@@ -64,6 +64,7 @@ function Blogs() {
                                                 title={post.title}
                                                 slug={post.slug}
                                                 image={post.image}
+                                                created_at={post.created_at}
                                             />
                                         </SwiperSlide>
                                     ))}
