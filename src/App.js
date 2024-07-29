@@ -21,6 +21,7 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Blogs from './pages/Blogs';
 import SingleBlog from './pages/SingleBlog';
+import TypeBlogs from './pages/TypeBlogs';
 function App() {
   return (
     <>
@@ -49,6 +50,7 @@ function App() {
           )}
           <Route path="/about" element={<About />} />
           <Route path="/tin-tuc" element={<Blogs />} />
+          <Route path="/loai-tin-tuc/:id" element={<TypeBlogs />} />
           <Route path="/tin-tuc/:id" element={<SingleBlog />} />
           <Route path="/dang-ky" element={<Register />} />
           <Route path="/dich-vu" element={<Services />} />

@@ -14,7 +14,6 @@ function SingleBlog() {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
     const [posts, setPosts] = useState([]);
-
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL + 'posts/' + id)
             .then((res) => res.json())
