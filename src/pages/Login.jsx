@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 function Login() {
   const [email,setEmail]= useState('');
@@ -88,6 +89,10 @@ function Login() {
   return (
     <>
       <Header />
+      <Helmet>
+          <title>Đăng nhập</title>
+          <meta name="description" content='Đăng nhập' />
+      </Helmet>
       <div className="page-content">
         <div className="container pt-5 pb-5">
           <nav aria-label="breadcrumb">

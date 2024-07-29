@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import axios from "axios";
+import { Helmet } from 'react-helmet';
 
 function Register() {
   const [name,setName]= useState('');
@@ -104,6 +105,10 @@ function Register() {
   return (
     <>
       <Header />
+      <Helmet>
+          <title>Đăng ký</title>
+          <meta name="description" content='Đăng ký' />
+      </Helmet>
       <div className="page-content">
         <div className="container pt-5 pb-5">
           <nav aria-label="breadcrumb">
