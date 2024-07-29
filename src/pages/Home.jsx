@@ -17,9 +17,9 @@ function Home() {
   const [filterServices, setFilterServices] = useState(services);
   const [post, setPost] = useState({});
   const formatDate = (dateString) => {
-	const options = { year: 'numeric', month: 'long', day: 'numeric' };
-	return new Date(dateString).toLocaleDateString(undefined, options);
-};
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
@@ -203,27 +203,42 @@ function Home() {
             <div className="col-md">
               <div class="card shadow border-0">
                 <div className="card-body">
-					<div className="row text-end">
-						<div className="col-md">
-					<span class="badge bg-danger">{formatDate(post.created_at)}</span>
-
-						</div>
-					</div>
+                  <div className="row text-end">
+                    <div className="col-md">
+                      <span class="badge bg-danger">
+                        {formatDate(post.created_at)}
+                      </span>
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-md-5">
-                    <a href={"/tin-tuc/"+post.slug}>  <img
-                        src={
-                          process.env.REACT_APP_IMG_URL + "posts/" + post.image
-                        }
-                        className="w-100 border-rounded"
-                        alt=""
-                      /></a>
+                      <a href={"/tin-tuc/" + post.slug}>
+                        {" "}
+                        <img
+                          src={
+                            process.env.REACT_APP_IMG_URL +
+                            "posts/" +
+                            post.image
+                          }
+                          className="w-100 border-rounded"
+                          alt=""
+                        />
+                      </a>
                     </div>
                     <div className="col-md d-flex align-items-center">
                       <div>
-					  <a href={"/tin-tuc/"+post.slug}><h4>{post.title}</h4></a>
+                        <a href={"/tin-tuc/" + post.slug}>
+                          <h4>{post.title}</h4>
+                        </a>
                         <p>{post.summary}</p>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md text-center">
+                      <a href="/tin-tuc" className="btn btn-outline-primary">
+                        Xem thêm
+                      </a>
                     </div>
                   </div>
                 </div>

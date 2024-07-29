@@ -288,7 +288,7 @@ function Header() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/tin-tuc">
-                    Blog
+                    Tin tức
                   </a>
                 </li>
               </ul>
