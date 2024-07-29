@@ -7,7 +7,7 @@ import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Service from "../components/Service";
 import { Link } from "react-router-dom";
-
+import { Helmet } from 'react-helmet';
 function Services() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -56,6 +56,10 @@ function Services() {
 
   return (
     <>
+      <Helmet>
+          <title>Dịch vụ</title>
+          <meta name="description" content='Dịch vụ' />
+      </Helmet>
       <Header />
       <div className="page-content mt-3">
         <div className="row mt-3 text-center w-100">

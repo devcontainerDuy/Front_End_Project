@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
 import "swiper/css/pagination";
 import Post from '../components/Post';
+import { Helmet } from 'react-helmet';
 function TypeBlogs() {
     const [posts, setPosts] = useState([]);
     const [post,setPost]= useState({});
@@ -19,6 +20,10 @@ function TypeBlogs() {
     }, [id])
     return (
         <>
+            <Helmet>
+                <title>{post.name}</title>
+                <meta name="description" content={post.name} />
+            </Helmet>
             <Header />
             <div className="page-content">
                 <div className="pt-4 container pb-4">

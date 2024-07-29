@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
+import { Helmet } from 'react-helmet';
 import Post from '../components/Post';
 function Blogs() {
     const [posts, setPosts] = useState([]);
@@ -19,6 +20,10 @@ function Blogs() {
     return (
         <>
             <Header />
+            <Helmet>
+                <title>Tin tức</title>
+                <meta name="description" content='Tin tức' />
+            </Helmet>
             <div className="page-content">
                 <div className="pt-4 container pb-4">
                     <nav aria-label="breadcrumb">

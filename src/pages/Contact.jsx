@@ -4,8 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
-
-
+import { Helmet } from 'react-helmet';
 const notyf = new Notyf({
   position: {
     x: "right",
@@ -107,6 +106,10 @@ function Contact() {
 
   return (
     <>
+             <Helmet>
+        <title>Liên hệ</title>
+        <meta name="description" content='Liên hệ' />
+      </Helmet>
       <Header />
       <div className="page-content">
         <div className="container pt-3 pb-3">

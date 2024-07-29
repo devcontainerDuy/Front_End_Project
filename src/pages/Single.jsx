@@ -197,7 +197,7 @@ function Single() {
         <>
          <Helmet>
         <title>{product.name}</title>
-        <meta name="description" content={product.description} />
+        <meta name="description" content={product.name} />
       </Helmet>
           <Header />
           <section className="page-content">

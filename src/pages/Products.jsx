@@ -7,6 +7,7 @@ import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
 import Product from "../components/Product";
+import { Helmet } from 'react-helmet';
 function Products() {
     const dispatch = useDispatch();
     const { collections, loading1 } = useSelector((state) => state.collections);
@@ -54,6 +55,10 @@ function Products() {
   return (
     <>
       <Header />
+      <Helmet>
+                <title>Sản phẩm</title>
+                <meta name="description" content='Sản phẩm' />
+            </Helmet>
       <div className="page-content mt-3">
         <div className="row mt-3 text-center w-100">
           <div className="py-4 border-bottom">

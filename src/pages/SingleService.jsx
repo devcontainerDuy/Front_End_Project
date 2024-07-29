@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
+import { Helmet } from 'react-helmet';
 
 function SingleService() {
 	const { id } = useParams();
@@ -94,6 +95,10 @@ function SingleService() {
 
 	return (
 		<>
+		      <Helmet>
+                <title>{service.name}</title>
+                <meta name="description" content={service.name} />
+            </Helmet>
 			<Header />
 			<div className="page-content">
 				<div className="container pt-4 pb-4">

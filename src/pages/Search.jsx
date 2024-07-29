@@ -8,6 +8,7 @@ import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
 import Product from "../components/Product";
+import { Helmet } from "react-helmet";
 function Search() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -18,23 +19,30 @@ function Search() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
 
-  const setProductFilter = ()=>{
+  const setProductFilter = () => {
     if (min != 0 && max == 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) => Number(product.price) >= min
+      );
+      setFilterProducts(sortedProducts);
     } else if (min == 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) => Number(product.price) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else if (min != 0 && max != 0) {
-        var sortedProducts = products.filter(product => Number(product.price) >= min && Number(product.price) <= max);
-        setFilterProducts(sortedProducts);
+      var sortedProducts = products.filter(
+        (product) =>
+          Number(product.price) >= min && Number(product.price) <= max
+      );
+      setFilterProducts(sortedProducts);
     } else {
-        setFilterProducts(products)
+      setFilterProducts(products);
     }
-  }
+  };
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "products/search/"+id )
+    fetch(process.env.REACT_APP_API_URL + "products/search/" + id)
       .then((res) => res.json())
       .then((res) => {
         setProducts(res.products);
@@ -45,6 +53,10 @@ function Search() {
   }, [id]);
   return (
     <>
+      <Helmet>
+        <title>Tìm kiếm {id}</title>
+        <meta name="description" content={"Tìm kiếm" + id} />
+      </Helmet>
       <Header />
       <div className="page-content">
         <div className="row mt-3 text-center w-100">
@@ -85,7 +97,7 @@ function Search() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá thấp nhất"
-                              onChange={(e)=>setMin(e.target.value)}
+                              onChange={(e) => setMin(e.target.value)}
                             />
                             <span className="input-group-text bg-section-1 border-0">
                               -
@@ -94,15 +106,14 @@ function Search() {
                               type="text"
                               className="form-control rounded-0"
                               placeholder="Giá cao nhất"
-                              onChange={(e)=>setMax(e.target.value)}
+                              onChange={(e) => setMax(e.target.value)}
                             />
                             <button
                               type="button"
                               className="btn btn-outline-dark rounded-0 ms-2"
-                                onClick={(e)=>setProductFilter()}
+                              onClick={(e) => setProductFilter()}
                             >
                               <i className="bi bi-chevron-right" />
-                            
                             </button>
                           </div>
                         </div>
@@ -114,18 +125,18 @@ function Search() {
 
               <div className="shop-right-sidebar">
                 <div className="product-grid mt-4">
-                  <div className="row">
+                  <div className="row mb-3">
                     {filterProducts.length > 0 &&
                       filterProducts.map((product, index) => (
-                       <div className="col-md-3">
-                         <Product
-                    name={product.name}
-                    image={product.image}
-                    price={product.price}
-                    slug={product.slug}
-                    discount={product.discount}
-                  />
-                       </div>
+                        <div className="col-md-3 mb-3">
+                          <Product
+                            name={product.name}
+                            image={product.image}
+                            price={product.price}
+                            slug={product.slug}
+                            discount={product.discount}
+                          />
+                        </div>
                       ))}
                   </div>
                 </div>
