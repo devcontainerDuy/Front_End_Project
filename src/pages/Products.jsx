@@ -7,17 +7,17 @@ import { getCollection } from "../redux/CollectionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Category } from "@mui/icons-material";
 import Product from "../components/Product";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 function Products() {
-    const dispatch = useDispatch();
-    const { collections, loading1 } = useSelector((state) => state.collections);
-    const { brands, loading } = useSelector((state) => state.brands);
-    const [filter, setFilter] = useState(false);
-    const [products, setProducts] = useState([]);
-    const [page, setPage] = useState(1);
-    const [lastPage, setLastPage] = useState(0);
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(0);
+  const dispatch = useDispatch();
+  const { collections, loading1 } = useSelector((state) => state.collections);
+  const { brands, loading } = useSelector((state) => state.brands);
+  const [filter, setFilter] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(0);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
 
   const setProductFilter = () => {
     if (min != 0 && max == 0) {
@@ -56,9 +56,9 @@ function Products() {
     <>
       <Header />
       <Helmet>
-                <title>Sản phẩm</title>
-                <meta name="description" content='Sản phẩm' />
-            </Helmet>
+        <title>Sản phẩm</title>
+        <meta name="description" content="Sản phẩm" />
+      </Helmet>
       <div className="page-content mt-3">
         <div className="row mt-3 text-center w-100">
           <div className="py-4 border-bottom">
@@ -152,99 +152,100 @@ function Products() {
                         ))}
                   </div>
                 </div>
-                {min==0 && max==0 && (
+                {min == 0 && max == 0 && (
                   <>
-                                  <hr className="my-4" />
-                <div className="product-pagination">
-                  <nav>
-                    <ul className="pagination justify-content-center">
-                      <li
-                        className={
-                          page == 1 ? "page-item disabled" : "page-item "
-                        }
-                      >
-                        <a
-                          onClick={(e) => setPage(page - 1)}
-                          className="page-link"
-                        >
-                          Previous
-                        </a>
-                      </li>
-                      {page == 1 && (
-                        <>
-                          <li className="page-item active">
-                            <a className="page-link" href="javascript:;">
-                              1
-                            </a>
-                          </li>
-                          <li className="page-item">
+                    <hr className="my-4" />
+                    <div className="product-pagination">
+                      <nav>
+                        <ul className="pagination justify-content-center">
+                          <li
+                            className={
+                              page == 1 ? "page-item disabled" : "page-item "
+                            }
+                          >
                             <a
-                              className="page-link"
-                              onClick={(e) => setPage(2)}
-                              href="javascript:;"
-                            >
-                              2
-                            </a>
-                          </li>
-                          <li className="page-item">
-                            <a
-                              className="page-link"
-                              onClick={(e) => setPage(2)}
-                              href="javascript:;"
-                            >
-                              3
-                            </a>
-                          </li>
-                        </>
-                      )}
-                      {page != 1 && (
-                        <>
-                          <li className="page-item">
-                            <a
-                              className="page-link"
                               onClick={(e) => setPage(page - 1)}
+                              className="page-link"
+                            >
+                              Previous
+                            </a>
+                          </li>
+                          {page == 1 && (
+                            <>
+                              <li className="page-item active">
+                                <a className="page-link" href="javascript:;">
+                                  1
+                                </a>
+                              </li>
+                              <li className="page-item">
+                                <a
+                                  className="page-link"
+                                  onClick={(e) => setPage(2)}
+                                  href="javascript:;"
+                                >
+                                  2
+                                </a>
+                              </li>
+                              <li className="page-item">
+                                <a
+                                  className="page-link"
+                                  onClick={(e) => setPage(2)}
+                                  href="javascript:;"
+                                >
+                                  3
+                                </a>
+                              </li>
+                            </>
+                          )}
+                          {page != 1 && (
+                            <>
+                              <li className="page-item">
+                                <a
+                                  className="page-link"
+                                  onClick={(e) => setPage(page - 1)}
+                                  href="javascript:;"
+                                >
+                                  {page - 1}
+                                </a>
+                              </li>
+                              <li className="page-item disabled active">
+                                <a className="page-link" href="javascript:;">
+                                  {page}
+                                </a>
+                              </li>
+                              {page + 1 <= lastPage && (
+                                <li className={"page-item"}>
+                                  <a
+                                    className="page-link"
+                                    onClick={(e) => setPage(page + 1)}
+                                    href="javascript:;"
+                                  >
+                                    {page + 1}
+                                  </a>
+                                </li>
+                              )}
+                            </>
+                          )}
+                          <li
+                            className={
+                              page != lastPage
+                                ? "page-item"
+                                : "disabled page-item"
+                            }
+                          >
+                            <a
+                              className="page-link"
+                              onClick={(e) => setPage(page + 1)}
                               href="javascript:;"
                             >
-                              {page - 1}
+                              Next
                             </a>
                           </li>
-                          <li className="page-item disabled active">
-                            <a className="page-link" href="javascript:;">
-                              {page}
-                            </a>
-                          </li>
-                          {page + 1 <= lastPage && (
-                            <li className={"page-item"}>
-                              <a
-                                className="page-link"
-                                onClick={(e) => setPage(page + 1)}
-                                href="javascript:;"
-                              >
-                                {page + 1}
-                              </a>
-                            </li>
-                          )}
-                        </>
-                      )}
-                      <li
-                        className={
-                          page != lastPage ? "page-item" : "disabled page-item"
-                        }
-                      >
-                        <a
-                          className="page-link"
-                          onClick={(e) => setPage(page + 1)}
-                          href="javascript:;"
-                        >
-                          Next
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+                        </ul>
+                      </nav>
+                    </div>
                   </>
                 )}
-
               </div>
             </div>
           </div>
