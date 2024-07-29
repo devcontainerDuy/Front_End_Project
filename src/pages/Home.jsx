@@ -77,7 +77,9 @@ function Home() {
   };
   return (
     <>
-      <Header />
+    {products.length>0 && post && (
+      <>
+            <Header />
       <div className="page-content">
         <Slider />
         <div className="container">
@@ -248,6 +250,9 @@ function Home() {
         </div>
       </div>
       <Footer />
+      </>
+    )}
+
     </>
   );
 }
