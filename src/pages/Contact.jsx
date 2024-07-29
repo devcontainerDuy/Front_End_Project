@@ -1,11 +1,10 @@
+/* eslint-disable*/
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import { Helmet } from 'react-helmet';
-import { Helmet } from "react-helmet";
-
 const notyf = new Notyf({
   position: {
     x: "right",
