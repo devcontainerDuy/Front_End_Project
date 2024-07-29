@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Notyf } from "notyf";
 import { useDispatch, useSelector } from "react-redux";
 import { getCollection } from "../redux/CollectionSlice";
+import { getPostCollections } from "../redux/PostCollectionSlice";
+
 import "notyf/notyf.min.css";
 import { getBrands } from "../redux/BrandSlice";
 import Button from "react-bootstrap/Button";
@@ -84,10 +86,13 @@ function Header() {
   };
   const { collections, loading1 } = useSelector((state) => state.collections);
   const { brands, loading } = useSelector((state) => state.brands);
+  const { postCollections, loading2, error } = useSelector((state) => state.postCollections);
+
 
   useEffect(() => {
     dispatch(getCollection());
     dispatch(getBrands());
+    dispatch(getPostCollections());
   }, []);
   return (
     <>
@@ -283,10 +288,35 @@ function Header() {
                     )}
                   </ul>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/tin-tuc">
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle dropdown-toggle-nocaret"
+                    href="javascript:;"
+                    data-bs-toggle="dropdown"
+                  >
                     Tin tức
                   </a>
+                  <ul className="dropdown-menu">
+                  <li>
+                          <a
+                            className="dropdown-item"
+                            href={"/tin-tuc"}
+                          >
+                            Tin tức
+                          </a>
+                        </li>
+                    {postCollections &&
+                      postCollections.map((item, index) => (
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href={"/loai-tin-tuc/" + item.slug}
+                          >
+                            {item.name}
+                          </a>
+                        </li>
+                      ))}
+                  </ul>
                 </li>
               </ul>
             </div>
