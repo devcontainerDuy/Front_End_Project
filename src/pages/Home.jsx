@@ -211,17 +211,17 @@ function Home() {
 					</div>
                   <div className="row">
                     <div className="col-md-5">
-                      <img
+                    <a href={"/tin-tuc/"+post.slug}>  <img
                         src={
                           process.env.REACT_APP_IMG_URL + "posts/" + post.image
                         }
                         className="w-100 border-rounded"
                         alt=""
-                      />
+                      /></a>
                     </div>
                     <div className="col-md d-flex align-items-center">
                       <div>
-                        <h4>{post.title}</h4>
+					  <a href={"/tin-tuc/"+post.slug}><h4>{post.title}</h4></a>
                         <p>{post.summary}</p>
                       </div>
                     </div>
