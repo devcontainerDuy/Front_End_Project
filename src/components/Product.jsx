@@ -4,7 +4,7 @@ import React from "react";
 function Product({ name, price, discount, slug, image }) {
   return (
     <a style={{ textDecoration:'none' }} href={`/${slug}`}>
-    <div className="card shadow pt-2 border-0">
+    <div className="card shadow pt-2 border-0 mb-3">
       <div className="position-relative overflow-hidden" style={{ margin:'0px auto' }}>
         <a href={`/${slug}`}>
           <img
