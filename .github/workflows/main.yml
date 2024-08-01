@@ -18,7 +18,7 @@ jobs:
       run: |
         echo "REACT_APP_API_URL=${{ secrets.API }}" >> .env
         echo "REACT_APP_IMG_URL=${{ secrets.IMG }}" >> .env
-
+        echo "REACT_APP_AI_KEY=${{ secrets.APIKEY }}" >> .env
     - name: 🔧 Install dependencies and build
       run: |
         npm install
