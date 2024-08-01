@@ -12,6 +12,8 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "@google/generative-ai": "^0.3.1",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "ngx-image-zoom": "^3.0.0",

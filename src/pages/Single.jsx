@@ -17,6 +17,7 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Product from "../components/Product";
 import axios from "axios";
+import Chat from "../components/Chat";
 
 function Single() {
   const { id } = useParams();
@@ -356,6 +357,9 @@ function Single() {
                       ...
                     </div>
                   </div>
+                </div>
+                <div className="col-md-2">
+                    <Chat/>
                 </div>
               </div>
               <div className="row mt-3">
