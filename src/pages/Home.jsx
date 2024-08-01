@@ -133,7 +133,7 @@ function Home() {
                 onClick={(e) => setIdCollection(null)}
                 className="list-inline-item ps-4"
               >
-                Tát cả
+                Tất cả
               </li>
               {collections &&
                 collections.map((collection, index) => (
