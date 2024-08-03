@@ -1,6 +1,7 @@
 /* eslint-disable*/
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const [sitemap, setSiteMap] = useState([]);
@@ -18,10 +19,18 @@ function Footer() {
           <div className="row row-cols-1 row-cols-lg-4 g-4">
             <div className="col">
               <div className="footer-widget-6">
-                <img src="assets/images/logo.webp" className="logo-img mb-3" alt="" />
+                <Link to="/about">
+                  <img
+                    src="/assets/images/codevui_shop.png"
+                    className="logo-img mb-2"
+                    alt=""
+                  />
+                </Link>
                 <h5 className="mb-3 fw-bold">Về chúng tôi</h5>
                 <p className="mb-20" style={{ textAlign: "justify" }}>
-                  Chúng tôi không chỉ là nơi bạn có thể đặt lịch làm tóc để có mái tóc đẹp tự tin, mà còn là địa điểm tuyệt vời để khám phá các sản phẩm chăm sóc tóc và da mặt.
+                  Chúng tôi không chỉ là nơi bạn có thể đặt lịch làm tóc để có
+                  mái tóc đẹp tự tin, mà còn là địa điểm tuyệt vời để khám phá
+                  các sản phẩm chăm sóc tóc và da mặt.
                 </p>
                 <a className="link-dark" href="javascript:;">
                   Đọc thêm
@@ -32,7 +41,7 @@ function Footer() {
               <div className="footer-widget-7">
                 <h5 className="mb-3 fw-bold">Cửa hàng</h5>
                 <ul className="widget-link list-unstyled">
-                {sitemap.length > 0 &&
+                  {sitemap.length > 0 &&
                     sitemap.map((item, index) =>
                       item.static_page === 0 ? (
                         <li key={index}>
@@ -47,7 +56,7 @@ function Footer() {
               <div className="footer-widget-8">
                 <h5 className="mb-3 fw-bold">Thông tin</h5>
                 <ul className="widget-link list-unstyled">
-                {sitemap.length > 0 &&
+                  {sitemap.length > 0 &&
                     sitemap.map((item, index) =>
                       item.static_page === 1 ? (
                         <li key={index}>
