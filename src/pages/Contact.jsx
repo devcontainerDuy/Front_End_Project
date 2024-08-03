@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-/* eslint-disable*/
-=======
 
->>>>>>> Stashed changes
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -123,11 +119,7 @@ function Contact() {
                 <li className="breadcrumb-item">
                   <a href="/">Home</a>
                 </li>
-<<<<<<< Updated upstream
-                <li className="breadcrumb-item active" aria-current="page">
-=======
 <li className="breadcrumb-item active" aria-current="page">
->>>>>>> Stashed changes
                   Liên hệ
                 </li>
               </ol>
@@ -192,11 +184,7 @@ function Contact() {
                       <div className="col-md-6 mb-3">
                         <label htmlFor="subject">Chủ đề</label>
                         <input
-<<<<<<< Updated upstream
-                          type="text"
-=======
 type="text"
->>>>>>> Stashed changes
                           id="subject"
                           placeholder="Chủ đề . . ."
                           className="form-control"

@@ -257,18 +257,13 @@ h6 {
   }
 }
 
-<<<<<<< Updated upstream
 .footer-widget-6 .logo-img {
-=======
-.footer-widget-6 a img {
-  width: 120px;
-  margin-top: -40px;
+  width: 100px;
 }
 
-/* .top-header .logo-img {
->>>>>>> Stashed changes
+.top-header .logo-img {
   width: 100px;
-} */
+}
 
 .dropdown-toggle-nocaret:after {
   display: none;
@@ -279,7 +274,6 @@ h6 {
   color: #464444;
   font-size: 1.5rem;
 }
-<<<<<<< Updated upstream
 .footer-section {
   flex-shrink: 0;
   background-color: #343a40;
@@ -291,8 +285,6 @@ h6 {
   flex-direction: column;
   min-height: 100%;
 }
-=======
->>>>>>> Stashed changes
 
 /*Page content*/
 
@@ -975,7 +967,6 @@ h6 {
 .detail img {
   width: 100%;
 }
-<<<<<<< Updated upstream
 
 .shadow {
   height: 500px;
@@ -984,5 +975,3 @@ h6 {
   height: 400px;
   margin-top: 40px;
 }
-=======
->>>>>>> Stashed changes
