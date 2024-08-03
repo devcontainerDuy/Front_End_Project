@@ -128,7 +128,11 @@ function Header() {
         </Modal>
         <nav className="navbar navbar-expand-xl w-100 navbar-dark container gap-3">
           <a className="navbar-brand d-none d-xl-inline" href="/">
-            <img src="/assets/images/codevui_shop.png" className="logo-img" alt="" />
+            <img
+              src="/assets/images/codevui_shop.png"
+              className="logo-img"
+              alt=""
+            />
           </a>
           <a
             className="mobile-menu-btn d-inline d-xl-none"
@@ -149,7 +153,7 @@ function Header() {
             <div className="offcanvas-header">
               <div className="offcanvas-logo">
                 <img
-                  src="/assets/images/logo.webp"
+                  src="/assets/images/codevui_shop.png"
                   className="logo-img"
                   alt=""
                 />
@@ -177,7 +181,7 @@ function Header() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/dich-vu">
-                   Dịch vụ
+                    Dịch vụ
                   </a>
                 </li>
                 <li className="nav-item dropdown">
@@ -297,14 +301,11 @@ function Header() {
                     Tin tức
                   </a>
                   <ul className="dropdown-menu">
-                  <li>
-                          <a
-                            className="dropdown-item"
-                            href={"/tin-tuc"}
-                          >
-                            Tin tức
-                          </a>
-                        </li>
+                    <li>
+                      <a className="dropdown-item" href={"/tin-tuc"}>
+                        Tin tức
+                      </a>
+                    </li>
                     {postCollections &&
                       postCollections.map((item, index) => (
                         <li>

@@ -317,7 +317,7 @@ function Cart() {
                                   value={item.quantity}
                                 />
                               </p>
-                              <p className="card-text">Thành tiền: {Intl.NumberFormat("en-US").format(item.price * item.quantity)}</p>
+                              <p className="card-text">Thành tiền: {Intl.NumberFormat("en-US").format(item.slug * item.quantity)}</p>
                             </div>
                             <div className="card-footer text-end">
                               <button className="btn btn-danger btn-sm" onClick={(e) => deleteItem(item.id)}>

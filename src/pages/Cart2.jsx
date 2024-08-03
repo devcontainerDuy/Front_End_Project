@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import axios from "axios";
@@ -22,21 +21,21 @@ function Cart2() {
   const [checkOut, setCheckOut] = useState(false);
 
   const updateQuantity = (id, e) => {
-    axios.post(process.env.REACT_APP_API_URL+'carts',{
-        id_customer:localStorage.getItem('id'),
-        id_product:id,
-        quantity:e.target.value
-      }).then((res)=>{
-        if(res.data.check==true){
+    axios
+      .post(process.env.REACT_APP_API_URL + "carts", {
+        id_customer: localStorage.getItem("id"),
+        id_product: id,
+        quantity: e.target.value,
+      })
+      .then((res) => {
+        if (res.data.check == true) {
           notyf.open({
             type: "success",
-            message: "Đã cập nhật giỏ hàng",
+            message: "Đã cập nhật giỏ hàng",
           });
-          loadCart()
+          loadCart();
         }
-      })
-
-    
+      });
   };
 
   const notyf = new Notyf({
@@ -82,9 +81,14 @@ function Cart2() {
 
   const loadCart = async () => {
     try {
-      const res = await axios.get("https://backend.codingfs.com/api/carts/"+localStorage.getItem('id'));
+      const res = await axios.get(
+        "https://backend.codingfs.com/api/carts/" + localStorage.getItem("id")
+      );
       setCart(res.data);
-      const totalAmount = res.data.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      const totalAmount = res.data.reduce(
+        (acc, item) => acc + item.discount * item.quantity,
+        0
+      );
       setTotal(totalAmount);
     } catch (error) {
       notyf.error("Failed to load cart data");
@@ -96,73 +100,74 @@ function Cart2() {
     if (!fullname || !email || !phone || !address) {
       notyf.error("Please fill in all the fields.");
       return;
-    }else{
+    } else {
       axios
-      .post(process.env.REACT_APP_API_URL + "bills/login",{
-        name:fullname,
-        email:email,
-        phone:phone,
-        address:address,
-        id_customer:Number(localStorage.getItem('id'))
-      })
-      .then((response) => {
-        if (response.data.check==true) {
-          notyf.success("Đặt hàng thành công!");
-          setTimeout(() => {
-            window.location.reload()
-          }, 2000);
-        } else {
-          notyf.error("Fail đặt hàng.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting order:", error);
-      });
+        .post(process.env.REACT_APP_API_URL + "bills/login", {
+          name: fullname,
+          email: email,
+          phone: phone,
+          address: address,
+          id_customer: Number(localStorage.getItem("id")),
+        })
+        .then((response) => {
+          if (response.data.check == true) {
+            notyf.success("Đặt hàng thành công!");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            notyf.error("Fail đặt hàng.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting order:", error);
+        });
     }
   };
   const vnpaycheckout = () => {
     if (!fullname || !email || !phone || !address) {
       notyf.error("Please fill in all the fields.");
       return;
-    }else{
+    } else {
       axios
-      .post(process.env.REACT_APP_API_URL + "bills/login",{
-        name:fullname,
-        email:email,
-        phone:phone,
-        total:total,
-        vnpay:true,
-        address:address,
-        id_customer:Number(localStorage.getItem('id'))
-      })
-      .then((response) => {
-        if (response.data.check==true) {
-          if(response.data.url){
-            window.open(response.data.url, "_blank", "noreferrer");
-          } 
-          setTimeout(() => {
-            window.location.reload()
-          }, 2000);
-        } else {
-          notyf.error("Fail đặt hàng.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting order:", error);
-      });
+        .post(process.env.REACT_APP_API_URL + "bills/login", {
+          name: fullname,
+          email: email,
+          phone: phone,
+          total: total,
+          vnpay: true,
+          address: address,
+          id_customer: Number(localStorage.getItem("id")),
+        })
+        .then((response) => {
+          if (response.data.check == true) {
+            if (response.data.url) {
+              window.open(response.data.url, "_blank", "noreferrer");
+            }
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            notyf.error("Fail đặt hàng.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting order:", error);
+        });
     }
   };
   const deleteItem = (id) => {
-    axios.delete(process.env.REACT_APP_API_URL+'carts/'+id,{
-      }).then((res)=>{
-        if(res.data.check==true){
+    axios
+      .delete(process.env.REACT_APP_API_URL + "carts/" + id, {})
+      .then((res) => {
+        if (res.data.check == true) {
           notyf.open({
             type: "success",
-            message: "Đã cập nhật giỏ hàng",
+            message: "Đã cập nhật giỏ hàng",
           });
-          loadCart()
+          loadCart();
         }
-      })
+      });
   };
 
   useEffect(() => {
@@ -229,10 +234,14 @@ function Cart2() {
                                     <div className="product-price d-flex align-items-center gap-2 mt-3">
                                       <div className="h6 fw-bold">
                                         <span className="text-decoration-line-through pe-2">
-                                          {Intl.NumberFormat("en-US").format(Number(item.price))}
+                                          {Intl.NumberFormat("en-US").format(
+                                            Number(item.price)
+                                          )}
                                         </span>
                                         <span className="text-danger">
-                                          {Intl.NumberFormat("en-US").format(Number(item.discount))}
+                                          {Intl.NumberFormat("en-US").format(
+                                            Number(item.discount)
+                                          )}
                                         </span>
                                         <br />
                                         <label htmlFor="" className="mt-2">
@@ -243,21 +252,27 @@ function Cart2() {
                                             type="number"
                                             className="form-control mt-2"
                                             value={item.quantity}
-                                            onChange={(e) => updateQuantity(item.id, e)}
+                                            onChange={(e) =>
+                                              updateQuantity(item.id, e)
+                                            }
                                           />
                                           <button
                                             className="btn btn-outline-danger mt-2"
                                             type="button"
-                                            onClick={() => deleteItem(item.id_cart)}
+                                            onClick={() =>
+                                              deleteItem(item.id_cart)
+                                            }
                                           >
-                                            Xoá 
+                                            Xoá
                                           </button>
                                         </div>
                                       </div>
                                     </div>
                                   </td>
                                   <td>
-                                    {Intl.NumberFormat("en-US").format(Number(item.price * item.quantity))}
+                                    {Intl.NumberFormat("en-US").format(
+                                      Number(item.discount * item.quantity)
+                                    )}
                                   </td>
                                 </tr>
                               ))}
@@ -297,7 +312,8 @@ function Cart2() {
                                 </a>
                               </h5>
                               <p className="card-text">
-                                Giá: {Intl.NumberFormat("en-US").format(item.price)}
+                                Giá:{" "}
+                                {Intl.NumberFormat("en-US").format(item.price)}
                               </p>
                               <p className="card-text">
                                 Số lượng:
@@ -311,7 +327,7 @@ function Cart2() {
                               <p className="card-text">
                                 Thành tiền:{" "}
                                 {Intl.NumberFormat("en-US").format(
-                                  item.price * item.quantity
+                                  item.discount * item.quantity
                                 )}
                               </p>
                             </div>
@@ -341,55 +357,105 @@ function Cart2() {
                   <h5 className="fw-bold mb-4">Hóa đơn</h5>
                   <div className="hstack align-items-center justify-content-between">
                     <p className="mb-0">
-                      Tổng hóa đơn: {Intl.NumberFormat("en-US").format(Number(total))}
+                      Tổng hóa đơn:{" "}
+                      {Intl.NumberFormat("en-US").format(Number(total))}
                     </p>
                   </div>
                   <hr />
                   {carts.length > 0 && (
                     <>
-											<div className="container mt-4">
-												<div className="mb-3">
-													<label htmlFor="formGroupFullname" className="form-label fw-bold">
-														Tên người mua
-													</label>
-													<input type="text" className="form-control" id="formGroupFullname" placeholder="Nhập tên của người mua..." onChange={(e) => setFullname(e.target.value)} />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="formGroupEmail" className="form-label fw-bold">
-														Địa chỉ email
-													</label>
-													<input type="email" className="form-control" id="formGroupEmail" placeholder="Nhập vào địa chỉ email của bạn..." onChange={(e) => setEmail(e.target.value)} />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="formGroupPhone" className="form-label fw-bold">
-														Số điện thoại
-													</label>
-													<input type="tel" className="form-control" id="formGroupPhone" placeholder="Nhập số điện thoại của bạn..." onChange={(e) => setPhone(e.target.value)} />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="formGroupAddress" className="form-label fw-bold">
-														Địa chỉ nhận hàng
-													</label>
-													<input type="text" className="form-control" id="formGroupAddress" placeholder="Nhập vào địa chỉ nhận hàng của bạn..." onChange={(e) => setAddress(e.target.value)} />
-												</div>
-												<div className="d-grid mt-4">
-													<button onClick={submitBook} type="button" className="btn btn-dark btn-ecomm py-3 px-5">
-														Thanh toán hóa đơn
-													</button>
-												</div>
+                      <div className="container mt-4">
+                        <div className="mb-3">
+                          <label
+                            htmlFor="formGroupFullname"
+                            className="form-label fw-bold"
+                          >
+                            Tên người mua
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="formGroupFullname"
+                            placeholder="Nhập tên của người mua..."
+                            onChange={(e) => setFullname(e.target.value)}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="formGroupEmail"
+                            className="form-label fw-bold"
+                          >
+                            Địa chỉ email
+                          </label>
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="formGroupEmail"
+                            placeholder="Nhập vào địa chỉ email của bạn..."
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="formGroupPhone"
+                            className="form-label fw-bold"
+                          >
+                            Số điện thoại
+                          </label>
+                          <input
+                            type="tel"
+                            className="form-control"
+                            id="formGroupPhone"
+                            placeholder="Nhập số điện thoại của bạn..."
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="formGroupAddress"
+                            className="form-label fw-bold"
+                          >
+                            Địa chỉ nhận hàng
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="formGroupAddress"
+                            placeholder="Nhập vào địa chỉ nhận hàng của bạn..."
+                            onChange={(e) => setAddress(e.target.value)}
+                          />
+                        </div>
+                        <div className="d-grid mt-4">
+                          <button
+                            onClick={submitBook}
+                            type="button"
+                            className="btn btn-dark btn-ecomm py-3 px-5"
+                          >
+                            Thanh toán hóa đơn
+                          </button>
+                        </div>
                         <div className="row">
-                       <div className="col-md mt-3">
-                       <img src={'https://qr.sepay.vn/img?acc=0977766653&bank=TPBank&amount='+total}/>
-                       </div>
+                          <div className="col-md mt-3">
+                            <img
+                              src={
+                                "https://qr.sepay.vn/img?acc=0977766653&bank=TPBank&amount=" +
+                                total
+                              }
+                            />
+                          </div>
                         </div>
                         <div className="row mt-3 text-center">
                           <div className="col-md-5 w-100">
-                          <button className="btn btn-primary" onClick={(e)=>vnpaycheckout()}>
-                          <i class="bi bi-menu-button-wide me-3"></i> VNPay
-                          </button>
+                            <button
+                              className="btn btn-primary"
+                              onClick={(e) => vnpaycheckout()}
+                            >
+                              <i className="bi bi-menu-button-wide me-3"></i>{" "}
+                              VNPay
+                            </button>
                           </div>
                         </div>
-											</div>
+                      </div>
                     </>
                   )}
                 </div>
