@@ -94,116 +94,170 @@ function SingleService() {
 	};
 
 	return (
-		<>
-		      <Helmet>
-                <title>{service.name}</title>
-                <meta name="description" content={service.name} />
-            </Helmet>
-			<Header />
-			<div className="page-content">
-				<div className="container pt-4 pb-4">
-					<nav aria-label="breadcrumb">
-						<ol className="breadcrumb">
-							<li className="breadcrumb-item">
-								<a href="/">Home</a>
-							</li>
-							<li className="breadcrumb-item" aria-current="page">
-								Dịch vụ
-							</li>
-							<li className="breadcrumb-item active" aria-current="page">
-								{service.name}
-							</li>
-						</ol>
-					</nav>
+    <>
+      <Helmet>
+        <title>{service.name}</title>
+        <meta name="description" content={service.name} />
+      </Helmet>
+      <Header />
+      <div className="page-content">
+        <div className="container pt-4 pb-4">
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <a href="/">Home</a>
+              </li>
+              <li className="breadcrumb-item" aria-current="page">
+                Dịch vụ
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                {service.name}
+              </li>
+            </ol>
+          </nav>
 
-					<div class="card shadow">
-						<div class="card-body">
-							<div className="row">
-								<div className="col-md-4">
-<h3 className="text-danger">{service.name}</h3>
-								</div>
-								<div className="col-md text-end">
-									<span className="text-decoration-line-through">{Intl.NumberFormat("en-US").format(Number(service.compare_price))}</span>{" "}
-									<span className="text-danger"> {Intl.NumberFormat("en-US").format(Number(service.price))}</span>
-									<br />{" "}
-									{!book && (
-										<button className="btn btn-primary" onClick={() => setBook(true)}>
-											Đặt lịch
-										</button>
-									)}
-									{book && (
-										<button className="btn btn-secondary" onClick={() => setBook(false)}>
-											Hủy đặt
-										</button>
-									)}
-								</div>
-							</div>
-							<div className="row">
-								{!book && (
-									<div className="col-md">
-										<div dangerouslySetInnerHTML={{ __html: service.content }} />
-									</div>
-								)}
-								{book && (
-									<>
-										<div className="col-md-8">
-											<div dangerouslySetInnerHTML={{ __html: service.content }} />
-										</div>
-										<div className="col-md">
-											<form onSubmit={handleSubmit}>
-												<h2>
-													<strong>Đặt lịch</strong>
-												</h2>
-												<div className="mb-3">
-													<label htmlFor="exampleInput1" className="form-label">
-														<strong>Tên người đặt lịch</strong>
-													</label>
-													<input type="text" className="form-control" id="exampleInput1" onChange={(e) => setName(e.target.value)} placeholder="Nhập tên của bạn..." />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="exampleInput2" className="form-label">
-														<strong>Số điện thoại người đặt</strong>
-													</label>
-													<input type="number" className="form-control" id="exampleInput2" onChange={(e) => setPhone(e.target.value)} placeholder="Nhập vào số điện thoại của bạn..." />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="exampleInput3" className="form-label">
-														<strong>Địa chỉ email người đặt</strong>
-													</label>
-													<input type="email" className="form-control" id="exampleInput3" onChange={(e) => setEmail(e.target.value)} placeholder="Nhập địa chỉs email..." />
-												</div>
-												<div className="mb-3">
-													<label htmlFor="exampleInput4" className="form-label">
-														<strong>Thời gian đến</strong>
-													</label>
-													<div className="d-flex">
-														<input type="time" className="form-control me-1" onChange={(e) => setTime(e.target.value)} id="exampleInput4" />
-														<input type="date" className="form-control ms-1" onChange={(e) => setDate(e.target.value)} id="exampleInput4" />
-													</div>
-												</div>
-												<div className="mb-3 form-check">
-<input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={(e) => setCheckbox(e.target.checked)} />
-													<label className="form-check-label text-secondary" htmlFor="exampleCheck1">
-														<small>
-															Tôi đã đọc kĩ <a href="#">điều khoản</a> và <a href="#">chính sách</a>
-														</small>
-													</label>
-												</div>
-												<button type="submit" className="btn btn-dark w-100">
-													Đặt lịch hẹn ngay !
-												</button>
-											</form>
-										</div>
-									</>
-								)}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<Footer />
-		</>
-	);
+          <div class="card shadow">
+            <div class="card-body">
+              <div className="row">
+                <div className="col-md-4">
+                  <h3 className="text-danger">{service.name}</h3>
+                </div>
+                <div className="col-md text-end">
+                  <span className="text-decoration-line-through">
+                    {Intl.NumberFormat("en-US").format(
+                      Number(service.compare_price)
+                    )}
+                  </span>{" "}
+                  <span className="text-danger">
+                    {" "}
+                    {Intl.NumberFormat("en-US").format(Number(service.price))}
+                  </span>
+                  <br />{" "}
+                  {!book && (
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => setBook(true)}
+                    >
+                      Đặt lịch
+                    </button>
+                  )}
+                  {book && (
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setBook(false)}
+                    >
+                      Hủy đặt
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="row">
+                {!book && (
+                  <div className="col-md">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: service.content }}
+                    />
+                  </div>
+                )}
+                {book && (
+                  <>
+                    <div className="col-md-8">
+                      <div
+                        dangerouslySetInnerHTML={{ __html: service.content }}
+                      />
+                    </div>
+                    <div className="col-md">
+                      <form onSubmit={handleSubmit}>
+                        <h2>
+                          <strong>Đặt lịch</strong>
+                        </h2>
+                        <div className="mb-3">
+                          <label htmlFor="exampleInput1" className="form-label">
+                            <strong>Tên người đặt lịch</strong>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="exampleInput1"
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Nhập tên của bạn..."
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="exampleInput2" className="form-label">
+                            <strong>Số điện thoại người đặt</strong>
+                          </label>
+                          <input
+                            type="tel"
+                            className="form-control"
+                            id="exampleInput2"
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="Nhập vào số điện thoại của bạn..."
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="exampleInput3" className="form-label">
+                            <strong>Địa chỉ email người đặt</strong>
+                          </label>
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="exampleInput3"
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Nhập địa chỉs email..."
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="exampleInput4" className="form-label">
+                            <strong>Thời gian đến</strong>
+                          </label>
+                          <div className="d-flex">
+                            <input
+                              type="time"
+                              className="form-control me-1"
+                              onChange={(e) => setTime(e.target.value)}
+                              id="exampleInput4"
+                            />
+                            <input
+                              type="date"
+                              className="form-control ms-1"
+                              onChange={(e) => setDate(e.target.value)}
+                              id="exampleInput4"
+                            />
+                          </div>
+                        </div>
+                        <div className="mb-3 form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="exampleCheck1"
+                            onChange={(e) => setCheckbox(e.target.checked)}
+                          />
+                          <label
+                            className="form-check-label text-secondary"
+                            htmlFor="exampleCheck1"
+                          >
+                            <small>
+                              Tôi đã đọc kĩ <a href="#">điều khoản</a> và{" "}
+                              <a href="#">chính sách</a>
+                            </small>
+                          </label>
+                        </div>
+                        <button type="submit" className="btn btn-dark w-100">
+                          Đặt lịch hẹn ngay !
+                        </button>
+                      </form>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 export default SingleService;
