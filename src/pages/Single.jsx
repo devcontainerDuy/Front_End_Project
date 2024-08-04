@@ -295,10 +295,15 @@ function Single() {
 									</Swiper>
 								</div>
 							</div>
-							<div className="row mt-3">
+							<div className="row mt-3 mb-3">
 								<h3 className="fw-bold">Trò chuyện với app</h3>
 								<div className="col">
-									<Chat />
+									<div class="card shadow border-0" >
+										<div class="card-body">
+										<Chat />
+										</div>
+									</div>
+									
 								</div>
 							</div>
 						</div>
