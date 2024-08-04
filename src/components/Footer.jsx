@@ -15,26 +15,20 @@ function Footer() {
   return (
     <>
       <section className="footer-section bg-section-2 section-padding mt-0">
-        <div className="container">
+        <div className="container pb-4">
           <div className="row row-cols-1 row-cols-lg-4 g-4">
             <div className="col">
               <div className="footer-widget-6">
                 <Link to="/about">
-                  <img
-                    src="/assets/images/codevui_shop.png"
-                    className="logo-img mb-2"
-                    alt=""
-                  />
+                  <img src="/assets/images/codevui_shop.png" className="logo-img mb-2" alt="" />
                 </Link>
                 <h5 className="mb-3 fw-bold">Về chúng tôi</h5>
                 <p className="mb-20" style={{ textAlign: "justify" }}>
-                  Chúng tôi không chỉ là nơi bạn có thể đặt lịch làm tóc để có
-                  mái tóc đẹp tự tin, mà còn là địa điểm tuyệt vời để khám phá
-                  các sản phẩm chăm sóc tóc và da mặt.
+                  Chúng tôi không chỉ là nơi bạn có thể đặt lịch làm tóc để có mái tóc đẹp tự tin, mà còn là địa điểm tuyệt vời để khám phá các sản phẩm chăm sóc tóc và da mặt.
                 </p>
-                <a className="link-dark" href="javascript:;">
+                <Link className="read link-dark" to="/about">
                   Đọc thêm
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col">
