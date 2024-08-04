@@ -260,6 +260,7 @@ function Cart() {
                                           <div className="input-group mb-3">
                                             <input
                                               type="number"
+                                              min="1"
                                               className="form-control mt-2"
                                               value={item.quantity}
                                               onChange={(e) =>
@@ -325,8 +326,8 @@ function Cart() {
                                   {item.name}
                                 </a>
                               </h5>
-                              <p className="card-text">
-                                Giá:{" "}
+                              <p className="card-text text-decoration-line-through ">
+                                {/* Giá:{" "} */}
                                 {Intl.NumberFormat("en-US").format(item.price)}
                               </p>
                               <p className="card-text text-danger">
@@ -339,6 +340,7 @@ function Cart() {
                                 Số lượng:
                                 <input
                                   type="number"
+                                  min="1"
                                   className="form-control d-inline-block w-auto ms-2"
                                   onChange={(e) => updateQuantity(item.id, e)}
                                   value={item.quantity}
