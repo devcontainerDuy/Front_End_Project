@@ -277,9 +277,10 @@ h6 {
 .footer-section {
   flex-shrink: 0;
   background-color: #343a40;
-  color: #fff;
+  /* color: #fff; */
   padding: 70px;
 }
+
 #root {
   display: flex;
   flex-direction: column;
