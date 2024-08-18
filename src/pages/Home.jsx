@@ -5,7 +5,10 @@ import Slider from "../components/Slider";
 import Product from "../components/Product";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 function Home() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -16,16 +19,28 @@ function Home() {
   const [idCollection, setIdCollection] = useState(null);
   const [filterServices, setFilterServices] = useState(services);
   const [post, setPost] = useState({});
+  const [voucher,setVoucher]= useState({});
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
   useEffect(() => {
+    
     fetch(process.env.REACT_APP_API_URL + "slides/home-banner")
       .then((res) => res.json())
       .then((res) => {
         setBanners(res);
       });
+
+     setTimeout(() => {
+      fetch(process.env.REACT_APP_API_URL + "campains")
+      .then((res) => res.json())
+      .then((res) => {
+        setVoucher(res);
+        setOpen(true)
+      });
+     }, 4000);
+
     fetch(process.env.REACT_APP_API_URL + "highlight-service-collections")
       .then((res) => res.json())
       .then((res) => {
@@ -75,12 +90,55 @@ function Home() {
       setLimit(limit + 4);
     }
   };
+  
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
     {products.length>0 && post && (
       <>
             <Header />
       <div className="page-content">
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <div className="row">
+  <div className="col-md-4">
+    <img src={process.env.REACT_APP_IMG_URL + voucher.image} alt="" />
+  </div>
+  <div className="col-md d-flex flex-column justify-content-center">
+    <h4>{voucher.title}</h4>
+    <h5>{voucher.summary}</h5>
+    <a href={voucher.link} className="btn btn-sm btn-outline-primary">Xem thêm</a>
+  </div>
+</div>
+          </Typography>
+        
+        </Box>
+      </Modal>
         <Slider />
         <div className="container">
           <div className="row mb-4 mt-4">
