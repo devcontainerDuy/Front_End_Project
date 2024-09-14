@@ -1,5 +1,5 @@
-/* eslint-disable*/
 import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { Notyf } from "notyf";
@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import Header from "../components/Header";
 function Personal() {
   const [bills, setBills] = useState([]);
   const [idBill, setIdBill] = useState(0);
@@ -330,411 +329,393 @@ function Personal() {
   return (
     <>
       <Header />
-
-      <div className="page-content" style={{ minHeight: "470px" }}>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              <div className="input-group mb-3">
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Nhập lại mật khẩu"
-                  aria-label="Recipient's username"
-                  aria-describedby="button-addon2"
-                  onChange={(e) => setPassword2(e.target.value)}
-                />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <div className="input-group mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Nhập lại mật khẩu"
+                aria-label="Recipient's username"
+                aria-describedby="button-addon2"
+                onChange={(e) => setPassword2(e.target.value)}
+              />
+              <button
+                className="btn btn-outline-primary"
+                type="button"
+                id="button-addon2"
+                onClick={(e) => submitChangePass()}
+              >
+                Thay đổi
+              </button>
+            </div>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
+        </Box>
+      </Modal>
+      <div style={{ fontSize: "18px" }} className="pt-5 mt-5 container">
+        <div class="card">
+          <div class="card-header">
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li className="nav-item" role="presentation">
                 <button
-                  className="btn btn-outline-primary"
+                  className="nav-link active"
+                  id="home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#home"
                   type="button"
-                  id="button-addon2"
-                  onClick={(e) => submitChangePass()}
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
                 >
-                  Thay đổi
+                  Tài khoản
                 </button>
-              </div>
-            </Typography>
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2 }}
-            ></Typography>
-          </Box>
-        </Modal>
-        <div style={{ fontSize: "18px" }} className="pt-4 container">
-          <div class="card shadow mb-5">
-            <div class="card-body">
-              <div className="d-flex align-items-start">
-                <div
-                  className="nav flex-column nav-pills me-3"
-                  id="v-pills-tab"
-                  role="tablist"
-                  aria-orientation="vertical"
+              </li>
+              <li className="nav-item" role="presentation">
+                <button
+                  className="nav-link"
+                  id="profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                  onClick={(e)=>{
+                    setIdBill(0);
+                    setSingle(null)
+                  }}
                 >
-                  <button
-                    className="nav-link active"
-                    id="v-pills-home-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#v-pills-home"
-                    type="button"
-                    role="tab"
-                    aria-controls="v-pills-home"
-                    aria-selected="true"
-                    onClick={(e) => {
-                      setIdBill(0);
-                      setSingle(null);
-                    }}
-                  >
-                    Bills
-                  </button>
-                  <button
-                    className="nav-link"
-                    id="v-pills-profile-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#v-pills-profile"
-                    type="button"
-                    role="tab"
-                    aria-controls="v-pills-profile"
-                    aria-selected="false"
-                  >
-                    TTTK
-                  </button>
+                  Hóa đơn
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <div className="tab-content" id="myTabContent">
+              <div
+                className="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="input-group mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Email mới"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={(e) => submitEmail()}
+                      >
+                        Thay đổi
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="input-group mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Họ tên"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={(e) => submitName()}
+                      >
+                        Thay đổi
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="input-group mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Số diện thoại"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={(e) => submitPhone()}
+                      >
+                        Thay đổi
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="input-group mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Địa chỉ"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        value={address}
+                        onChange={(e) => setAdress(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={(e) => submitAddress()}
+                      >
+                        Thay đổi
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="input-group mb-3">
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Mật khẩu mới"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={(e) => submitPassword()}
+                      >
+                        Thay đổi
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="tab-content w-100" id="v-pills-tabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="v-pills-home"
-                    role="tabpanel"
-                    aria-labelledby="v-pills-home-tab"
-                  >
-                    {!single && (
-                      <div class="table-responsive w-100">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col-2">Ngày mua</th>
-                              <th scope="col-2">Số hóa đơn</th>
-                              <th scope="col-2">Trạng thái</th>
-                              <th scope="col-2">Tổng tiền</th>
-                              <th scope="col-2">Tùy chọn</th>
+              </div>
+              <div
+                className="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
+                {!single && (
+                  <div class="table-responsive w-100">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col-2">Ngày mua</th>
+                          <th scope="col-2">Số hóa đơn</th>
+                          <th scope="col-2">Trạng thái</th>
+                          <th scope="col-2">Tổng tiền</th>
+                          <th scope="col-2">Tùy chọn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {bills.length > 0 &&
+                          bills.map((item, index) => (
+                            <tr class="">
+                              <td>{++index}</td>
+                              <td scope="row">{formatDate(item.created_at)}</td>
+                              <td>HD_00{item.id}</td>
+                              <td>{item.status==0 ?'Đặt hàng':''}
+
+                              {item.status==1 ?'Thành công':''}
+                              {item.status==2 ?'Thất bại':''}
+                              </td>
+
+                              <td>
+                                {Intl.NumberFormat("en-US").format(item.total)}
+                              </td>
+
+                              <td>
+                                <a
+                                  href="#"
+                                  className="btn btn-sm btn-primary"
+                                  onClick={(e) => setIdBill(item.id)}
+                                >
+                                  Xem thêm
+                                </a>
+                              </td>
                             </tr>
-                          </thead>
-                          <tbody>
-                            {bills.length > 0 &&
-                              bills.map((item, index) => (
-                                <tr class="">
-                                  <td>{++index}</td>
-                                  <td scope="row">
-                                    {item.updated_at && formatDate(item.updated_at)}
-                                  </td>
-                                  <td>HD_00{item.id}</td>
-                                  <td>
-                                    {item.status == 0 ? "Đặt hàng" : ""}
-
-                                    {item.status == 1 ? "Thành công" : ""}
-                                    {item.status == 2 ? "Thất bại" : ""}
-                                  </td>
-
-                                  <td>
-                                    {Intl.NumberFormat("en-US").format(
-                                      item.total
-                                    )}
-                                  </td>
-
-                                  <td>
-                                    <a
-                                      href="#"
-                                      className="btn btn-sm btn-primary"
-                                      onClick={(e) => setIdBill(item.id)}
-                                    >
-                                      Xem thêm
-                                    </a>
-                                  </td>
-                                </tr>
-                              ))}
-                            {bills.length == 0 && (
-                              <tr>
-                                <td colSpan={5}>Chưa phát sinh đơn hàng</td>
-                              </tr>
-                            )}
-                            {page > 1 && (
-                              <button
-                                className="btn btn-outline-secondary mt-2"
-                                onClick={() => setPage(page - 1)}
-                              >
-                                &lt;&lt;
-                              </button>
-                            )}
-                            {page != null && page < lastPage && (
-                              <button
-                                className="btn btn-outline-primary mt-2"
-                                onClick={() => setPage(page + 1)}
-                              >
-                                &gt;&gt;
-                              </button>
-                            )}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                    {single && (
+                          ))}
+                        {bills.length == 0 && (
+                          <tr>
+                            <td colSpan={5}>Chưa phát sinh đơn hàng</td>
+                          </tr>
+                        )}
+                        {page > 1 && (
+                          <button
+                            className="btn btn-outline-secondary mt-2"
+                            onClick={() => setPage(page - 1)}
+                          >
+                            &lt;&lt;
+                          </button>
+                        )}
+                        {page != null && page < lastPage && (
+                          <button
+                            className="btn btn-outline-primary mt-2"
+                            onClick={() => setPage(page + 1)}
+                          >
+                            &gt;&gt;
+                          </button>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+                {single && (
+                  <div className="row">
+                    <div className="col-md-3">
+                      <ul className="list-group">
+                        {bills.map((bill, index) => (
+                          <li
+                            onClick={(e) => setIdBill(bill.id)}
+                            className={
+                              bill.id == idBill
+                                ? "list-group-item active"
+                                : "list-group-item"
+                            }
+                            aria-current="true"
+                          >
+                            HD_00{bill.id} <br />
+                            {formatDate(bill.created_at)}
+                          </li>
+                        ))}
+                      </ul>
                       <div className="row">
-                        <div className="col-md-2">
-                          <ul className="list-group">
-                            {bills.map((bill, index) => (
-                              <li
-                                onClick={(e) => setIdBill(bill.id)}
-                                className={
-                                  bill.id == idBill
-                                    ? "list-group-item active"
-                                    : "list-group-item"
-                                }
-                                aria-current="true"
-                              >
-                                HD_00{bill.id} <br />
-                                {item.updated_at && formatDate(item.updated_at)}
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="row">
-                            <div className="col-md-6  d-flex">
-                              {page > 1 && (
-                                <button
-                                  className="btn btn-outline-secondary mt-2"
-                                  onClick={() => setPage(page - 1)}
-                                >
-                                  &lt;&lt;
-                                </button>
-                              )}
-                              {page != null && page < lastPage && (
-                                <button
-                                  className="btn btn-outline-primary mt-2"
-                                  onClick={() => setPage(page + 1)}
-                                >
-                                  &gt;&gt;
-                                </button>
-                              )}
-                            </div>
-                          </div>
+                        <div className="col-md-6">
+                        {page > 1 && (
+                          <button
+                            className="btn btn-outline-secondary mt-2"
+                            onClick={() => setPage(page - 1)}
+                          >
+                            &lt;&lt;
+                          </button>
+                        )}
+                        {page != null && page < lastPage && (
+                          <button
+                            className="btn btn-outline-primary mt-2"
+                            onClick={() => setPage(page + 1)}
+                          >
+                            &gt;&gt;
+                          </button>
+                        )}
                         </div>
-                        <div className="col-md">
-                          {single && (
-                            <div className="row">
-                              <div className="col-md">
-                                <div className="card text-start">
-                                  <div className="card-body">
-                                    <h4 className="card-title">
-                                      Hóa đơn : HD_00{single.id}
-                                    </h4>
-                                    <p
-                                      className="card-text"
-                                      style={{ fontSize: "18px" }}
-                                    >
-                                      Tên người nhận: {single.name}
-                                    </p>
-                                    <p style={{ fontSize: "18px" }}>
-                                      {" "}
-                                      Số điện thoại người nhận: {single.phone}
-                                    </p>
-                                    <p style={{ fontSize: "18px" }}>
-                                      Địa chỉ : {single.address}
-                                    </p>
-                                    <div className="row">
-                                      <div className="col-md-6">
+                      </div>
+                    </div>
+                    <div className="col-md">
+                      {single && (
+                        <div className="row">
+                          <div className="col-md">
+                            <div className="card text-start">
+                              <div className="card-body">
+                                <h4 className="card-title">
+                                  Hóa đơn : HD_00{single.id}
+                                </h4>
+                                <p
+                                  className="card-text"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  Tên người nhận: {single.name}
+                                </p>
+                                <p style={{ fontSize: "18px" }}>
+                                  {" "}
+                                  Số điện thoại người nhận: {single.phone}
+                                </p>
+                                <p style={{ fontSize: "18px" }}>
+                                  Địa chỉ : {single.address}
+                                </p>
+                                <div className="row">
+                                    <div className="col-md-6">
                                         <label htmlFor="">Ghi chú</label>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html: single.note,
-                                          }}
-                                        />
-                                      </div>
+                                    <div
+      dangerouslySetInnerHTML={{__html: single.note}}
+    />
                                     </div>
-                                    <div className="row">
-                                      <div className="table-responsive">
-                                        <table className="table table-striped">
-                                          <thead className="">
-                                            <tr>
-                                              <th scope="col">#</th>
-                                              <th scope="col">Tên sản phẩm</th>
-                                              <th scope="col">Đơn giá</th>
-                                              <th scope="col">Số lượng</th>
-                                              <th scope="col">Giá tiền</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {single.details.map(
-                                              (line, index) => (
-                                                <tr key={line.id}>
-                                                  <td scope="row">
-                                                    {index + 1}
-                                                  </td>
-                                                  <td>{line.product.name}</td>
-                                                  <td>
-                                                    {Intl.NumberFormat(
-                                                      "en-US"
-                                                    ).format(
-                                                      line.product.price
-                                                    )}
-                                                  </td>
-                                                  <td>{line.quantity}</td>
-                                                  <td>
-                                                    {Intl.NumberFormat(
-                                                      "en-US"
-                                                    ).format(
-                                                      line.quantity *
-                                                        line.product.price
-                                                    )}
-                                                  </td>
-                                                </tr>
-                                              )
+                                </div>
+                                <div className="row">
+                                  <div className="table-responsive">
+                                    <table className="table table-striped">
+                                      <thead className="">
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Tên sản phẩm</th>
+                                          <th scope="col">Đơn giá</th>
+                                          <th scope="col">Số lượng</th>
+                                          <th scope="col">Giá tiền</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {single.details.map((line, index) => (
+                                          <tr key={line.id}>
+                                            <td scope="row">{index + 1}</td>
+                                            <td>{line.product.name}</td>
+                                            <td>
+                                              {Intl.NumberFormat(
+                                                "en-US"
+                                              ).format(line.product.price)}
+                                            </td>
+                                            <td>{line.quantity}</td>
+                                            <td>
+                                              {Intl.NumberFormat(
+                                                "en-US"
+                                              ).format(
+                                                line.quantity *
+                                                  line.product.price
+                                              )}
+                                            </td>
+                                          </tr>
+                                        ))}
+                                        <tr>
+                                          <td colSpan={4}>Tổng tiền</td>
+                                          <td>
+                                            {Intl.NumberFormat("en-US").format(
+                                              single.total
                                             )}
-                                            <tr>
-                                              <td colSpan={4}>Tổng tiền</td>
-                                              <td>
-                                                {Intl.NumberFormat(
-                                                  "en-US"
-                                                ).format(single.total)}
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div
-  className="tab-pane fade"
-  id="v-pills-profile"
-  role="tabpanel"
-  aria-labelledby="v-pills-profile-tab"
->
-<div className="row">
-                      <div className="col-md">
-                        <div className="container-fluid">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="input-group mb-3">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Email mới"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="button-addon2"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <button
-                                  className="btn btn-outline-primary"
-                                  type="button"
-                                  id="button-addon2"
-                                  onClick={(e) => submitEmail()}
-                                >
-                                  Thay đổi
-                                </button>
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-group mb-3">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Họ tên"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="button-addon2"
-                                  value={name}
-                                  onChange={(e) => setName(e.target.value)}
-                                />
-                                <button
-                                  className="btn btn-outline-primary"
-                                  type="button"
-                                  id="button-addon2"
-                                  onClick={(e) => submitName()}
-                                >
-                                  Thay đổi
-                                </button>
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-group mb-3">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Số diện thoại"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="button-addon2"
-                                  value={phone}
-                                  onChange={(e) => setPhone(e.target.value)}
-                                />
-                                <button
-                                  className="btn btn-outline-primary"
-                                  type="button"
-                                  id="button-addon2"
-                                  onClick={(e) => submitPhone()}
-                                >
-                                  Thay đổi
-                                </button>
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-group mb-3">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Địa chỉ"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="button-addon2"
-                                  value={address}
-                                  onChange={(e) => setAdress(e.target.value)}
-                                />
-                                <button
-                                  className="btn btn-outline-primary"
-                                  type="button"
-                                  id="button-addon2"
-                                  onClick={(e) => submitAddress()}
-                                >
-                                  Thay đổi
-                                </button>
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-group mb-3">
-                                <input
-                                  type="password"
-                                  className="form-control"
-                                  placeholder="Mật khẩu mới"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="button-addon2"
-                                  value={password}
-                                  onChange={(e) => setPassword(e.target.value)}
-                                />
-                                <button
-                                  className="btn btn-outline-primary"
-                                  type="button"
-                                  id="button-addon2"
-                                  onClick={(e) => submitPassword()}
-                                >
-                                  Thay đổi
-                                </button>
-                              </div>
-                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
-</div>
-                </div>
+                  </div>
+                )}
+              </div>
+              <div
+                className="tab-pane fade"
+                id="contact"
+                role="tabpanel"
+                aria-labelledby="contact-tab"
+              >
+                ...
               </div>
             </div>
           </div>
