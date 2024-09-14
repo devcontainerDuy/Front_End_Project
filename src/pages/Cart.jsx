@@ -466,16 +466,6 @@ function Cart() {
                             />
                           </div>
                         </div>
-                        <div className="row mt-3 text-center">
-                          <div className="col-md-5 w-100">
-                            <button
-                              className="btn btn-primary"
-                              onClick={(e) => vnpaycheckout()}
-                            >
-                              <i class="bi bi-menu-button-wide me-3"></i> VNPay
-                            </button>
-                          </div>
-                        </div>
                       </div>
                     </>
                   )}

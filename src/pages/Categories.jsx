@@ -47,7 +47,8 @@ function Categories() {
       .then((res) => res.json())
       .then((res) => {
         setProducts(res[0]);
-        setFilterProducts(res[0].products);
+        const activeProducts = res[0].products.filter(product => product.status === 1);
+        setFilterProducts(activeProducts);
       });
     dispatch(getCollection());
     dispatch(getBrands());
@@ -140,7 +141,7 @@ function Categories() {
                           />
                         </div>
                       ))
-                      : products.map((product, index) => (
+                      : products.length > 0 && products.map((product, index) => (
                         <div className="col-md-3 mb-3" key={index}>
                           <Product
                             name={product.name}
