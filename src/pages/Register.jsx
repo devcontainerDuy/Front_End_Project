@@ -123,80 +123,95 @@ function Register() {
               </>
             </ol>
           </nav>
-          <div class="card rounded text-white border-0 ">
-            <div class="card-body shadow p-3 text-dark bg-opacity-25 rounded">
-              <div className="row">
-                <div className="col-md-6">
-                  <img
-                    className="img-fluid"
-                    src="https://static.vecteezy.com/system/resources/thumbnails/008/014/115/small_2x/tropical-leaves-background-design-summer-leaves-flat-illustration-simple-banner-with-copy-space-free-vector.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="col-md">
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
-                      Tên tài khoản
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name=""
-                      onChange={(e)=>setName(e.target.value)}
-                      id=""
-                      placeholder="Tên tài khoản"
-                    />
-                  </div>
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      name=""
-                      id=""
-                      onChange={(e)=>setEmail(e.target.value)}
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name=""
-                      id=""
-                      onChange={(e)=>setPassword(e.target.value)}
-                      placeholder="Mật khẩu"
-                    />
-                  </div>
-                  <div className="mb-3 align-middle">
-                    <label for="" className="text-dark form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name=""
-                      id=""
-                      onChange={(e)=>setConfirmPassword(e.target.value)}
-                      placeholder="Nhập lại mật khẩu"
-                    />
-                  </div>
-                  <div className="row">
-                    <div className="col-md-4">
-                      <button className="btn btn-sm btn-primary" onClick={(e)=>submitRegister()}>
-                        Tạo tài khoản
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+					<section className="container px-0">
+						<div className="card border-light-subtle shadow-sm">
+							<div className="row g-0">
+								<div className="col-12 col-md-6 text-bg-dark">
+									<div className="d-flex align-items-center justify-content-center h-100">
+										<div className="col-10 col-xl-8 py-3">
+											{/* <img className="img-fluid rounded mb-4" loading="lazy" src="/assets/images/codevui_shop.png" width={245} height={80} alt="Logo" /> */}
+											<hr className="border-dark-subtle mb-4" />
+											<h2 className="h1 mb-4">We make digital products that drive you to stand out.</h2>
+											<p className="lead m-0">We write words, take photos, make videos, and interact with artificial intelligence.</p>
+										</div>
+									</div>
+								</div>
+								<div className="col-12 col-md-6">
+									<div className="card-body p-3 p-md-4 p-xl-5">
+										<div className="row">
+											<div className="col-12">
+												<div className="mb-5">
+													<h3>Đăng Ký</h3>
+												</div>
+											</div>
+										</div>
+										<form action="#!">
+											<div className="row gy-3 gy-md-4 overflow-hidden">
+                      <div className="col-12">
+													<label htmlFor="username" className="form-label">
+														Tên tài khoản <span className="text-danger">*</span>
+													</label>
+													<input type="text" className="form-control" onChange={(e) => setName(e.target.value)} name="username" id="username" placeholder="Tên tài khoản" required="" />
+												</div>
+												<div className="col-12">
+													<label htmlFor="email" className="form-label">
+														Địa chỉ Email <span className="text-danger">*</span>
+													</label>
+													<input type="email" className="form-control" onChange={(e) => setEmail(e.target.value)} name="email" id="email" placeholder="name@example.com" required="" />
+												</div>
+												<div className="col-12">
+													<label htmlFor="password" className="form-label">
+														Mật khẩu <span className="text-danger">*</span>
+													</label>
+													<input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} name="password" id="password" defaultValue="" required="" />
+												</div>
+                        <div className="col-12">
+													<label htmlFor="password" className="form-label">
+														Nhập lại mật khẩu <span className="text-danger">*</span>
+													</label>
+													<input type="password" className="form-control" onChange={(e) => setConfirmPassword(e.target.value)} name="password" id="password" defaultValue="" required="" />
+												</div>
+
+												<div className="col-12">
+													<div className="d-grid">
+														<button className="btn bsb-btn-xl btn-dark" onClick={(e) => submitRegister()} type="button">
+															Đăng ký
+														</button>
+													</div>
+												</div>
+											</div>
+										</form>
+										<div className="row">
+											<div className="col-12">
+												<hr className="mt-5 mb-4 border-secondary-subtle" />
+												<div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+
+												</div>
+											</div>
+										</div>
+										<div className="row">
+											<div className="col-12">
+												<div className="d-flex gap-3 flex-column flex-xl-row">
+													{/* <a href="#!" className="btn bsb-btn-xl btn-outline-dark">
+														<svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" className="bi bi-facebook" viewBox="0 0 16 16">
+															<path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+														</svg>
+														<span className="ms-2 fs-6">Facebook</span>
+													</a>
+													<a href="#!" className="btn bsb-btn-xl btn-outline-dark">
+														<svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" className="bi bi-twitter" viewBox="0 0 16 16">
+															<path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+														</svg>
+														<span className="ms-2 fs-6">Twitter</span>
+													</a> */}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
         </div>
       </div>
       <Footer />
