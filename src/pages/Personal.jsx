@@ -137,7 +137,6 @@ function Personal() {
               type: "success",
               message: "Đã cập nhật tên thành công",
             });
-            setName(res.data.data.name);
           } else if (res.data.check == false) {
             if (res.data.msg) {
               notyf.open({
@@ -176,7 +175,6 @@ function Personal() {
               type: "success",
               message: "Đã cập nhật số điện thoại thành công",
             });
-            setPhone(res.data.data.phone);
           } else if (res.data.check == false) {
             if (res.data.msg) {
               notyf.open({
@@ -215,7 +213,6 @@ function Personal() {
               type: "success",
               message: "Đã cập nhật địa chỉ thành công",
             });
-            setAdress(res.data.data.address);
           } else if (res.data.check == false) {
             if (res.data.msg) {
               notyf.open({
@@ -254,7 +251,6 @@ function Personal() {
               type: "success",
               message: "Đã cập nhật email thành công",
             });
-            setEmail(res.data.data.email);
           } else if (res.data.check == false) {
             if (res.data.msg) {
               notyf.open({
@@ -648,6 +644,19 @@ function Personal() {
                                 <p style={{ fontSize: "18px" }}>
                                   Địa chỉ : {single.address}
                                 </p>
+                                <div className="row mb-2">
+                                    <div className="col-md-6">
+                                        <label htmlFor="">Trạng thái :  {single.status==0 ?'Đặt hàng':''}
+                                  {single.status==1 ?'Thành công':''}
+                                  {single.status==2 ?'Thất bại':''}</label>
+                                    <div
+                                >
+                                 
+                                </div>
+
+
+                                </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <label htmlFor="">Ghi chú</label>
