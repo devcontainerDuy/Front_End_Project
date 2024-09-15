@@ -357,8 +357,8 @@ function Personal() {
         </Box>
       </Modal>
       <div style={{ fontSize: "18px" }} className="pt-5 mt-5 container">
-        <div class="card">
-          <div class="card-header">
+        <div class="card border-0 shadow">
+          <div class="card-header border-0">
             <ul className="nav nav-tabs" id="myTab" role="tablist">
               <li className="nav-item" role="presentation">
                 <button
