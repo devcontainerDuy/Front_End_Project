@@ -7,6 +7,7 @@ import axios from "axios";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import { Helmet } from 'react-helmet';
+import Chat from "../components/Chat";
 
 function SingleService() {
 	const { id } = useParams();
@@ -251,8 +252,20 @@ function SingleService() {
                   </>
                 )}
               </div>
+
             </div>
           </div>
+          <div className="row mt-3 mb-3 rounded">
+								<h3 className="fw-bold">Trò chuyện với app</h3>
+								<div className="col">
+									<div class="card shadow border-0" >
+										<div class="card-body">
+										<Chat />
+										</div>
+									</div>
+									
+								</div>
+							</div>
         </div>
       </div>
       <Footer />

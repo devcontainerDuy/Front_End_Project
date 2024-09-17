@@ -3,11 +3,21 @@ import { useState, useEffect }  from 'react';
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import {
   MainContainer,
+  Sidebar,
   ChatContainer,
   MessageList,
   Message,
   MessageInput,
   TypingIndicator,
+  ConversationHeader,
+  Avatar,
+  ConversationList,
+  Conversation,
+  InputToolbox,
+  ExpansionPanel,
+  AttachmentButton,
+  SendButton,
+  Search,
 } from '@chatscope/chat-ui-kit-react';
 
 const API_KEY =process.env.REACT_APP_OPEN_AI_KEY
@@ -15,7 +25,7 @@ const API_KEY =process.env.REACT_APP_OPEN_AI_KEY
 const Chat = () => {
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: "Xin chào! Tôi là ChatGPT. Hãy đặt câu hỏi của bạn.",
       sentTime: "just now",
       sender: "ChatGPT",
     },
@@ -79,23 +89,25 @@ const Chat = () => {
 		<div className="App">
 			<div className="row">
 				<div className="col position-relative" style={{ height: "360px" }}>
-					<MainContainer>
-						<ChatContainer>
-							<MessageList scrollBehavior="smooth" typingIndicator={isTyping ? <TypingIndicator content="GPT đang soạn tin nhắn..." /> : null}>
-								{messages.map((message, i) => (
-									<Message
-										key={i}
-										model={{
-											message: message.message,
-											sentTime: message.sentTime,
-											sender: message.sender,
-											direction: message.sender === "GeminiAI" ? "incoming" : "outgoing",
-											position: message.position, // Call the message in the State
-										}}
-									/>
-								))}
-							</MessageList>
-							<MessageInput placeholder="Nhập vào tin nhắn..." sendButton onSend={handleSendRequest} />
+					<MainContainer style={{border: 'none'}}>
+						<ChatContainer >
+            <MessageList typingIndicator={isTyping ? <TypingIndicator content="ChatGPT đang soạn tin nhắn" /> : null}>
+            {messages.map((message, i) => (
+              <Message
+              key={i}
+              model={{
+                message: message.message,
+                sentTime: message.sentTime,
+                sender: message.sender,
+                direction: message.sender === "ChatGPT" ? "incoming" : "outgoing",
+                position: message.position, // Call the message in the State
+              }}
+              >
+                <Avatar src={message.sender === "ChatGPT" ? 'https://cdn.prod.website-files.com/6411daab15c8848a5e4e0153/6476e947d3fd3c906c9d4da6_4712109.png' :'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s' } />
+              </Message>
+            ))}
+          </MessageList>
+          <MessageInput placeholder="Hãy nhập câu hỏi của bạn..." onSend={handleSendRequest} />
 						</ChatContainer>
 					</MainContainer>
 				</div>
