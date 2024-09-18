@@ -23,6 +23,7 @@ import Blogs from './pages/Blogs';
 import SingleBlog from './pages/SingleBlog';
 import TypeBlogs from './pages/TypeBlogs';
 import ForgotPass from './pages/ForgotPass';
+import Orders from './pages/Orders';
 function App() {
   return (
     <>
@@ -47,6 +48,7 @@ function App() {
           {localStorage.getItem("token") && (
             <>
               <Route path="/tai-khoan" element={<Bills />} />
+              <Route path="/hoa-don" element={<Orders />} />
             </>
           )}
           <Route path="/about" element={<About />} />

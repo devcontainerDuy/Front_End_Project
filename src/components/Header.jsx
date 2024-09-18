@@ -202,6 +202,11 @@ function Header() {
 													</a>
 												</li>
 												<li>
+													<a className="dropdown-item" href="/hoa-don">
+														Hóa đơn
+													</a>
+												</li>
+												<li>
 													<hr className="dropdown-divider" />
 												</li>
 											</>
