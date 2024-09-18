@@ -119,9 +119,7 @@ function Personal() {
     } else {
       axios
         .put(
-          process.env.REACT_APP_API_URL +
-            "customers/" +
-            localStorage.getItem("id"),
+          process.env.REACT_APP_API_URL + "customers/" + localStorage.getItem("id"),
           {
             name: name,
           },
@@ -157,9 +155,7 @@ function Personal() {
     } else {
       axios
         .put(
-          process.env.REACT_APP_API_URL +
-            "customers/" +
-            localStorage.getItem("id"),
+          process.env.REACT_APP_API_URL + "customers/" + localStorage.getItem("id"),
           {
             phone: phone,
           },
@@ -195,9 +191,7 @@ function Personal() {
     } else {
       axios
         .put(
-          process.env.REACT_APP_API_URL +
-            "customers/" +
-            localStorage.getItem("id"),
+          process.env.REACT_APP_API_URL + "customers/" + localStorage.getItem("id"),
           {
             address: address,
           },
@@ -233,9 +227,7 @@ function Personal() {
     } else {
       axios
         .put(
-          process.env.REACT_APP_API_URL +
-            "customers/" +
-            localStorage.getItem("id"),
+          process.env.REACT_APP_API_URL + "customers/" + localStorage.getItem("id"),
           {
             email: email,
           },
@@ -281,9 +273,7 @@ function Personal() {
     } else {
       axios
         .put(
-          process.env.REACT_APP_API_URL +
-            "customers/" +
-            localStorage.getItem("id"),
+          process.env.REACT_APP_API_URL + "customers/" + localStorage.getItem("id"),
           {
             password: password,
           },
@@ -326,12 +316,7 @@ function Personal() {
   return (
     <>
       <Header />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div className="input-group mb-3">
@@ -343,12 +328,7 @@ function Personal() {
                 aria-describedby="button-addon2"
                 onChange={(e) => setPassword2(e.target.value)}
               />
-              <button
-                className="btn btn-outline-primary"
-                type="button"
-                id="button-addon2"
-                onClick={(e) => submitChangePass()}
-              >
+              <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitChangePass()}>
                 Thay đổi
               </button>
             </div>
@@ -361,16 +341,7 @@ function Personal() {
           <div class="card-header border-0">
             <ul className="nav nav-tabs" id="myTab" role="tablist">
               <li className="nav-item" role="presentation">
-                <button
-                  className="nav-link active"
-                  id="home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home"
-                  type="button"
-                  role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
-                >
+                <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
                   Tài khoản
                 </button>
               </li>
@@ -384,9 +355,9 @@ function Personal() {
                   role="tab"
                   aria-controls="profile"
                   aria-selected="false"
-                  onClick={(e)=>{
+                  onClick={(e) => {
                     setIdBill(0);
-                    setSingle(null)
+                    setSingle(null);
                   }}
                 >
                   Hóa đơn
@@ -396,12 +367,7 @@ function Personal() {
           </div>
           <div class="card-body">
             <div className="tab-content" id="myTabContent">
-              <div
-                className="tab-pane fade show active"
-                id="home"
-                role="tabpanel"
-                aria-labelledby="home-tab"
-              >
+              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div className="row">
                   <div className="col-md-4">
                     <div className="input-group mb-3">
@@ -414,12 +380,7 @@ function Personal() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
-                      <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={(e) => submitEmail()}
-                      >
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitEmail()}>
                         Thay đổi
                       </button>
                     </div>
@@ -435,12 +396,7 @@ function Personal() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                       />
-                      <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={(e) => submitName()}
-                      >
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitName()}>
                         Thay đổi
                       </button>
                     </div>
@@ -456,12 +412,7 @@ function Personal() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
-                      <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={(e) => submitPhone()}
-                      >
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitPhone()}>
                         Thay đổi
                       </button>
                     </div>
@@ -477,12 +428,7 @@ function Personal() {
                         value={address}
                         onChange={(e) => setAdress(e.target.value)}
                       />
-                      <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={(e) => submitAddress()}
-                      >
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitAddress()}>
                         Thay đổi
                       </button>
                     </div>
@@ -498,24 +444,14 @@ function Personal() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={(e) => submitPassword()}
-                      >
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitPassword()}>
                         Thay đổi
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div
-                className="tab-pane fade"
-                id="profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >
+              <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 {!single && (
                   <div class="table-responsive w-100">
                     <table class="table table-striped">
@@ -536,22 +472,17 @@ function Personal() {
                               <td>{++index}</td>
                               <td scope="row">{formatDate(item.created_at)}</td>
                               <td>HD_00{item.id}</td>
-                              <td>{item.status==0 ?'Đặt hàng':''}
+                              <td>
+                                {item.status == 0 ? "Đặt hàng" : ""}
 
-                              {item.status==1 ?'Thành công':''}
-                              {item.status==2 ?'Thất bại':''}
+                                {item.status == 1 ? "Thành công" : ""}
+                                {item.status == 2 ? "Thất bại" : ""}
                               </td>
 
-                              <td>
-                                {Intl.NumberFormat("en-US").format(item.total)}
-                              </td>
+                              <td>{Intl.NumberFormat("en-US").format(item.total)}</td>
 
                               <td>
-                                <a
-                                  href="#"
-                                  className="btn btn-sm btn-primary"
-                                  onClick={(e) => setIdBill(item.id)}
-                                >
+                                <a href="#" className="btn btn-sm btn-primary" onClick={(e) => setIdBill(item.id)}>
                                   Xem thêm
                                 </a>
                               </td>
@@ -563,18 +494,12 @@ function Personal() {
                           </tr>
                         )}
                         {page > 1 && (
-                          <button
-                            className="btn btn-outline-secondary mt-2"
-                            onClick={() => setPage(page - 1)}
-                          >
+                          <button className="btn btn-outline-secondary mt-2" onClick={() => setPage(page - 1)}>
                             &lt;&lt;
                           </button>
                         )}
                         {page != null && page < lastPage && (
-                          <button
-                            className="btn btn-outline-primary mt-2"
-                            onClick={() => setPage(page + 1)}
-                          >
+                          <button className="btn btn-outline-primary mt-2" onClick={() => setPage(page + 1)}>
                             &gt;&gt;
                           </button>
                         )}
@@ -587,15 +512,7 @@ function Personal() {
                     <div className="col-md-3">
                       <ul className="list-group">
                         {bills.map((bill, index) => (
-                          <li
-                            onClick={(e) => setIdBill(bill.id)}
-                            className={
-                              bill.id == idBill
-                                ? "list-group-item active"
-                                : "list-group-item"
-                            }
-                            aria-current="true"
-                          >
+                          <li onClick={(e) => setIdBill(bill.id)} className={bill.id == idBill ? "list-group-item active" : "list-group-item"} aria-current="true">
                             HD_00{bill.id} <br />
                             {formatDate(bill.created_at)}
                           </li>
@@ -603,22 +520,16 @@ function Personal() {
                       </ul>
                       <div className="row">
                         <div className="col-md-6">
-                        {page > 1 && (
-                          <button
-                            className="btn btn-outline-secondary mt-2"
-                            onClick={() => setPage(page - 1)}
-                          >
-                            &lt;&lt;
-                          </button>
-                        )}
-                        {page != null && page < lastPage && (
-                          <button
-                            className="btn btn-outline-primary mt-2"
-                            onClick={() => setPage(page + 1)}
-                          >
-                            &gt;&gt;
-                          </button>
-                        )}
+                          {page > 1 && (
+                            <button className="btn btn-outline-secondary mt-2" onClick={() => setPage(page - 1)}>
+                              &lt;&lt;
+                            </button>
+                          )}
+                          {page != null && page < lastPage && (
+                            <button className="btn btn-outline-primary mt-2" onClick={() => setPage(page + 1)}>
+                              &gt;&gt;
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -628,42 +539,27 @@ function Personal() {
                           <div className="col-md">
                             <div className="card text-start">
                               <div className="card-body">
-                                <h4 className="card-title">
-                                  Hóa đơn : HD_00{single.id}
-                                </h4>
-                                <p
-                                  className="card-text"
-                                  style={{ fontSize: "18px" }}
-                                >
+                                <h4 className="card-title">Hóa đơn : HD_00{single.id}</h4>
+                                <p className="card-text" style={{ fontSize: "18px" }}>
                                   Tên người nhận: {single.name}
                                 </p>
-                                <p style={{ fontSize: "18px" }}>
-                                  {" "}
-                                  Số điện thoại người nhận: {single.phone}
-                                </p>
-                                <p style={{ fontSize: "18px" }}>
-                                  Địa chỉ : {single.address}
-                                </p>
+                                <p style={{ fontSize: "18px" }}> Số điện thoại người nhận: {single.phone}</p>
+                                <p style={{ fontSize: "18px" }}>Địa chỉ : {single.address}</p>
                                 <div className="row mb-2">
-                                    <div className="col-md-6">
-                                        <label htmlFor="">Trạng thái :  {single.status==0 ?'Đặt hàng':''}
-                                  {single.status==1 ?'Thành công':''}
-                                  {single.status==2 ?'Thất bại':''}</label>
-                                    <div
-                                >
-                                 
-                                </div>
-
-
-                                </div>
+                                  <div className="col-md-6">
+                                    <label htmlFor="">
+                                      Trạng thái : {single.status == 0 ? "Đặt hàng" : ""}
+                                      {single.status == 1 ? "Thành công" : ""}
+                                      {single.status == 2 ? "Thất bại" : ""}
+                                    </label>
+                                    {/* <div></div> */}
+                                  </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-6">
-                                        <label htmlFor="">Ghi chú</label>
-                                    <div
-      dangerouslySetInnerHTML={{__html: single.note}}
-    />
-                                    </div>
+                                  <div className="col-md-6">
+                                    <label htmlFor="">Ghi chú</label>
+                                    <div dangerouslySetInnerHTML={{ __html: single.note }} />
+                                  </div>
                                 </div>
                                 <div className="row">
                                   <div className="table-responsive">
@@ -682,29 +578,14 @@ function Personal() {
                                           <tr key={line.id}>
                                             <td scope="row">{index + 1}</td>
                                             <td>{line.product.name}</td>
-                                            <td>
-                                              {Intl.NumberFormat(
-                                                "en-US"
-                                              ).format(line.product.price)}
-                                            </td>
+                                            <td>{Intl.NumberFormat("en-US").format(line.product.price)}</td>
                                             <td>{line.quantity}</td>
-                                            <td>
-                                              {Intl.NumberFormat(
-                                                "en-US"
-                                              ).format(
-                                                line.quantity *
-                                                  line.product.price
-                                              )}
-                                            </td>
+                                            <td>{Intl.NumberFormat("en-US").format(line.quantity * line.product.price)}</td>
                                           </tr>
                                         ))}
                                         <tr>
                                           <td colSpan={4}>Tổng tiền</td>
-                                          <td>
-                                            {Intl.NumberFormat("en-US").format(
-                                              single.total
-                                            )}
-                                          </td>
+                                          <td>{Intl.NumberFormat("en-US").format(single.total)}</td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -719,12 +600,7 @@ function Personal() {
                   </div>
                 )}
               </div>
-              <div
-                className="tab-pane fade"
-                id="contact"
-                role="tabpanel"
-                aria-labelledby="contact-tab"
-              >
+              <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 ...
               </div>
             </div>
