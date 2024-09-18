@@ -11,347 +11,271 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function Header() {
-  const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
-  const [search,setSearch]= useState('');
-  const [show, setShow] = useState(false);
-  const [lgShow, setLgShow] = useState(false);
-  const notyf = new Notyf({
-    duration: 1000,
-    position: {
-      x: "right",
-      y: "top",
-    },
-    types: [
-      {
-        type: "warning",
-        background: "orange",
-        icon: {
-          className: "material-icons",
-          tagName: "i",
-          text: "warning",
-        },
-      },
-      {
-        type: "error",
-        background: "indianred",
-        duration: 2000,
-        dismissible: true,
-      },
-      {
-        type: "success",
-        background: "green",
-        color: "white",
-        duration: 2000,
-        dismissible: true,
-      },
-      {
-        type: "info",
-        background: "#24b3f0",
-        color: "white",
-        duration: 1500,
-        dismissible: false,
-        icon: '<i class="bi bi-bag-check"></i>',
-      },
-    ],
-  });
-  const changeSearch=(item)=>{
-    var result = generateSlug(item);
-    setSearch(result);
-  }
-  function generateSlug(text) {
-    return text
-      .toString()                       
-      .toLowerCase()                    
-      .trim()                           
-      .replace(/\s+/g, '-')             
-      .replace(/\-\-+/g, '-');
-  }
-  const logout = () => {
-    localStorage.clear();
-    notyf.open({
-      type: "info",
-      message: "Hẹn gặp lại",
-    });
-    setTimeout(() => {
-      window.location.replace("/");
-    }, 2000);
-  };
-  const changeShow = () => {
-    if (show == true) {
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-  };
-  const { collections, loading1 } = useSelector((state) => state.collections);
-  const { brands, loading } = useSelector((state) => state.brands);
-  const { postCollections, loading2, error } = useSelector((state) => state.postCollections);
+	const dispatch = useDispatch();
+	const [open, setOpen] = React.useState(false);
+	const [search, setSearch] = useState("");
+	const [show, setShow] = useState(false);
+	const [lgShow, setLgShow] = useState(false);
+	const notyf = new Notyf({
+		duration: 1000,
+		position: {
+			x: "right",
+			y: "top",
+		},
+		types: [
+			{
+				type: "warning",
+				background: "orange",
+				icon: {
+					className: "material-icons",
+					tagName: "i",
+					text: "warning",
+				},
+			},
+			{
+				type: "error",
+				background: "indianred",
+				duration: 2000,
+				dismissible: true,
+			},
+			{
+				type: "success",
+				background: "green",
+				color: "white",
+				duration: 2000,
+				dismissible: true,
+			},
+			{
+				type: "info",
+				background: "#24b3f0",
+				color: "white",
+				duration: 1500,
+				dismissible: false,
+				icon: '<i class="bi bi-bag-check"></i>',
+			},
+		],
+	});
+	const changeSearch = (item) => {
+		var result = generateSlug(item);
+		setSearch(result);
+	};
+	function generateSlug(text) {
+		return text.toString().toLowerCase().trim().replace(/\s+/g, "-").replace(/\-\-+/g, "-");
+	}
+	const logout = () => {
+		localStorage.clear();
+		notyf.open({
+			type: "info",
+			message: "Hẹn gặp lại",
+		});
+		setTimeout(() => {
+			window.location.replace("/");
+		}, 2000);
+	};
+	const changeShow = () => {
+		if (show == true) {
+			setShow(false);
+		} else {
+			setShow(true);
+		}
+	};
+	const { collections, loading1 } = useSelector((state) => state.collections);
+	const { brands, loading } = useSelector((state) => state.brands);
+	const { postCollections, loading2, error } = useSelector((state) => state.postCollections);
 
+	useEffect(() => {
+		dispatch(getCollection());
+		dispatch(getBrands());
+		dispatch(getPostCollections());
+	}, []);
+	return (
+		<>
+			<header className="top-header">
+				<Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
+					<Modal.Body>
+						<div className="input-group mb-3">
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Nhập tên sản phẩm"
+								aria-label="Recipient's username"
+								onChange={(e) => changeSearch(e.target.value)}
+								aria-describedby="button-addon2"
+							/>
+							<button
+								className="btn btn-outline-success"
+								type="button"
+								id="button-addon2"
+								onClick={(e) => {
+									window.location.replace("/tim-kiem/" + search);
+								}}>
+								Tìm kiếm
+							</button>
+						</div>
+					</Modal.Body>
+				</Modal>
+				<nav className="navbar navbar-expand-xl w-100 navbar-dark container gap-3">
+					<a className="navbar-brand d-none d-xl-inline" href="/">
+						<img src="/assets/images/codevui_shop.png" className="logo-img" alt="" />
+					</a>
+					<a className="mobile-menu-btn d-inline d-xl-none" href="#" onClick={(e) => changeShow()}>
+						<i className="bi bi-list" />
+					</a>
+					<div className={show ? "offcanvas offcanvas-start show" : "offcanvas offcanvas-start"} tabIndex={-1} id="offcanvasNavbar">
+						<div className="offcanvas-header">
+							<div className="offcanvas-logo">
+								<img src="/assets/images/codevui_shop.png" className="logo-img" alt="" />
+							</div>
+							<button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" onClick={(e) => setShow(false)} />
+						</div>
+						<div className="offcanvas-body primary-menu">
+							<ul className="navbar-nav justify-content-start flex-grow-1 gap-1">
+								<li className="nav-item">
+									<a className="nav-link" href="/">
+										Trang chủ
+									</a>
+								</li>
 
-  useEffect(() => {
-    dispatch(getCollection());
-    dispatch(getBrands());
-    dispatch(getPostCollections());
-  }, []);
-  return (
-    <>
-      <header className="top-header">
-        <Modal
-          size="lg"
-          show={lgShow}
-          onHide={() => setLgShow(false)}
-          aria-labelledby="example-modal-sizes-title-lg"
-        >
-          <Modal.Body>
-            <div className="input-group mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Nhập tên sản phẩm"
-                aria-label="Recipient's username"
-                onChange={(e) => changeSearch(e.target.value)}
-                aria-describedby="button-addon2"
-              />
-              <button
-                className="btn btn-outline-success"
-                type="button"
-                id="button-addon2"
-                onClick={(e) => {
-                  window.location.replace("/tim-kiem/" + search);
-                }}
-              >
-                Tìm kiếm
-              </button>
-            </div>
-          </Modal.Body>
-        </Modal>
-        <nav className="navbar navbar-expand-xl w-100 navbar-dark container gap-3">
-          <a className="navbar-brand d-none d-xl-inline" href="/">
-            <img
-              src="/assets/images/codevui_shop.png"
-              className="logo-img"
-              alt=""
-            />
-          </a>
-          <a
-            className="mobile-menu-btn d-inline d-xl-none"
-            href="#"
-            onClick={(e) => changeShow()}
-          >
-            <i className="bi bi-list" />
-          </a>
-          <div
-            className={
-              show
-                ? "offcanvas offcanvas-start show"
-                : "offcanvas offcanvas-start"
-            }
-            tabIndex={-1}
-            id="offcanvasNavbar"
-          >
-            <div className="offcanvas-header">
-              <div className="offcanvas-logo">
-                <img
-                  src="/assets/images/codevui_shop.png"
-                  className="logo-img"
-                  alt=""
-                />
-              </div>
-              <button
-                type="button"
-                className="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-                onClick={(e) => setShow(false)}
-              />
-            </div>
-            <div className="offcanvas-body primary-menu">
-              <ul className="navbar-nav justify-content-start flex-grow-1 gap-1">
-                <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    Trang chủ
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a className="nav-link" href="/about">
-                    Thông tin
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/dich-vu">
-                    Dịch vụ
-                  </a>
-                </li>
-                <li className="nav-item dropdown">
-                  {/* <a className="nav-link" href="/san-pham">
+								<li className="nav-item">
+									<a className="nav-link" href="/about">
+										Thông tin
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/dich-vu">
+										Dịch vụ
+									</a>
+								</li>
+								<li className="nav-item dropdown">
+									{/* <a className="nav-link" href="/san-pham">
                                     Shop
                                     </a> */}
-                  <a
-                    className="nav-link dropdown-toggle dropdown-toggle-nocaret"
-                    href="javascript:;"
-                    data-bs-toggle="dropdown"
-                  >
-                    Sản phẩm
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="/san-pham">
-                        Sản phẩm
-                      </a>
-                    </li>
-                    {collections &&
-                      collections.map((item, index) => (
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            href={"/san-pham/" + item.slug}
-                          >
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                  </ul>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle dropdown-toggle-nocaret"
-                    href="javascript:;"
-                    data-bs-toggle="dropdown"
-                  >
-                    Thương hiệu
-                  </a>
-                  <ul className="dropdown-menu">
-                    {brands &&
-                      brands.map((item, index) => (
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            href={"/thuong-hieu/" + item.slug}
-                          >
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                  </ul>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/lien-he">
-                    Liên hệ
-                  </a>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle dropdown-toggle-nocaret"
-                    href="javascript:;"
-                    data-bs-toggle="dropdown"
-                  >
-                    Tài khoản
-                  </a>
-                  <ul className="dropdown-menu">
-                    {localStorage.getItem("token") && (
-                      <>
-                        <li>
-                          <a className="dropdown-item" href="/tai-khoan">
-                            Tài khoản
-                          </a>
-                        </li>
-                        <li>
-                          <hr className="dropdown-divider" />
-                        </li>
-                      </>
-                    )}
-                    {!localStorage.getItem("token") && (
-                      <>
-                        <li>
-                          <a className="dropdown-item" href="/dang-nhap">
-                            Đăng nhập
-                          </a>
-                        </li>
-                        <li>
-                          <a className="dropdown-item" href="/dang-ky">
-                            Đăng ký
-                          </a>
-                        </li>
-                      </>
-                    )}
+									<a className="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#!" data-bs-toggle="dropdown">
+										Sản phẩm
+									</a>
+									<ul className="dropdown-menu">
+										<li>
+											<a className="dropdown-item" href="/san-pham">
+												Sản phẩm
+											</a>
+										</li>
+										{collections &&
+											collections.map((item, index) => (
+												<li key={index}>
+													<a className="dropdown-item" href={"/san-pham/" + item.slug}>
+														{item.name}
+													</a>
+												</li>
+											))}
+									</ul>
+								</li>
+								<li className="nav-item dropdown">
+									<a className="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#!" data-bs-toggle="dropdown">
+										Thương hiệu
+									</a>
+									<ul className="dropdown-menu">
+										{brands &&
+											brands.map((item, index) => (
+												<li key={index}>
+													<a className="dropdown-item" href={"/thuong-hieu/" + item.slug}>
+														{item.name}
+													</a>
+												</li>
+											))}
+									</ul>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/lien-he">
+										Liên hệ
+									</a>
+								</li>
+								<li className="nav-item dropdown">
+									<a className="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#!" data-bs-toggle="dropdown">
+										Tài khoản
+									</a>
+									<ul className="dropdown-menu">
+										{localStorage.getItem("token") && (
+											<>
+												<li>
+													<a className="dropdown-item" href="/tai-khoan">
+														Tài khoản
+													</a>
+												</li>
+												<li>
+													<hr className="dropdown-divider" />
+												</li>
+											</>
+										)}
+										{!localStorage.getItem("token") && (
+											<>
+												<li>
+													<a className="dropdown-item" href="/dang-nhap">
+														Đăng nhập
+													</a>
+												</li>
+												<li>
+													<a className="dropdown-item" href="/dang-ky">
+														Đăng ký
+													</a>
+												</li>
+											</>
+										)}
 
-                    {localStorage.getItem("token") && (
-                      <>
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            href="#"
-                            onClick={(e) => logout()}
-                          >
-                            Đăng xuất
-                          </a>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle dropdown-toggle-nocaret"
-                    href="javascript:;"
-                    data-bs-toggle="dropdown"
-                  >
-                    Tin tức
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href={"/tin-tuc"}>
-                        Tin tức
-                      </a>
-                    </li>
-                    {postCollections &&
-                      postCollections.map((item, index) => (
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            href={"/loai-tin-tuc/" + item.slug}
-                          >
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <ul className="navbar-nav secondary-menu flex-row">
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={(e) => setLgShow(true)}>
-                <i className="bi bi-search" />
-              </a>
-            </li>
-            <li
-              className="nav-item"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasRight"
-            >
-              <a className="nav-link position-relative" href="/gio-hang">
-                <i className="bi bi-basket2" />
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href={
-                  localStorage.getItem("token") ? "/tai-khoan" : "/dang-nhap"
-                }
-              >
-                <i className="bi bi-person-circle" />
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    </>
-  );
+										{localStorage.getItem("token") && (
+											<>
+												<li>
+													<a className="dropdown-item" href="#" onClick={(e) => logout()}>
+														Đăng xuất
+													</a>
+												</li>
+											</>
+										)}
+									</ul>
+								</li>
+								<li className="nav-item dropdown">
+									<a className="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
+										Tin tức
+									</a>
+									<ul className="dropdown-menu">
+										<li>
+											<a className="dropdown-item" href={"/tin-tuc"}>
+												Tin tức
+											</a>
+										</li>
+										{postCollections &&
+											postCollections.map((item, index) => (
+												<li key={index}>
+													<a className="dropdown-item" href={"/loai-tin-tuc/" + item.slug}>
+														{item.name}
+													</a>
+												</li>
+											))}
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<ul className="navbar-nav secondary-menu flex-row">
+						<li className="nav-item">
+							<a className="nav-link" href="#" onClick={(e) => setLgShow(true)}>
+								<i className="bi bi-search" />
+							</a>
+						</li>
+						<li className="nav-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+							<a className="nav-link position-relative" href="/gio-hang">
+								<i className="bi bi-basket2" />
+							</a>
+						</li>
+						<li className="nav-item">
+							<a className="nav-link" href={localStorage.getItem("token") ? "/tai-khoan" : "/dang-nhap"}>
+								<i className="bi bi-person-circle" />
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</header>
+		</>
+	);
 }
 
 export default Header;

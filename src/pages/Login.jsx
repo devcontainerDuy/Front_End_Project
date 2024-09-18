@@ -6,49 +6,48 @@ import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import axios from "axios";
 import { Helmet } from "react-helmet";
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [ user, setUser ] = useState([]);
-    const [ profile, setProfile ] = useState([]);
+	const [user, setUser] = useState([]);
+	const [profile, setProfile] = useState([]);
 
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
-    });
-    useEffect(
-        () => {
-            if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setProfile(res.data);
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [ user ]
-    );
+	const login = useGoogleLogin({
+		onSuccess: (codeResponse) => setUser(codeResponse),
+		onError: (error) => console.log("Login Failed:", error),
+	});
 
-    // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
 	useEffect(() => {
-		if(profile.email){
+		if (user !== undefined && user.access_token) {
+			axios
+				.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+					headers: {
+						Authorization: `Bearer ${user.access_token}`,
+						Accept: "application/json",
+					},
+				})
+				.then((res) => {
+					setProfile(res.data);
+				})
+				.catch((err) => console.log(err));
+		}
+	}, [user]);
+
+	// log out function to log the user out of google and set the profile array to null
+	const logOut = () => {
+		googleLogout();
+		setProfile(null);
+	};
+
+	useEffect(() => {
+		if (profile && profile.email) {
 			axios
 				.post(process.env.REACT_APP_API_URL + "customers/auth/login-email", {
 					email: profile.email,
 				})
 				.then((res) => {
-					if(res.data.check == true){
+					if (res.data.check == true) {
 						localStorage.setItem("token", res.data.token);
 						localStorage.setItem("id", res.data.id);
 						notyf.open({
@@ -58,10 +57,16 @@ function Login() {
 						setTimeout(() => {
 							window.location.replace("/");
 						}, 1200);
+					} else {
+						notyf.open({
+							type: "error",
+							message: res.data.msg || "Đăng nhập thất bại",
+						});
 					}
 				});
 		}
 	}, [profile]);
+
 	const notyf = new Notyf({
 		duration: 1000,
 		position: {
@@ -101,7 +106,9 @@ function Login() {
 			},
 		],
 	});
-	const submitLogin = () => {
+
+	const submitLogin = (e) => {
+		e.preventDefault();
 		if (email == "") {
 			notyf.open({
 				type: "error",
