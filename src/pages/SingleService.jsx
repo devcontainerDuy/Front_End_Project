@@ -6,95 +6,114 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Chat from "../components/Chat";
+import CommentList from "../components/CommentList";
 
 function SingleService() {
-	const { id } = useParams();
-	const [service, setService] = useState({});
-	const [book, setBook] = useState(false);
+  const { id } = useParams();
+  const [service, setService] = useState({});
+  const [book, setBook] = useState(false);
+  const [comments, setComments] = useState([
+    { name: "Nguyen Van A", content: "Dịch vụ rất tốt!" },
+    { name: "Tran Thi B", content: "Tôi sẽ quay lại lần sau." },
+  ]);
 
-	useEffect(() => {
-		fetch(process.env.REACT_APP_API_URL + "services/service/" + id)
-			.then((res) => res.json())
-			.then((res) => {
-				setService(res[0]);
-			});
-	}, [id]);
+  useEffect(() => {
+    const fetchService = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}services/service/${id}`
+        );
+        const data = await response.json();
+        setService(data[0]);
+      } catch (error) {
+        console.error("Failed to fetch service:", error);
+      }
+    };
 
-	const notyf = new Notyf({
-		duration: 3000,
-		position: {
-			x: "right",
-			y: "top",
-		},
-		types: [
-			{
-				type: "warning",
-				background: "orange",
-				icon: {
-					className: "material-icons",
-					tagName: "i",
-					text: "warning",
-				},
-			},
-			{
-				type: "error",
-				background: "indianred",
-				duration: 2000,
-				dismissible: true,
-			},
-			{
-				type: "success",
-				background: "green",
-				color: "white",
-				duration: 2000,
-				dismissible: true,
-			},
-		],
-	});
+    fetchService();
+  }, [id]);
 
-	// Create booking
-	const [name, setName] = useState("");
-	const [phone, setPhone] = useState("");
-	const [email, setEmail] = useState("");
-	const [time, setTime] = useState("");
-	const [date, setDate] = useState("");
-	const [checkbox, setCheckbox] = useState(false);
+  const notyf = new Notyf({
+    duration: 3000,
+    position: {
+      x: "right",
+      y: "top",
+    },
+    types: [
+      {
+        type: "warning",
+        background: "orange",
+        icon: {
+          className: "material-icons",
+          tagName: "i",
+          text: "warning",
+        },
+      },
+      {
+        type: "error",
+        background: "indianred",
+        duration: 2000,
+        dismissible: true,
+      },
+      {
+        type: "success",
+        background: "green",
+        color: "white",
+        duration: 2000,
+        dismissible: true,
+      },
+    ],
+  });
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		let token = localStorage.getItem("token");
-		let idusr = localStorage.getItem("id");
+  // Create booking
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+    let idusr = localStorage.getItem("id");
 
-			if (!name || !phone || !email || !time || !date) {
-				notyf.error("Vui lòng điền đầy đủ thông tin đặt lịch");
-			} else {
-				if (checkbox === true) {
-					axios
-						.post(process.env.REACT_APP_API_URL + "bookings", {
-							email: email,
-							name: name,
-							time: date + " " + time + ":00",
-							id_service: Number(service.id),
-							phone: phone,
-						})
-						.then((res) => {
-							if (res.data.check === true) {
-								notyf.success("Đặt lịch thành công");
-								setBook(false);
-							} else {
-								notyf.error(res.data.msg);
-							}
-						});
-				} else {
-					notyf.error("Vui lòng phải đồng ý chính sách");
-				}
-		}
-	};
+    if (!name || !phone || !email || !time || !date) {
+      notyf.error("Vui lòng điền đầy đủ thông tin đặt lịch");
+      return;
+    }
 
-	return (
+    if (checkbox) {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}bookings`,
+          {
+            email,
+            name,
+            time: `${date} ${time}:00`,
+            id_service: Number(service.id),
+            phone,
+          }
+        );
+
+        if (response.data.check) {
+          notyf.success("Đặt lịch thành công");
+          setBook(false);
+        } else {
+          notyf.error(response.data.msg);
+        }
+      } catch (error) {
+        notyf.error("Có lỗi xảy ra khi đặt lịch.");
+        console.error(error);
+      }
+    } else {
+      notyf.error("Vui lòng phải đồng ý chính sách");
+    }
+  };
+
+  return (
     <>
       <Helmet>
         <title>{service.name}</title>
@@ -109,7 +128,7 @@ function SingleService() {
                 <a href="/">Home</a>
               </li>
               <li className="breadcrumb-item" aria-current="page">
-                Dịch vụ
+                Dịch vụ
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 {service.name}
@@ -117,8 +136,8 @@ function SingleService() {
             </ol>
           </nav>
 
-          <div class="card shadow">
-            <div class="card-body">
+          <div className="card shadow">
+            <div className="card-body">
               <div className="row">
                 <div className="col-md-4">
                   <h3 className="text-danger">{service.name}</h3>
@@ -130,37 +149,25 @@ function SingleService() {
                     )}
                   </span>{" "}
                   <span className="text-danger">
-                    {" "}
                     {Intl.NumberFormat("en-US").format(Number(service.price))}
                   </span>
-                  <br />{" "}
-                  {!book && (
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => setBook(true)}
-                    >
-                      Đặt lịch
-                    </button>
-                  )}
-                  {book && (
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => setBook(false)}
-                    >
-                      Hủy đặt
-                    </button>
-                  )}
+                  <br />
+                  <button
+                    className={`btn ${book ? "btn-secondary" : "btn-primary"}`}
+                    onClick={() => setBook(!book)}
+                  >
+                    {book ? "Hủy đặt" : "Đặt lịch"}
+                  </button>
                 </div>
               </div>
               <div className="row">
-                {!book && (
+                {!book ? (
                   <div className="col-md">
                     <div
                       dangerouslySetInnerHTML={{ __html: service.content }}
                     />
                   </div>
-                )}
-                {book && (
+                ) : (
                   <>
                     <div className="col-md-8">
                       <div
@@ -170,46 +177,49 @@ function SingleService() {
                     <div className="col-md">
                       <form onSubmit={handleSubmit}>
                         <h2>
-                          <strong>Đặt lịch</strong>
+                          <strong>Đặt lịch</strong>
                         </h2>
                         <div className="mb-3">
-                          <label htmlFor="exampleInput1" className="form-label">
+                          <label htmlFor="name" className="form-label">
                             <strong>Tên người đặt lịch</strong>
                           </label>
                           <input
                             type="text"
                             className="form-control"
-                            id="exampleInput1"
+                            id="name"
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Nhập tên của bạn..."
+                            required
                           />
                         </div>
                         <div className="mb-3">
-                          <label htmlFor="exampleInput2" className="form-label">
+                          <label htmlFor="phone" className="form-label">
                             <strong>Số điện thoại người đặt</strong>
                           </label>
                           <input
                             type="tel"
                             className="form-control"
-                            id="exampleInput2"
+                            id="phone"
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder="Nhập vào số điện thoại của bạn..."
+                            required
                           />
                         </div>
                         <div className="mb-3">
-                          <label htmlFor="exampleInput3" className="form-label">
+                          <label htmlFor="email" className="form-label">
                             <strong>Địa chỉ email người đặt</strong>
                           </label>
                           <input
                             type="email"
                             className="form-control"
-                            id="exampleInput3"
+                            id="email"
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Nhập địa chỉs email..."
+                            placeholder="Nhập địa chỉ email..."
+                            required
                           />
                         </div>
                         <div className="mb-3">
-                          <label htmlFor="exampleInput4" className="form-label">
+                          <label htmlFor="dateTime" className="form-label">
                             <strong>Thời gian đến</strong>
                           </label>
                           <div className="d-flex">
@@ -217,13 +227,13 @@ function SingleService() {
                               type="time"
                               className="form-control me-1"
                               onChange={(e) => setTime(e.target.value)}
-                              id="exampleInput4"
+                              required
                             />
                             <input
                               type="date"
                               className="form-control ms-1"
                               onChange={(e) => setDate(e.target.value)}
-                              id="exampleInput4"
+                              required
                             />
                           </div>
                         </div>
@@ -231,12 +241,12 @@ function SingleService() {
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            id="exampleCheck1"
+                            id="terms"
                             onChange={(e) => setCheckbox(e.target.checked)}
                           />
                           <label
                             className="form-check-label text-secondary"
-                            htmlFor="exampleCheck1"
+                            htmlFor="terms"
                           >
                             <small>
                               Tôi đã đọc kĩ <a href="#">điều khoản</a> và{" "}
@@ -245,27 +255,30 @@ function SingleService() {
                           </label>
                         </div>
                         <button type="submit" className="btn btn-dark w-100">
-                          Đặt lịch hẹn ngay !
+                          Đặt lịch hẹn ngay!
                         </button>
                       </form>
                     </div>
                   </>
                 )}
               </div>
-
+            </div>
+            <div className="card shadow mt-4">
+              <div className="card-body">
+                <CommentList comments={comments} />
+              </div>
             </div>
           </div>
           <div className="row mt-3 mb-3 rounded">
-								<h3 className="fw-bold">Trò chuyện với app</h3>
-								<div className="col">
-									<div class="card shadow border-0" >
-										<div class="card-body">
-										<Chat />
-										</div>
-									</div>
-									
-								</div>
-							</div>
+            <h3 className="fw-bold">Trò chuyện với app</h3>
+            <div className="col">
+              <div className="card shadow border-0">
+                <div className="card-body">
+                  <Chat />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
