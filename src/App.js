@@ -26,6 +26,7 @@ import SingleBlog from "./pages/SingleBlog";
 import TypeBlogs from "./pages/TypeBlogs";
 import ForgotPass from "./pages/ForgotPass";
 import Orders from "./pages/Orders";
+import Recall from "./pages/Recall";
 
 
 
@@ -64,6 +65,7 @@ function App() {
         <Route path="/lien-he" element={<Contact />} />
         <Route path="/dang-nhap" element={<Login />} />
         <Route path="/quen-mat-khau" element={<ForgotPass />} />
+        <Route path="/thiet-lap-mat-khau" element={<Recall />} />
         <Route path="/tim-kiem/:id" element={<Search />} />
         <Route path="/pay-success" element={<Success />} />
         <Route path="/not-found" element={<NotFound />} />

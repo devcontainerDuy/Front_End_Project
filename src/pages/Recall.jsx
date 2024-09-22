@@ -8,17 +8,27 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { ElevatorSharp } from "@mui/icons-material";
-function ForgotPass() {
+function Recall() {
 	const [email,setEmail]= useState('');
+	const [password,setPassword]= useState('');
+	const [token,setToken]= useState('');
+	const [password1,setPassword1]= useState('');
 	useEffect(()=>{
 
 	},[])
 	const submitForget=()=>{
 		if(email==''){
 			notyf.error("Vui lòng nhập email cần lấy mật khẩu");
-		}else{
-			axios.post(process.env.REACT_APP_API_URL+'customers/checkMailForget', { 
-				email: email 
+		}else if(password==''||password1==''){
+			notyf.error("Vui lòng nhập đủ 2 lần mật khẩu");
+        }else if(password!=password1){
+			notyf.error("Vui lòng nhập lại chính xác mật khẩu");
+        }
+        else{
+			axios.post(process.env.REACT_APP_API_URL+'customers/submitForgetPassword', { 
+				email: email, 
+                token:token,
+                password:password
 			})
 			.then((res)=> {
 				if(res.data.check==false){
@@ -26,10 +36,11 @@ function ForgotPass() {
 						notyf.error(res.data.msg); 
 					}
 				}else if(res.data.check==true){
-					notyf.success('Vui lòng kiểm tra email');
-					window.location.replace('/thiet-lap-mat-khau');
-				}
-				
+                    setTimeout(() => {
+						notyf.success('Đã đổi thành công. Mời đăng nhập lại'); 
+                    }, 1700);
+                    window.location.replace('/dang-nhap')
+                }
 			})
 			.catch(error => {
 				notyf.error("Có lỗi xảy ra, vui lòng thử lại."); 
@@ -81,7 +92,7 @@ function ForgotPass() {
 		<>
 			<Header />
 			<Helmet>
-				<title>Quên mật khẩu</title>
+				<title>Thiết lập lại mật khẩu</title>
 				<meta name="description" content="Quên mật khẩu" />
 			</Helmet>
 			<div className="page-content">
@@ -94,7 +105,7 @@ function ForgotPass() {
 								</li>
 								<li className="breadcrumb-item active" disabled aria-current="page">
 									<a style={{ textDecoration: "none" }} href="#">
-										Quên mật khẩu
+										Thiết lập lại mật khẩu
 									</a>
 								</li>
 							</>
@@ -117,7 +128,7 @@ function ForgotPass() {
 										<div className="row">
 											<div className="col-12">
 												<div className="mb-5">
-													<h3>Quên mật khẩu</h3>
+													<h3>Thiết lập mật khẩu</h3>
 												</div>
 											</div>
 										</div>
@@ -128,6 +139,24 @@ function ForgotPass() {
 														Nhập địa chỉ Email <span className="text-danger">*</span>
 													</label>
 													<input type="email" className="form-control"  onChange={(e)=>setEmail(e.target.value)} name="email" id="email" placeholder="name@example.com" required="" />
+												</div>
+                                                <div className="col-12">
+													<label htmlFor="email" className="form-label">
+														Nhập mã token <span className="text-danger">*</span>
+													</label>
+													<input type="text" className="form-control"  onChange={(e)=>setToken(e.target.value)} name="token" id="token" placeholder="name@example.com" required="" />
+												</div>
+                                                <div className="col-12">
+													<label htmlFor="email" className="form-label">
+														Nhập mật khẩu mới <span className="text-danger">*</span>
+													</label>
+													<input type="password" className="form-control"  onChange={(e)=>setPassword(e.target.value)} name="password" id="password" placeholder="name@example.com" required="" />
+												</div>
+                                                <div className="col-12">
+													<label htmlFor="email" className="form-label">
+														Nhập lại mật khẩu <span className="text-danger">*</span>
+													</label>
+													<input type="password" className="form-control"  onChange={(e)=>setPassword1(e.target.value)} name="password1" id="password1" placeholder="name@example.com" required="" />
 												</div>
 												<div className="col-12">
 													<div className="d-grid">
@@ -150,4 +179,4 @@ function ForgotPass() {
 	);
 }
 
-export default ForgotPass;
+export default Recall;
