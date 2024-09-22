@@ -7,7 +7,31 @@ import "notyf/notyf.min.css";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { ElevatorSharp } from "@mui/icons-material";
 function ForgotPass() {
+	const [email,setEmail]= useState('');
+	useEffect(()=>{
+
+	},[])
+	const submitForget=()=>{
+		if(email==''){
+			notyf.error("Vui lòng nhập email cần lấy mật khẩu");
+		}else{
+			axios.post(process.env.REACT_APP_API_URL+'customers/checkMailForget', { 
+				email: email 
+			})
+			.then((res)=> {
+				if(res.data.check==false){
+					if(res.data.msg){
+						notyf.error(res.data.msg); 
+					}
+				}
+			})
+			.catch(error => {
+				notyf.error("Có lỗi xảy ra, vui lòng thử lại."); 
+			});
+		}
+	}
 
 	const notyf = new Notyf({
 		duration: 1000,
@@ -99,11 +123,11 @@ function ForgotPass() {
 													<label htmlFor="email" className="form-label">
 														Nhập địa chỉ Email <span className="text-danger">*</span>
 													</label>
-													<input type="email" className="form-control"  name="email" id="email" placeholder="name@example.com" required="" />
+													<input type="email" className="form-control"  onChange={(e)=>setEmail(e.target.value)} name="email" id="email" placeholder="name@example.com" required="" />
 												</div>
 												<div className="col-12">
 													<div className="d-grid">
-														<button className="btn bsb-btn-xl btn-dark" type="button">
+														<button className="btn bsb-btn-xl btn-dark" onClick={(e)=>submitForget()} type="button">
 															Gửi
 														</button>
 													</div>
