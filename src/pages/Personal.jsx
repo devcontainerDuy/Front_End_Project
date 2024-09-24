@@ -111,11 +111,12 @@ function Personal() {
 			});
 	}, []);
 	const submitName = () => {
-		if (name == "") {
+		if (name.trim() === "") {
 			notyf.open({
 				type: "error",
-				message: "Vui lòng nhập email mới",
+				message: "Vui lòng nhập tên mới",
 			});
+			return;
 		} else {
 			axios
 				.put(
@@ -147,7 +148,8 @@ function Personal() {
 		}
 	};
 	const submitPhone = () => {
-		if (phone == "") {
+		const pattern = /^[0-9]+$/;
+		if (phone === "") {
 			notyf.open({
 				type: "error",
 				message: "Vui lòng nhập số điện thoại mới",
@@ -183,7 +185,7 @@ function Personal() {
 		}
 	};
 	const submitAddress = () => {
-		if (address == "") {
+		if (address === "" || address === null) {
 			notyf.open({
 				type: "error",
 				message: "Vui lòng nhập địa chỉ mới",
@@ -219,11 +221,14 @@ function Personal() {
 		}
 	};
 	const submitEmail = () => {
-		if (email == "") {
+		const isEmpty = (value) => !value || value.trim() === "";
+
+		if (isEmpty(email)) {
 			notyf.open({
 				type: "error",
-				message: "Vui lòng nhập email mới",
+				message: "Vui lòng nhập email mới",
 			});
+			return;
 		} else {
 			axios
 				.put(
@@ -255,7 +260,7 @@ function Personal() {
 		}
 	};
 	const submitPassword = () => {
-		if (password == "") {
+		if (password === "" && password === null) {
 			notyf.open({
 				type: "error",
 				message: "Vui lòng nhập mật khẩu mới",
@@ -363,40 +368,40 @@ function Personal() {
 								<div className="row">
 									<div className="col-md-4">
 										<div className="input-group mb-3">
-											<input type="text" className="form-control" placeholder="Email mới" aria-label="Recipient's username" aria-describedby="button-addon2" value={email} onChange={(e) => setEmail(e.target.value)} />
-											<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitEmail()}>
+											<input type="email" className="form-control" placeholder="Email mới" aria-label="Nhập email mới" value={email} onChange={(e) => setEmail(e.target.value)} required />
+											<button className="btn btn-outline-primary" type="button" onClick={submitEmail} aria-label="Thay đổi email">
 												Thay đổi
 											</button>
 										</div>
 									</div>
 									<div className="col-md-4">
 										<div className="input-group mb-3">
-											<input type="text" className="form-control" placeholder="Họ tên" aria-label="Recipient's username" aria-describedby="button-addon2" value={name} onChange={(e) => setName(e.target.value)} />
-											<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitName()}>
+											<input type="text" className="form-control" placeholder="Họ tên" aria-label="Nhập họ tên" value={name} onChange={(e) => setName(e.target.value)} required />
+											<button className="btn btn-outline-primary" type="button" onClick={submitName} aria-label="Thay đổi họ tên">
 												Thay đổi
 											</button>
 										</div>
 									</div>
 									<div className="col-md-4">
 										<div className="input-group mb-3">
-											<input type="text" className="form-control" placeholder="Số diện thoại" aria-label="Recipient's username" aria-describedby="button-addon2" value={phone} onChange={(e) => setPhone(e.target.value)} />
-											<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitPhone()}>
+											<input type="tel" className="form-control" placeholder="Số diện thoại" aria-label="Nhập số điện thoại" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+											<button className="btn btn-outline-primary" type="button" onClick={submitPhone} aria-label="Thay đổi số điện thoại">
 												Thay đổi
 											</button>
 										</div>
 									</div>
 									<div className="col-md-4">
 										<div className="input-group mb-3">
-											<input type="text" className="form-control" placeholder="Địa chỉ" aria-label="Recipient's username" aria-describedby="button-addon2" value={address} onChange={(e) => setAdress(e.target.value)} />
-											<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitAddress()}>
+											<input type="text" className="form-control" placeholder="Địa chỉ" aria-label="Nhập địa chỉ" value={address} onChange={(e) => setAddress(e.target.value)} required />
+											<button className="btn btn-outline-primary" type="button" onClick={submitAddress} aria-label="Thay đổi địa chỉ">
 												Thay đổi
 											</button>
 										</div>
 									</div>
 									<div className="col-md-4">
 										<div className="input-group mb-3">
-											<input type="password" className="form-control" placeholder="Mật khẩu mới" aria-label="Recipient's username" aria-describedby="button-addon2" value={password} onChange={(e) => setPassword(e.target.value)} />
-											<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={(e) => submitPassword()}>
+											<input type="password" className="form-control" placeholder="Mật khẩu mới" aria-label="Nhập mật khẩu mới" value={password} onChange={(e) => setPassword(e.target.value)} />
+											<button className="btn btn-outline-primary" type="button" onClick={submitPassword} aria-label="Thay đổi mật khẩu">
 												Thay đổi
 											</button>
 										</div>

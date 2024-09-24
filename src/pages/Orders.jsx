@@ -33,6 +33,7 @@ function Orders() {
 	const [idBill, setIdBill] = useState(0);
 	const [single, setSingle] = useState(null);
 	const [page, setPage] = useState(1);
+	const [lastPage, setLastPage] = useState(1);
 	const [open, setOpen] = useState(false);
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [filteredOrders, setFilteredOrders] = useState(orders);
@@ -56,6 +57,7 @@ function Orders() {
 			})
 			.then((res) => {
 				setOrders(res.data.data);
+				setLastPage(res.data.last_page);
 			});
 	}, [page]);
 
@@ -126,21 +128,11 @@ function Orders() {
 							<Col md="9"></Col>
 							<Col xs="12" md="3">
 								<div className="d-flex justify-content-end mb-3">
-									<Form.Control
-										type="date"
-										className="rounded-pill"
-										value={startDate}
-										onChange={(e) => setStartDate(e.target.value)} // Cập nhật startDate
-									/>
+									<Form.Control type="date" className="rounded-pill" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
 									<div className="mx-3 my-2">
 										<span>To</span>
 									</div>
-									<Form.Control
-										type="date"
-										className="rounded-pill"
-										value={endDate}
-										onChange={(e) => setEndDate(e.target.value)} // Cập nhật endDate
-									/>
+									<Form.Control type="date" className="rounded-pill" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
 								</div>
 							</Col>
 							<Col md="6">
@@ -201,6 +193,25 @@ function Orders() {
 									</tr>
 								)}
 							</tbody>
+							<tfoot>
+								<div className="row">
+									<div className="col-md-6">
+										{page > 1 && (
+											<button className="btn btn-outline-secondary mt-2" onClick={() => setPage(page - 1)}>
+												&lt;&lt;
+											</button>
+										)}
+									</div>
+
+									<div className="col-md-6">
+										{page != null && page < lastPage && (
+											<button className="btn btn-outline-primary mt-2" onClick={() => setPage(page + 1)}>
+												&gt;&gt;
+											</button>
+										)}
+									</div>
+								</div>
+							</tfoot>
 						</table>
 					</Tab>
 				</Tabs>
@@ -230,7 +241,7 @@ function Orders() {
 									<strong>Địa chỉ:</strong> {single.address}
 								</Typography>
 								<Typography variant="body1">
-									<strong>Ngày tạo:</strong> {single.created_at}
+									<strong>Ngày tạo:</strong> {new Date(single.created_at).toLocaleString()}
 								</Typography>
 								<TableContainer component={Paper} sx={{ mt: 2 }}>
 									<Table>
