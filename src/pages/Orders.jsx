@@ -1,5 +1,5 @@
-/*eslint-disable*/ 
-import React, { useState } from "react";
+/*eslint-disable*/
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Box from "@mui/material/Box";
@@ -13,286 +13,267 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Col, Form, InputGroup, Row, Tab, Tabs } from "react-bootstrap";
+import axios from "axios";
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+	position: "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 600,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 4,
 };
 
 function Orders() {
-  const [open, setOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [filter, setFilter] = useState("default");
+	const [orders, setOrders] = useState([]);
+	const [idBill, setIdBill] = useState(0);
+	const [single, setSingle] = useState(null);
+	const [page, setPage] = useState(1);
+	const [open, setOpen] = useState(false);
+	const [searchKeyword, setSearchKeyword] = useState("");
+	const [filteredOrders, setFilteredOrders] = useState(orders);
+	const [sortOrder, setSortOrder] = useState("default");
+	const [startDate, setStartDate] = useState(""); // Ngày bắt đầu
+	const [endDate, setEndDate] = useState(""); // Ngày kết thúc
 
-  const orders = [
-    {
-      id: "#192611",
-      productName: "Sửa rửa mặt simple",
-      payment: "COD",
-      status: "Thành công",
-      total: "550.000 VNĐ",
-      items: [
-        { name: "Sửa rửa mặt simple", quantity: 1, price: "250.000 VNĐ" },
-        { name: "Kem chống nắng", quantity: 2, price: "300.000 VNĐ" }
-      ],
-      customer: {
-        name: "Nguyễn Văn A",
-        phone: "0123456789",
-        address: "123 Đường ABC, Quận 1, TP.HCM",
-        date: "2024-09-18"
-      }
-    },
-    {
-      id: "#192612",
-      productName: "Kem chống nắng",
-      payment: "COD",
-      status: "Mới",
-      total: "300.000 VNĐ",
-      items: [
-        { name: "Kem chống nắng", quantity: 1, price: "300.000 VNĐ" }
-      ],
-      customer: {
-        name: "Nguyễn Văn A",
-        phone: "0123456789",
-        address: "123 Đường ABC, Quận 1, TP.HCM",
-        date: "2024-09-19"
-      }
-    },
-    {
-      id: "#192613",
-      productName: "Dưỡng ẩm",
-      payment: "COD",
-      status: "Thất bại",
-      total: "200.000 VNĐ",
-      items: [
-        { name: "Dưỡng ẩm", quantity: 1, price: "200.000 VNĐ" }
-      ],
-      customer: {
-        name: "Nguyễn Văn A",
-        phone: "0123456789",
-        address: "123 Đường ABC, Quận 1, TP.HCM",
-        date: "2024-09-20"
-      }
-    }
-  ];
+	const handleOpen = (orderDetail) => {
+		setOpen(true);
+		setIdBill(orderDetail);
+	};
 
-  const filteredOrders = orders.filter(order => {
-    const matchesSearch = order.id.includes(searchTerm) || order.productName.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTab = activeTab === "all" || order.status.toLowerCase() === activeTab;
+	const handleClose = () => setOpen(false);
 
-    const orderDate = new Date(order.customer.date);
-    const fromDate = new Date(dateFrom);
-    const toDate = new Date(dateTo);
-    const matchesDate =
-      (!dateFrom || orderDate >= fromDate) && (!dateTo || orderDate <= toDate);
+	useEffect(() => {
+		axios
+			.get(process.env.REACT_APP_API_URL + "customers/bills?page=" + page, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			})
+			.then((res) => {
+				setOrders(res.data.data);
+			});
+	}, [page]);
 
-    return matchesSearch && matchesTab && matchesDate;
-  });
+	useEffect(() => {
+		const filterByDate = () => {
+			if (!startDate && !endDate) {
+				setFilteredOrders(orders);
+			} else {
+				const filtered = orders.filter((order) => {
+					const orderDate = new Date(order.created_at);
+					if (startDate && !endDate) {
+						return new Date(startDate) <= orderDate;
+					}
+					if (!startDate && endDate) {
+						return orderDate <= new Date(endDate);
+					}
+					return new Date(startDate) <= orderDate && orderDate <= new Date(endDate);
+				});
+				setFilteredOrders(filtered);
+			}
+		};
 
-  const sortedOrders = filteredOrders.sort((a, b) => {
-    const totalA = parseInt(a.total.replace(".", "").replace(" VNĐ", ""));
-    const totalB = parseInt(b.total.replace(".", "").replace(" VNĐ", ""));
-    if (filter === "high") return totalB - totalA; // Giá cao nhất
-    if (filter === "low") return totalA - totalB; // Giá thấp nhất
-    return 0; // Mặc định
-  });
+		filterByDate();
+	}, [orders, startDate, endDate]);
 
-  const handleOpen = (order) => {
-    setSelectedOrder(order);
-    setOpen(true);
-  };
-  
-  const handleClose = () => setOpen(false);
+	useEffect(() => {
+		if (searchKeyword === "") {
+			setFilteredOrders(orders);
+		} else {
+			setFilteredOrders(
+				orders.filter((order) => {
+					return order.details.some((detail) => detail.product.name.toLowerCase().includes(searchKeyword.toLowerCase()));
+				}),
+			);
+		}
+	}, [orders, searchKeyword]);
 
-  return (
-    <>
-      <Header />
-      <div className="container my-5">
-        <h3 className="mt-4 fw-bold">Lịch sử hóa đơn</h3>
-        
-        <ul className="nav nav-tabs mt-2 fw-bold">
-          <li className="nav-item">
-            <a 
-              className={`nav-link ${activeTab === "all" ? "bg-primary text-white" : "text-muted"}`}
-              onClick={() => setActiveTab("all")}
-            >
-              Tất cả hóa đơn ({orders.length})
-            </a>
-          </li>
-          <li className="nav-item">
-            <a 
-              className={`nav-link ${activeTab === "mới" ? "bg-primary text-white" : "text-muted"}`}
-              onClick={() => setActiveTab("mới")}
-            >
-              Mới ({orders.filter(o => o.status.toLowerCase() === "mới").length})
-            </a>
-          </li>
-          <li className="nav-item">
-            <a 
-              className={`nav-link ${activeTab === "thành công" ? "bg-primary text-white" : "text-muted"}`}
-              onClick={() => setActiveTab("thành công")}
-            >
-              Thành công ({orders.filter(o => o.status.toLowerCase() === "thành công").length})
-            </a>
-          </li>
-          <li className="nav-item">
-            <a 
-              className={`nav-link ${activeTab === "thất bại" ? "bg-primary text-white" : "text-muted"}`}
-              onClick={() => setActiveTab("thất bại")}
-            >
-              Thất bại ({orders.filter(o => o.status.toLowerCase() === "thất bại").length})
-            </a>
-          </li>
-        </ul>
+	useEffect(() => {
+		if (idBill !== 0) {
+			orders.forEach((el) => {
+				if (el.id == idBill) {
+					setSingle(el);
+				}
+			});
+		}
+	}, [idBill]);
 
-        <div className="row mt-3">
-          <div className="col-md-8">
-            <div className="input-group w-50">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Tìm hóa đơn..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col-md-4 d-flex align-items-center justify-content-end">
-            <div className="me-2">
-              <span>Từ:</span>
-              <input 
-                type="date" 
-                className="form-control form-control-sm" 
-                value={dateFrom} 
-                onChange={(e) => setDateFrom(e.target.value)} 
-              />
-            </div>
-            <div className="ms-2 me-2">
-              <span>Đến:</span>
-              <input 
-                type="date" 
-                className="form-control form-control-sm" 
-                value={dateTo} 
-                onChange={(e) => setDateTo(e.target.value)} 
-              />
-            </div>
-            <div className="ms-2">
-              <span>Lọc:</span>
-              <select className="form-control form-control-sm" value={filter} onChange={(e) => setFilter(e.target.value)}>
-                <option value="default">Mặc định</option>
-                <option value="high">Giá cao nhất</option>
-                <option value="low">Giá thấp nhất</option>
-              </select>
-            </div>
-          </div>
-        </div>
+	const handleSortOrder = (sortOrder) => {
+		setSortOrder(sortOrder);
+		if (sortOrder === "asc") {
+			orders.sort((a, b) => a.total - b.total);
+		} else if (sortOrder === "desc") {
+			orders.sort((a, b) => b.total - a.total);
+		} else if (sortOrder === "default") {
+			orders.sort((a, b) => a.id - b.id);
+		}
+	};
 
-        <table className="table table-striped mt-3">
-          <thead>
-            <tr className="fs-5">
-              <th>ID</th>
-              <th>Sản phẩm</th>
-              <th>Thanh toán</th>
-              <th>Trạng thái</th>
-              <th>Thành tiền</th>
-              <th>Chi tiết</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedOrders.map((order) => (
-              <tr className="fw-bold" key={order.id}>
-                <td className="text-primary">{order.id}</td>
-                <td className="d-flex">
-                  <img className="me-3" src="https://via.placeholder.com/35x35" alt="Sản phẩm" />
-                  <p>{order.productName}</p>
-                </td>
-                <td className="text-success">{order.payment}</td>
-                <td className={order.status === "Thành công" ? "text-success" : order.status === "Mới" ? "text-warning" : "text-danger"}>
-                  {order.status}
-                </td>
-                <td>{order.total}</td>
-                <td>
-                  <button className="btn btn-sm btn-primary" onClick={() => handleOpen(order)}>
-                    Chi tiết
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+	return (
+		<>
+			<Header />
+			<div className="container my-5">
+				<h3 className="mt-4 fw-bold">Lịch sử hóa đơn</h3>
 
-        <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Chi tiết hóa đơn
-            </Typography>
-            {selectedOrder && (
-              <div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography variant="body1">
-                    <strong>ID:</strong> {selectedOrder.id}
-                  </Typography>
-                  <Typography variant="body1">
-                    <strong>Trạng thái:</strong> {selectedOrder.status}
-                  </Typography>
-                </div>
-                <Typography variant="body1">
-                  <strong>Tên khách hàng:</strong> {selectedOrder.customer.name}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Số điện thoại:</strong> {selectedOrder.customer.phone}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Địa chỉ:</strong> {selectedOrder.customer.address}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Ngày tạo:</strong> {selectedOrder.customer.date}
-                </Typography>
-                <TableContainer component={Paper} sx={{ mt: 2 }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Tên sản phẩm</TableCell>
-                        <TableCell>Số lượng</TableCell>
-                        <TableCell>Thành tiền</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {selectedOrder.items.map((item, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{item.name}</TableCell>
-                          <TableCell>{item.quantity}</TableCell>
-                          <TableCell>{item.price}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <Typography variant="body1" sx={{ mt: 2 }}>
-                  <strong>Tổng tiền hóa đơn:</strong> {selectedOrder.total}
-                </Typography>
-              </div>
-            )}
-            <Button onClick={handleClose} variant="contained" color="primary" sx={{ mt: 2 }}>
-              Đóng
-            </Button>
-          </Box>
-        </Modal>
-      </div>
-      <Footer />
-    </>
-  );
+				<Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
+					<Tab eventKey="home" title="Hóa đơn">
+						<Row className="mt-3">
+							<Col md="9"></Col>
+							<Col xs="12" md="3">
+								<div className="d-flex justify-content-end mb-3">
+									<Form.Control
+										type="date"
+										className="rounded-pill"
+										value={startDate}
+										onChange={(e) => setStartDate(e.target.value)} // Cập nhật startDate
+									/>
+									<div className="mx-3 my-2">
+										<span>To</span>
+									</div>
+									<Form.Control
+										type="date"
+										className="rounded-pill"
+										value={endDate}
+										onChange={(e) => setEndDate(e.target.value)} // Cập nhật endDate
+									/>
+								</div>
+							</Col>
+							<Col md="6">
+								<InputGroup className="w-50 rounded-pill">
+									<InputGroup.Text role="button">
+										<i className="bi bi-search" />
+									</InputGroup.Text>
+									<Form.Control type="text" placeholder="Tìm hóa đơn..." value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} />
+								</InputGroup>
+							</Col>
+							<Col md="6" className="d-flex align-items-center justify-content-end column-gap-2">
+								<Form.Group className="mb-3" controlId="formGridState">
+									<Form.Select defaultValue="default" className="rounded-pill" onChange={(e) => handleSortOrder(e.target.value)} value={sortOrder}>
+										<option value="default">Mặc định</option>
+										<option value="asc">Giá thấp nhất</option>
+										<option value="desc">Giá cao nhất</option>
+									</Form.Select>
+								</Form.Group>
+							</Col>
+						</Row>
+
+						<table className="table table-striped mt-3">
+							<thead>
+								<tr className="fs-5">
+									<th>ID</th>
+									<th>Sản phẩm</th>
+									<th>Số lượng</th>
+									<th>Trạng thái</th>
+									<th>Thành tiền</th>
+									<th>Chi tiết</th>
+								</tr>
+							</thead>
+							<tbody>
+								{filteredOrders.length > 0 ? (
+									filteredOrders.map((order, index) => (
+										<tr key={index + 1}>
+											<td>HD00{order.id}</td>
+											<td> {order.details[0].product.name}</td>
+											<td>{order.details[0].quantity}</td>
+											<td>
+												{order.status == 0 ? "Đặt hàng" : ""}
+												{order.status == 1 ? "Thành công" : ""}
+												{order.status == 2 ? "Thất bại" : ""}
+											</td>
+											<td>{Intl.NumberFormat("en-US").format(order.total)}</td>
+											<td>
+												<Button variant="primary" onClick={() => handleOpen(order.id)}>
+													Chi tiết
+												</Button>
+											</td>
+										</tr>
+									))
+								) : (
+									<tr>
+										<td colSpan="6" className="text-center">
+											Không có hóa đơn
+										</td>
+									</tr>
+								)}
+							</tbody>
+						</table>
+					</Tab>
+					<Tab eventKey="profile" title="Profile">
+						<div>Profile content here...</div>
+					</Tab>
+				</Tabs>
+				{single ? (
+					<Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+						<Box sx={style}>
+							<Typography id="modal-modal-title" variant="h6" component="h2">
+								Chi tiết hóa đơn
+							</Typography>
+
+							<div>
+								<div style={{ display: "flex", justifyContent: "space-between" }}>
+									<Typography variant="body1">
+										<strong>ID:</strong> HD00{single.id}
+									</Typography>
+									<Typography variant="body1">
+										<strong>Trạng thái:</strong> {single.status == 0 ? "Đặt hàng" : ""} {single.status == 1 ? "Thành công" : ""} {single.status == 2 ? "Thất bại" : ""}
+									</Typography>
+								</div>
+								<Typography variant="body1">
+									<strong>Tên khách hàng:</strong> {single.name}
+								</Typography>
+								<Typography variant="body1">
+									<strong>Số điện thoại:</strong> {single.phone}
+								</Typography>
+								<Typography variant="body1">
+									<strong>Địa chỉ:</strong> {single.address}
+								</Typography>
+								<Typography variant="body1">
+									<strong>Ngày tạo:</strong> {single.created_at}
+								</Typography>
+								<TableContainer component={Paper} sx={{ mt: 2 }}>
+									<Table>
+										<TableHead>
+											<TableRow>
+												<TableCell>Tên sản phẩm</TableCell>
+												<TableCell>Số lượng</TableCell>
+												<TableCell>Thành tiền</TableCell>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{single.details.map((detail, index) => (
+												<TableRow key={index}>
+													<TableCell>{detail.product.name}</TableCell>
+													<TableCell>{detail.quantity}</TableCell>
+													<TableCell>
+														<p>{Intl.NumberFormat("en-US").format(detail.product.price)}</p>
+														<p className="text-danger">- {(((detail.product.price - detail.product.discount) / detail.product.price) * 100).toFixed(0)}%</p>
+													</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TableContainer>
+								<Typography variant="body1" sx={{ mt: 2 }}>
+									<strong>Tổng tiền hóa đơn:</strong> {Intl.NumberFormat("en-US").format(single.total)} VND
+								</Typography>
+							</div>
+							<Button onClick={handleClose} variant="contained" color="primary" sx={{ mt: 2 }}>
+								Đóng
+							</Button>
+						</Box>
+					</Modal>
+				) : (
+					<></>
+				)}
+			</div>
+			<Footer />
+		</>
+	);
 }
 
 export default Orders;
