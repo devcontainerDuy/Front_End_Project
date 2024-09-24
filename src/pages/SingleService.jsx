@@ -233,6 +233,7 @@ function SingleService() {
                               type="date"
                               className="form-control ms-1"
                               onChange={(e) => setDate(e.target.value)}
+                              min={new Date().toISOString().split("T")[0]}
                               required
                             />
                           </div>
