@@ -203,9 +203,6 @@ function Orders() {
 							</tbody>
 						</table>
 					</Tab>
-					<Tab eventKey="profile" title="Profile">
-						<div>Profile content here...</div>
-					</Tab>
 				</Tabs>
 				{single ? (
 					<Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

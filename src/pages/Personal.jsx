@@ -338,7 +338,7 @@ function Personal() {
 									Thông tin tài khoản
 								</button>
 							</li>
-							<li className="nav-item" role="presentation">
+							{/* <li className="nav-item" role="presentation">
 								<button
 									className="nav-link"
 									id="profile-tab"
@@ -354,7 +354,7 @@ function Personal() {
 									}}>
 									Đơn hàng
 								</button>
-							</li>
+							</li> */}
 						</ul>
 					</div>
 					<div class="card-body">
