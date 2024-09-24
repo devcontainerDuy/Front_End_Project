@@ -40,7 +40,6 @@ function Orders() {
 	const [sortOrder, setSortOrder] = useState("default");
 	const [startDate, setStartDate] = useState(""); // Ngày bắt đầu
 	const [endDate, setEndDate] = useState(""); // Ngày kết thúc
-
 	const handleOpen = (orderDetail) => {
 		setOpen(true);
 		setIdBill(orderDetail);
@@ -119,31 +118,34 @@ function Orders() {
 	return (
 		<>
 			<Header />
-			<div className="container my-5">
+			<div className="container  my-5 pt-4">
 				<h3 className="mt-4 fw-bold">Lịch sử hóa đơn</h3>
 
-				<Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
-					<Tab eventKey="home" title="Hóa đơn">
+				<Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3 ">
+					<Tab eventKey="home" className="card border-0 shadow p-2" title="Hóa đơn">
 						<Row className="mt-3">
-							<Col md="9"></Col>
-							<Col xs="12" md="3">
-								<div className="d-flex justify-content-end mb-3">
-									<Form.Control type="date" className="rounded-pill" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-									<div className="mx-3 my-2">
-										<span>To</span>
-									</div>
-									<Form.Control type="date" className="rounded-pill" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+							<Col md="10"></Col>
+							<Col md="2">
+								<div className="d-flex flex-column align-items-end mb-3">
+									<label htmlFor="pageSelect" className="mb-1">Trang</label>
+									<select name="page" onChange={(e)=>setPage(e.target.value)} className="form-control" id="pageSelect">
+										{Array.from({ length: lastPage }, (_, index) => (
+											<option key={index} value={index + 1}>
+												{index + 1}
+											</option>
+										))}
+									</select>
 								</div>
 							</Col>
-							<Col md="6">
+							{/* <Col md="6">
 								<InputGroup className="w-50 rounded-pill">
 									<InputGroup.Text role="button">
 										<i className="bi bi-search" />
 									</InputGroup.Text>
 									<Form.Control type="text" placeholder="Tìm hóa đơn..." value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} />
 								</InputGroup>
-							</Col>
-							<Col md="6" className="d-flex align-items-center justify-content-end column-gap-2">
+							</Col> */}
+							{/* <Col md="6" className="d-flex align-items-center justify-content-end column-gap-2">
 								<Form.Group className="mb-3" controlId="formGridState">
 									<Form.Select defaultValue="default" className="rounded-pill" onChange={(e) => handleSortOrder(e.target.value)} value={sortOrder}>
 										<option value="default">Mặc định</option>
@@ -151,10 +153,10 @@ function Orders() {
 										<option value="desc">Giá cao nhất</option>
 									</Form.Select>
 								</Form.Group>
-							</Col>
+							</Col> */}
 						</Row>
 
-						<table className="table table-striped mt-3">
+						<table className="table  table-striped mt-3">
 							<thead>
 								<tr className="fs-5">
 									<th>ID</th>
@@ -193,7 +195,7 @@ function Orders() {
 									</tr>
 								)}
 							</tbody>
-							<tfoot>
+							{/* <tfoot>
 								<div className="row">
 									<div className="col-md-6">
 										{page > 1 && (
@@ -211,7 +213,7 @@ function Orders() {
 										)}
 									</div>
 								</div>
-							</tfoot>
+							</tfoot> */}
 						</table>
 					</Tab>
 				</Tabs>
